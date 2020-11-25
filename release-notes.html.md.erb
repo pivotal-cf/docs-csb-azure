@@ -14,10 +14,17 @@ These are release notes for <%= vars.product_short %>.
 ### Features
 New features and changes in this release:
 
+Support for Azure MySQL threat detection policy.
+
 * **RUN-IN HEADING:** DESCRIPTION
 
 ### Resolved Issues
 This release has the following fixes:
+
+> Data Loss when updating services: Any parameters provided in the 'cf create-service' command must also be provided in the 'cf update-service' command. Otherwise, the broker substitutes default values for those parameters.
+For example, if you provided the parameter db_name when the service was created, omitting this parameter from the update service command would result in data loss.
+
+Any parameters provided to `cf create-service` are no preserved and used as defaults during `cf update-service`
 
 * **RUN-IN HEADING:** DESCRIPTION
 
