@@ -7,20 +7,25 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_short %>.
 
-##<a id="1-1-7"></a> v1.1.7
+## <a id="1-1-7"></a> v1.1.7
+
 **Release Date:** January 4, 2021
 
 ### New Features
 
-There are no new Features in this release. 
+There are no new features in this release.
 
 ### Resolved Issues
 
-[BUG FIX] Fixed a bug which caused Azure SQL bind/unbind operations to fail for existing instances after the SQL admin password was changed. See Github Issue [#158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158)
+Azure SQL bind and unbind operations no longer fail for existing instances after the SQL admin
+password is changed.
+For more information, see
+[Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
 
 ### Known Issues
 
-##<a id="1-1-6"></a> v1.1.6
+
+## <a id="1-1-6"></a> v1.1.6
 
 **Release Date:** December 16, 2020
 
@@ -28,7 +33,7 @@ There are no new Features in this release.
 
 New features and changes in this release:
 
-* **Azure Virtual Network (VNet) integration:** Added for Azure Redis Cache premium plans.
+* **Azure Virtual Network (VNet) integration:** VNet is integrated for Azure Redis Cache premium plans.
 
 ### Resolved Issues
 
@@ -48,16 +53,18 @@ stored procedures after Azure SQL subsume are now permissible.
 There are no known issues for this release.
 
 
-##<a id="1-1-1"></a> v1.1.1
+## <a id="1-1-1"></a> v1.1.1
 
 **Release Date:** November 20, 2020
 
-<p class="note breaking"><strong>Breaking Change:</strong>
-Subsume is no longer provided as a separate service in the Cloud Foundry marketplace.
-It is now a plan that is currently only available for the MSSQL Database service.
+<p class="note breaking">
+  <strong>Breaking Change:</strong> Subsume is no longer provided as a separate service in
+  Cloud Foundry Marketplace. It is now a plan that is currently only available for the MSSQL Database
+  service.
 </p>
 
 ### Features
+
 New features and changes in this release:
 
 * **Support for Azure MySQL Threat Detection Policy:**
@@ -69,24 +76,28 @@ For information about subsuming Azure MySQL FoG instances, see
 in GitHub.
 
 ### Resolved Issues
+
 This release has the following fixes:
 
-* **Data loss when updating services:** Any parameters provided to `cf create-service` are now preserved
- and used as defaults during `cf update-service`.
+* **Data loss when updating services:** Any parameters provided to `cf create-service` are now
+preserved and used as defaults during `cf update-service`.
 
-##<a id="1-1-0"></a> v1.1.0
+
+## <a id="1-1-0"></a> v1.1.0
 
 **Release Date:** November 5, 2020
 
-<p class="note breaking"><strong>Breaking Change:</strong>
-Subsume is no longer provided as a separate service in the Cloud Foundry marketplace.
-It is now a plan that is currently only available for the MSSQL Database service.
+<p class="note breaking">
+  <strong>Breaking Change:</strong> Subsume is no longer provided as a separate service in Cloud
+  Foundry Marketplace. It is now a plan that is currently only available for the MSSQL Database
+  service.
 </p>
 
 ### Features
+
 New features and changes in this release:
 
-* **Provides a cleaner pattern for subsuming existing MSSQL DB instances from the Microsoft Azure Service Broker:**
+* **Provides a cleaner pattern for subsuming existing MSSQL database instances from the Microsoft Azure Service Broker:**
 For more information, see [Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](./azure-mssql-subsume.html).
 * **Adds support for Azure SQL Short Term Retention Period:**
 For more information about the original issue, see
@@ -94,13 +105,15 @@ For more information about the original issue, see
 * **Error messaging:** Adds clearer error messaging to the subsume functionality.
 
 ### Resolved Issues
+
 This release has the following fixes:
 
 * **Azure Storage can now be configured in the tile:**
 Previously, there was an issue where Azure Storage configuration was not shown in the tile.
-* **Labeling:** Fixed incorrect labeling in Azure Redis Config.
+* **Labeling:** Fixed incorrect labeling in Azure Redis config.
 
 ### Known Issues
+
 This release has the following issues:
 
 * **Data loss when updating services:**
@@ -108,7 +121,7 @@ Any parameters provided in the `cf create-service` command must also be provided
 in the `cf update-service` command.
 Otherwise, the broker substitutes default values for those parameters.<br>
 For example, if you provided the parameter `db_name` when the service was created,
-omitting this parameter from the update service command would result in data loss.
+omitting this parameter from the update service command resulted in data loss.
 
 
 ## <a id="view"></a> View Release Notes for Another Version
