@@ -50,6 +50,8 @@ stored procedures after Azure SQL subsume are now permissible.
 
 ### Known Issues
 
+This release has the following issue:
+
 * **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
 password and re-deploying the broker, bind and unbind operations for existing database instances fail.
 For more information, see
@@ -86,6 +88,8 @@ This release has the following fixes:
 preserved and used as defaults during `cf update-service`.
 
 ### Known Issue
+
+This release has the following issue:
 
 * **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
 password and re-deploying the broker, bind and unbind operations for existing database instances fail.
