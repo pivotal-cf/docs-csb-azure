@@ -17,6 +17,15 @@ New features in this release:
 
 - Support for the Azure SQL short term retention period.
 
+### Known Issue
+
+This release has the following issue:
+
+* **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
+password and re-deploying the broker, bind and unbind operations for existing database instances fail.
+For more information, see
+[Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
+
 ## <a id="1-0-0"></a> v1.0.0-azure
 
 **Release Date:** October 9, 2020
@@ -26,3 +35,12 @@ New features in this release:
 New features in this release:
 
 * **Initial release:** Initial release for the <%= vars.product_short %> on the Azure tile.
+
+### Known Issue
+
+This release has the following issue:
+
+* **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
+password and re-deploying the broker, bind and unbind operations for existing database instances fail.
+For more information, see
+[Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
