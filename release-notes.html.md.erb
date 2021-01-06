@@ -13,8 +13,10 @@ These are release notes for <%= vars.product_short %>.
 
 ### Resolved Issues
 
-* Azure SQL bind and unbind operations no longer fail for existing instances after the SQL admin
-password is changed.
+This release has the following fix:
+
+* **Changing the SQL admin password no longer breaks bind and unbind operations:** Changing the SQL
+admin password no longer causes bind and unbind operations to fail for existing instances.
 For more information, see
 [Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
 
@@ -48,7 +50,10 @@ stored procedures after Azure SQL subsume are now permissible.
 
 ### Known Issues
 
-There are no known issues for this release.
+* **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
+password and re-deploying the broker, bind and unbind operations for existing database instances fail.
+For more information, see
+[Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
 
 
 ## <a id="1-1-1"></a> v1.1.1
@@ -79,6 +84,13 @@ This release has the following fixes:
 
 * **Data loss when updating services:** Any parameters provided to `cf create-service` are now
 preserved and used as defaults during `cf update-service`.
+
+### Known Issue
+
+* **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
+password and re-deploying the broker, bind and unbind operations for existing database instances fail.
+For more information, see
+[Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
 
 
 ## <a id="1-1-0"></a> v1.1.0
@@ -120,6 +132,11 @@ in the `cf update-service` command.
 Otherwise, the broker substitutes default values for those parameters.<br>
 For example, if you provided the parameter `db_name` when the service was created,
 omitting this parameter from the update service command resulted in data loss.
+
+* **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
+password and re-deploying the broker, bind and unbind operations for existing database instances fail.
+For more information, see
+[Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
 
 
 ## <a id="view"></a> View Release Notes for Another Version
