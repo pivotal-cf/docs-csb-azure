@@ -15,15 +15,15 @@ These are release notes for <%= vars.product_short %>.
 
 This release has the following fix:
 
-* **Changing the SQL admin password no longer breaks bind and unbind operations:** Changing the SQL
-admin password no longer causes bind and unbind operations to fail for existing instances.
+* **Changing the SQL admin password no longer breaks bind and unbind operations:**
+Changing the SQL admin password no longer causes bind and unbind operations to fail for existing
+instances. However, you might need to subsume instances that are still failing to bind and unbind.
 
-    However, you might need to subsume instances that are still failing to bind and unbind.
-For how to subsume an instance,
-see [Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](azure-mssql-subsume.html)
-or [Subsuming a Microsoft Azure Service Broker MSSQL Failover Group Instance](https://docs.pivotal.io/csb-azure/1-1/azure-mssql-fog-subsume.html).<br>
+For how to subsume an instance, see
+[Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](azure-mssql-subsume.html)
+or [Subsuming a Microsoft Azure Service Broker MSSQL Failover Group Instance](https://docs.pivotal.io/csb-azure/1-1/azure-mssql-fog-subsume.html).
 
-    For additional information about the issue, see
+For additional information about the issue, see
 [Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
 
 ### Known Issues
