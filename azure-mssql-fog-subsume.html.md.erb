@@ -154,7 +154,7 @@ the <%= vars.product_short %>:
     For example:
 
     <pre class="terminal">
-    $ az sql failover-group show  --name fog-name --server server-name \
+    $ az sql failover-group show  --name masb-fog-db-80124 --server server-name \
       --resource-group azure-service-broker --query id -o tsv
     /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/server-name/databases/database-name
     </pre>
@@ -165,7 +165,7 @@ the <%= vars.product_short %>:
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
 
       ```
-     cf create-service csb-azure-mssql-db-failover-group subsume NEW-SERVICE-INSTANCE -c
+    cf create-service csb-azure-mssql-db-failover-group subsume NEW-SERVICE-INSTANCE -c
         '{
    "azure_primary_db_id": "PRIMARY-AZURE-DB-ID",
     "azure_secondary_db_id": "SECONDARY-AZURE-DB-ID",
@@ -180,19 +180,6 @@ the <%= vars.product_short %>:
     * `SERVER-ADMIN-PASSWORD` is the admin password for the database.
        See Prerequisite Section above.
     * `PRIMARY-AZURE-DB-ID` , `SECONDARY-AZURE-DB-ID` and `FOG-AZURE-ID` are found in the outputs of step 3 above.
-    *  `FOG-SERVER-PAIR` is the ______________.
-
-    For example:
-
-    <pre class="terminal">
-    $ cf create-service csb-azure-mssql-db-failover-group subsume NEW-SERVICE-INSTANCE -c
-        '{
-   "azure_primary_db_id": "PRIMARY-AZURE-DB-ID",
-    "azure_secondary_db_id": "SECONDARY-AZURE-DB-ID",
-      "auzure_fog_id": "FOG-AZURE-ID",
-      "server_pair": "FOG-SERVER-PAIR"
-   }'
-    </pre>
 
 4. Disconnect the app from the MASB service binding by running:
 
@@ -217,10 +204,6 @@ $ cf unbind-service my-app masb-instance
 
     Where `NEW-SERVICE-INSTANCE` is the name of the <%= vars.product_short %> service instance
     that you created in step 4 above.
-    <br><br>
-    For example:
-
-    <pre class="terminal">$ cf bind-service my-app secondary-db </pre>
 
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
