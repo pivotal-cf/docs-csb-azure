@@ -65,14 +65,14 @@ the <%= vars.product_short %>:
 1. Get the MAS-brokered database instance details by running:
 
     ```
-    cf service MASB-SERVICE-INSTANCE
+    cf service MASB-DATABASE-INSTANCE
     ```
-    Where `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
+    Where `MASB-DATABASE-INSTANCE` is the name of the MAS-brokered database instance.
     <br><br>
     For example:
 
     <pre class="terminal">$ cf service masb-instance
-    Showing info of service <masb instance> in org ...
+    Showing info of service masb-instance in org ...
 
     name:            masb-instance
     service:         azure-sqldb
@@ -93,11 +93,10 @@ the <%= vars.product_short %>:
 1. Get the MASB-brokered FoG instance details by running:
 
     ```
-    cf service MASB-SERVICE-INSTANCE
+    cf service MASB-FOG-INSTANCE
     ```
-    Where is `MASB-SERVICE-INSTANCE` is the name of the service instance, the MAS-brokered database
-    instance.
-
+    Where is `MASB-FOG-INSTANCE` is the name of the MAS-brokered FoG instance.
+    <br><br>
     For example:
 
     <pre class="terminal">
@@ -123,7 +122,7 @@ the <%= vars.product_short %>:
     </pre>
 
 2. Get the Azure resource IDs for the FoG and its databases by running the following on the Azure CLI:
-
+<br><br>
     Primary database ID:
 
     ```
@@ -176,7 +175,7 @@ the <%= vars.product_short %>:
 
     Where:
     * `NEW-SERVICE-INSTANCE` is a name you choose for the new service instance
-       that creates to replace the MSAB service instance.
+       to replace the MSAB service instance.
     * `SERVER-ADMIN-PASSWORD` is the admin password for the database.
        See Prerequisite Section above.
     * `PRIMARY-AZURE-DB-ID` , `SECONDARY-AZURE-DB-ID` and `FOG-AZURE-ID` are found in the outputs of step 3 above.
@@ -204,7 +203,7 @@ $ cf unbind-service my-app masb-instance
 
     Where `NEW-SERVICE-INSTANCE` is the name of the <%= vars.product_short %> service instance
     that you created in step 4 above.
-
+    <br><br>
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
 
