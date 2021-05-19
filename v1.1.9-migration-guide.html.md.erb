@@ -1,0 +1,106 @@
+---
+title: Migration Manual Steps for v1.1.9
+owner: Cloud Service Broker
+---
+
+<strong><%= modified_date %></strong>
+
+This is a migration guide for v1.1.9
+
+## Introduction
+In Tanzu Cloud Service Broker for Azure v1.1.8 and earlier, an internal plan identifier that should
+have been unique was accidentally reused, such that the `csb-azure-mssql-failover-group/small`
+plan had the same internal identifier as the `csb-azure-mssql/small` plan. Prior to TAS 2.11 it
+did not cause any errors. In TAS 2.11 a check for duplicate plan identifiers
+was added in response to an issue reported by a customer. This has resulted in Tanzu Cloud Service Broker
+for Azure v1.1.8 and earlier failing to install successfully on TAS 2.11
+
+In Tanzu Cloud Service Broker for Azure v1.1.9 the `csb-azure-mssql-failover-group/small` plan has
+been removed and replaced with the `csb-azure-mssql-failover-group/small-v2` plan which has a
+different internal identifier, but is otherwise identical to the `csb-azure-mssql-failover-group/small`
+plan. Users will need to update any service instances using the `csb-azure-mssql-failover-group/small`
+plan to the `csb-azure-mssql-failover-group/small-v2` plan.
+
+These steps do not need to be performed immediately after installation. They can be performed at any time, and each
+service instance can be updated independently.
+
+## Procedure
+Follow these steps to update service instances once Tanzu Cloud Service Broker for Azure v1.1.9 has been installed.
+The product will function correctly
+
+## 1. Determine the GUID of the `csb-azure-mssql-failover-group` service offering
+Run:
+```
+cf curl /v2/services?q=label:csb-azure-mssql-failover-group
+```
+This should print a JSON response with details of the `csb-azure-mssql-failover-group` service offering.
+The `total_results` field should equal `1`.
+Make a note of the `guid` in the `metadata` object.
+If you have the `jq` tool installed, you can use the following command to save the GUID as a shell variable:
+```
+SERVICE_GUID="$(cf curl /v2/services?q=label:csb-azure-mssql-failover-group | jq -r .resources[0].metadata.guid)"
+```
+
+## 2. Determine the GUID of the `small` service plan
+Run:
+```
+cf curl "/v2/service_plans?q=service_guid:<service GUID>&q=unique_id:a556d1b4-5825-11ea-adb8-00155d4dfe6c"
+```
+Where `<service GUID>` should be replaced with the service offering GUID from the previous step. The value
+`a556d1b4-5825-11ea-adb8-00155d4dfe6c` is the internal identifier for the `small` plan.
+The `total_results` field should equal `1`.
+Make a note of the `guid` in the `metadata` object.
+If you are using the `jq` tool, you can use the following command to save the GUID as a shell variable:
+```
+PLAN_GUID="$(cf curl "/v2/service_plans?q=service_guid:$SERVICE_GUID&q=unique_id:a556d1b4-5825-11ea-adb8-00155d4dfe6c" | jq -r .resources[0].metadata.guid)"
+```
+
+## 3. Determine the service instances that must be updated
+Run:
+```
+cf curl "/v2/service_instances?q=service_plan_guid:<plan GUID>"
+```
+Where `<plan GUID>` is the service plan GUID from the previous step.
+If the `total_results` field is `0`, then no service instances need to be updated, and the remainder of the migration steps can be skipped.
+If you have used the `jq` tool, then you can obtain a list of GUIDs with the following command:
+```
+cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" | jq -r .resources[].metadata.guid
+```
+
+## 4. Update each service instance
+For each service instance identified in the previous step, determine the service instance name, space name and organization name. The space name can be determined from the `space_url` link, and the organization name can be determined from the `organizaion_url` in the response to the space query. Alternatively, if using the `jq` tool, the following query will return the service instance name, space name, and organization name:
+```
+cf curl "/v2/service_instances/$GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
+```
+Where `$GUID` is the GUID of a service instance.
+
+For each service instance, run:
+```
+cf target -o <organization name> -s <space name>
+cf update-service <service instance name> -p small-v2
+```
+Where `<organizaion name>`, `<space name>`, and `<service instance name>` are the values determined earlier in this step.
+Note that where parameters have been specified previously then they should be specified again to ensure that they are not
+reset to default values. For example if the `instance_name` was previously set to `myinstance` then the update command
+should be:
+```
+cf update-service <service instance name> -p small-v2 -c '{"instance_name": "myinstance"}'
+```
+
+## 5. Remove the obsolete `small` plan
+Run:
+```
+cf curl -X DELETE /v2/service_plans/<plan GUID>
+```
+Where `<plan GUID>` is the value obtained in a previous step.
+If you set the GUID as a shell variable, then run:
+```
+cf curl -X DELETE /v2/$PLAN_GUID
+```
+
+## 6. Check that the plan has been removed
+Run:
+```
+cf marketplace -s csb-azure-mssql-failover-group
+```
+Check that the `small` plan is no longer listed. Only the `small-v2`, `medium`, and `large` plans should be listed.
