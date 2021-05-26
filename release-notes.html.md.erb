@@ -7,6 +7,30 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_short %>.
 
+## <a id="1-1-8"></a> v1.1.8
+
+**Release Date:** January 28, 2021
+
+### Resolved Issues
+
+This release has the following fix:
+
+* **App binding credentials do not work after performing failover of Azure SQL DB**
+When creating a csb-azure-mssql-db-failover-group instance and binding to an app,
+the login is created in the primary database, and so does not get replicated to the
+secondary database.
+For more information, see
+[Issue #4](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/4) in GitHub.
+
+### Known Issues
+
+This release has the following issue:
+
+* **Installation on VMware Tanzu Application Service v2.11 fails:** due to an accidentally duplicated ID, installation will fail.
+For more information, see
+[Pull Request #34](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/34) in GitHub.
+
+
 ## <a id="1-1-7"></a> v1.1.7
 
 **Release Date:** January 4, 2021
@@ -27,7 +51,11 @@ For additional information about the issue, see
 
 ### Known Issues
 
-There are no known issues for this release.
+This release has the following issue:
+
+* **Installation on VMware Tanzu Application Service v2.11 fails:** due to an accidentally duplicated ID, installation will fail.
+For more information, see
+[Pull Request #34](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/34) in GitHub.
 
 
 ## <a id="1-1-6"></a> v1.1.6
@@ -55,13 +83,16 @@ stored procedures after Azure SQL subsume are now permissible.
 
 ### Known Issues
 
-This release has the following issue:
+This release has the following issues:
 
 * **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
 password and re-deploying the broker, bind and unbind operations for existing database instances fail.
 For more information, see
 [Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
 
+* **Installation on VMware Tanzu Application Service v2.11 fails:** due to an accidentally duplicated ID, installation will fail.
+For more information, see
+[Pull Request #34](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/34) in GitHub.
 
 ## <a id="1-1-1"></a> v1.1.1
 
@@ -94,12 +125,16 @@ preserved and used as defaults during `cf update-service`.
 
 ### Known Issue
 
-This release has the following issue:
+This release has the following issues:
 
 * **Changing the SQL admin password breaks bind and unbind operations:** After changing the SQL admin
 password and re-deploying the broker, bind and unbind operations for existing database instances fail.
 For more information, see
 [Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
+
+* **Installation on VMware Tanzu Application Service v2.11 fails:** due to an accidentally duplicated ID, installation will fail.
+For more information, see
+[Pull Request #34](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/34) in GitHub.
 
 
 ## <a id="1-1-0"></a> v1.1.0
@@ -146,6 +181,10 @@ omitting this parameter from the update service command resulted in data loss.
 password and re-deploying the broker, bind and unbind operations for existing database instances fail.
 For more information, see
 [Issue #158](https://github.com/cloudfoundry-incubator/cloud-service-broker/issues/158) in GitHub.
+
+* **Installation on VMware Tanzu Application Service v2.11 fails:** due to an accidentally duplicated ID, installation will fail.
+For more information, see
+[Pull Request #34](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/34) in GitHub.
 
 
 ## <a id="view"></a> View Release Notes for Another Version
