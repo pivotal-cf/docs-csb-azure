@@ -15,9 +15,9 @@ These are release notes for <%= vars.product_short %>.
 
 This release has the following fix:
 
-* **App binding credentials do not work after performing failover of Azure SQL DB**
+* **App binding credentials now work after performing a failover of Azure SQL DB:**
 When creating a csb-azure-mssql-db-failover-group instance and binding to an app,
-the login is created in the primary database, and so does not get replicated to the
+the login was created in the primary database, and so did not get replicated to the
 secondary database.
 For more information, see
 [Issue #4](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/4) in GitHub.
