@@ -7,7 +7,7 @@ owner: Cloud Service Broker
 
 This is topic describes how to upgrade <%= vars.product_full %> v1.1.8 and earlier to v1.1.9.
 
-You need to follow the procedure in this topic only if you use:
+You need to follow the procedure in this topic only if you use or intend to use:
 
 + <%= vars.product_short %> v1.1.8 or earlier
 + The `csb-azure-mssql-failover-group/small` plan
@@ -162,6 +162,12 @@ To update service instances after installing <%= vars.product_short %> v1.1.9:
     ```
     Confirm that the `small` plan is no longer listed.
     Only the `small-v2`, `medium`, and `large` plans should be listed.
+
+
+<%# If I exited at step 5, will the original small plan still be listed in the marketplace?  %>
+
+
+
 
 <hr>
 ## <a id="update"></a> Update Service Instances (DELETE or turn into non-jq version)
