@@ -71,8 +71,7 @@ You can perform them at any time, and, if necessary, each service instance can b
 ###<a id="id-failover"></a>  Identify the GUIDs for the Service Instances Using the Small Plans
 
 The steps below describe how to get a list of service instance names that use the small plan.
-If you already have such a list and know the GUIDs for these instances, then skip to 
-[Update Service Instances to Use small-v2 Plan](#update-si-failover) below.
+If you already have such a list, then skip to [Update Service Instances to Use small-v2 Plan](#update-si-failover) below.
 
 To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the `small` plan: 
 
@@ -94,22 +93,7 @@ To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` 
       identifier for the <code>small</code> plan.
     </p>
 
-5. Discover the service instances that must be updated by running:
-
-    ```
-    cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID"
-    ```
-    For example:
-
-    <pre class="terminal">$ cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID"
-     ADD SAMPLE output here.
-    </pre> 
-
-    If the `total_results` field is `0`, then there are no service instances that need to be updated
-    and you can skip to [Remove the Small Plan from the Marketplace](#remove-failover).
-
-
-6. Obtain a list of only the GUIDs with the following command:
+5. Discover the GUIDs of the service instances that must be updated by running:
 
     ```
     cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" | jq -r .resources[].metadata.guid
@@ -118,25 +102,32 @@ To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` 
 
     <pre class="terminal">$ cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" \
     | jq -r .resources[].metadata.guid
-     DOES the backslash work for line continuation? 
-     ADD SAMPLE output here.
+    c08199a9-a41d-483d-8d07-58347467623e
+    f28d32af-fbda-4057-9080-f655feda8c98
     </pre> 
 
+    If the result is empty, then there are no service instances that need to be updated
+    and you can skip to [Remove the Small Plan from the Marketplace](#remove-failover).
 
-7. For each service instance identified in step 4, discover the service instance name,
+
+6. For each service instance identified in step 5, discover the service instance name,
    space name, and organization name by running:
 
     ```
-    cf curl "/v2/service_instances/GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
+    cf curl "/v2/service_instances/GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r \
+    '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
     ```
-    Where `GUID` is the GUID of a service instance, listed in the output of step 4.
+    Where `GUID` is the GUID of a service instance, listed in the output of step 5.
 
     For example:
 
-    <pre class="terminal">$ cf curl "/v2/service_instances/GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
-     REPLACE GUID with example GUID output from the step above.
-     If backslash for line continuation works within cf command lines, break into multiple lines
-     ADD SAMPLE output.
+    <pre class="terminal">$ cf curl "/v2/service_instances/c08199a9-a41d-483d-8d07-58347467623e?inline-relations-depth=2&include-relations=space,organization" | jq -r \
+    '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
+    {
+      "service": "my-database",
+      "space": "services",
+      "organization": "system"
+    }
     </pre> 
 
 ###<a id=update-si-failover></a> Update Service Instances to Use small-v2 Plan
@@ -146,7 +137,7 @@ That is for each service instance in the list output in step 5 above.
 
 To update a service instance to use the small-v2 plan instead of the small plan:
 
-8. Target the org and space for the service instance by running:
+7. Target the org and space for the service instance by running:
 
     ```
     cf target -o ORGANIZATION-NAME -s SPACE-NAME
@@ -156,7 +147,7 @@ To update a service instance to use the small-v2 plan instead of the small plan:
     For example:
 
     <pre class="terminal">
-    $ cf target -o ORGANIZATION-NAME -s SPACE-NAME
+    $ cf target -o system -s services
     </pre>
 
 8. Update the service instance to use the new small-v2 plan by running:
@@ -175,8 +166,7 @@ To update a service instance to use the small-v2 plan instead of the small plan:
     For example:
 
     <pre class="terminal">
-    $ cf update-service SERVICE-INSTANCE-NAME -p small-v2 -c '{"instance_name": "myinstance"}'  </pre> 
-<%# Need to replace the placeholder text, all in caps now, with realistic examples %>
+    $ cf update-service my-database -p small-v2 -c '{"instance_name": "myinstance"}'  </pre> 
 
 
 ###<a id="remove-failover"></a> Remove the Small Plan from the Marketplace
@@ -189,6 +179,10 @@ so that no one can choose it in the future.
     ```
     cf curl -X DELETE /v2/service_plans/$PLAN_GUID
     ```
+
+    Note that if you get an error with error code `CF-ServicePlanNotFound` then Cloud Foundry
+    has already detected that the plan is no longer in use and has removed it. Proceed to the next step.
+
 10. Confirm that the original small plan has been removed by running:
 
     ```
@@ -198,13 +192,14 @@ so that no one can choose it in the future.
 
     <pre class="terminal">
     $ cf marketplace -s csb-azure-mssql-failover-group
-    ADD SAMPLE output
+    Getting service plan information for service csb-azure-mssql-failover-group as admin...
+    OK
+
+    service plan   description                                                                                                                                                                      free or paid
+    small-v2       SQL Server latest version. Instance properties: General Purpose - Serverless ; 0.5 - 2 cores ; Max Memory: 6gb ; 50 GB storage ; auto-pause enabled after 1 hour of inactivity   paid
+    medium         SQL Server latest version. Instance properties: General Purpose - Provisioned ; Provisioned Capacity ; 8 cores ; 200 GB storage                                                  paid
+    large          SQL Server latest version. Instance properties: Business Critical ; Provisioned Capacity ; 32 cores ; 500GB storage ; 1 read replica; Auto-failover group enabled                paid
     </pre>
-
-
-
-
-
 
 ## <a id="update-mssql"></a> Update csb-azure-mssql/small Service Instances
 
