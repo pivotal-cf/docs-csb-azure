@@ -7,12 +7,10 @@ owner: Cloud Service Broker
 
 This is topic describes how to upgrade <%= vars.product_full %> v1.1.8 and earlier to v1.1.9.
 
-You need to follow the procedure in this topic only if you use or intend to use:
+You need to follow the procedure in this topic only if you use:
 
 + <%= vars.product_short %> v1.1.8 or earlier
-+ The `csb-azure-mssql-failover-group/small` plan
-+ <%= vars.app_runtime_full %> v2.11
-
++ The `csb-azure-mssql-failover-group/small` plan or `csb-azure-mssql/small` plan
 
 <p class="note">
    <strong>Note:</strong> Skip this topic if you do not use the exact components and versions listed above.
@@ -24,89 +22,91 @@ In <%= vars.product_short %> v1.1.8 and earlier, the `csb-azure-mssql-failover-g
 and the `csb-azure-mssql/small` plan have the same internal identifier.
 These identifiers should be unique.
 
-<%= vars.app_runtime_abbr %> 2.11 checks for duplicate plan identifiers, resulting in
-<%= vars.product_short %> v1.1.8 and earlier failing to install successfully on
-<%= vars.app_runtime_abbr %> 2.11.
-<%= vars.app_runtime_abbr %> 2.10 and earlier did not check for duplicate plan identifiers.
+<%= vars.app_runtime_abbr %> v2.11 checks for duplicate plan identifiers, resulting in
+<%= vars.product_short %> v1.1.8 and earlier failing to install on <%= vars.app_runtime_abbr %> v2.11.
+<%= vars.app_runtime_abbr %> v2.10 and earlier did not check for duplicate plan identifiers.
 
 In <%= vars.product_short %> v1.1.9, the `csb-azure-mssql-failover-group/small`
 plan is replaced by the `csb-azure-mssql-failover-group/small-v2` plan.
-The new plan has a different internal identifier, but is otherwise identical to the previous plan.
+And, the `csb-azure-mssql/small`
+plan is replaced by the `csb-azure-mssql/small-v2` plan.
+The new v2 plans have different internal identifiers, but are otherwise identical to the old small plans.
 
-## <a id="upgrade"></a> Process for Upgrading to <%= vars.product_short %> v1.1.9 and <%= vars.app_runtime_abbr %> v2.11
+## <a id="upgrade"></a> Process for Upgrading to <%= vars.product_short %> v1.1.9
 
-If you use the `csb-azure-mssql-failover-group/small` plan, the process for upgrading to v1.1.9 or later
-and <%= vars.app_runtime_abbr %> v2.11 is:
+If you use the `csb-azure-mssql-failover-group/small` plan or the `csb-azure-mssql/small` plan, 
+the process for upgrading to v1.1.9 or later is:
 
-<%# **Q:** Can Steps 2 and 3 be done in either order? %>
+1. Upgrade the tile to v1.1.9 or later as you normally upgrade a tile.
 
-1. Upgrade to the v1.1.9 tile as you normally upgrade a tile.
+2. Identify the GUIDs for the service instances using the small plans of the `csb-azure-mssql`
+   and `csb-azure-mssql-failover-group/small` services.
 
-2. Update the service instances to use the new small-v2 plan, as described in [Update Service Instances](#update) below.
+3. Update the service instances to use the new small-v2 plans for the two services.
 
-3. Upgrade <%= vars.app_runtime_abbr %> v2.11 following the instructions in the <%= vars.app_runtime_abbr %> documentation.
+4. Remove the small plans from the Marketplace.
 
-## <a id="update"></a> Update Service Instances
+Detailed procedures for steps 2–4 are below.
+See [Update csb-azure-mssql-failover-group/small Service Instances](#update-failover) and 
+[Update csb-azure-mssql/small Service Instances](#update-mssql).
 
-<%# This version of the procedure requires the jq tool. The doc and the work seems much easier with it.
-    I think either you should require it, or have two versions of the procedure, one with it and one without it.  %>
+## <a id='prerequisites'></a> Prerequisite
 
-You must update any service instances using `csb-azure-mssql-failover-group/small` to
-`csb-azure-mssql-failover-group/small-v2`.
+To follow the procedures in this topic, you need the jq tool installed.
+See [jq](https://stedolan.github.io/jq/).
 
-You do not need to perform these steps immediately after installing v1.1.9(?) or TAS v2.11 (?).
-You can perform them at any time, and each service instance can be updated independently.
 
-**Prerequisite:** The jq tool. 
-  For instructions on downloading and using the jq tool, see [jq](https://stedolan.github.io/jq/).
+## <a id="update-failover"></a> Update csb-azure-mssql-failover-group/small Service Instances
 
-To update service instances after installing <%= vars.product_short %> v1.1.9:
+If your foundation uses the `csb-azure-mssql-failover-group/small` plan,
+follow the procedures below:
 
-1. Discover the GUID of the `csb-azure-mssql-failover-group` service offering by running:
++ [Identify the GUIDs for the Service Instances Using the Small Plans](#id-failover)
++ [Update Service Instances to Use small-v2 Plan](#update-si-failover)
++ [Remove the Small Plan from the Marketplace](#remove-failover)
 
-    ```
-    cf curl /v2/services?q=label:csb-azure-mssql-failover-group
-    ```
+You do not need to perform these steps immediately after upgrading to v1.1.9.
+You can perform them at any time, and, if necessary, each service instance can be updated independently.
 
-    The JSON response contains details of the `csb-azure-mssql-failover-group` service
-    offering. <%# Ask an engineer for some output to insert here %>
-    The `total_results` field should equal `1`.
+###<a id="id-failover"></a>  Identify the GUIDs for the Service Instances Using the Small Plans
 
-2. Set a shell variable named `SERVICE_GUID` to the GUID in the `metadata` object above
-    by running:
+The steps below describe how to get a list of service instance names that use the small plan.
+If you already have such a list and know the GUIDs for these instances, then skip to 
+[Update Service Instances to Use small-v2 Plan](#update-si-failover) below.
+
+To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the `small` plan: 
+
+1. Set a shell variable named `SERVICE_GUID` to the GUID of the `csb-azure-mssql-failover-group` service
+   by running:
 
     ```
     SERVICE_GUID="$(cf curl /v2/services?q=label:csb-azure-mssql-failover-group | jq -r .resources[0].metadata.guid)"
     ```
 
-3. Discover the GUID of the `small` service plan by running:
-
-    ```
-    cf curl "/v2/service_plans?q=service_guid:SERVICE_GUID&q=unique_id:a556d1b4-5825-11ea-adb8-00155d4dfe6c"
-    ```
-
-    <p class="note">
-      <strong>Note:</strong> <code>a556d1b4-5825-11ea-adb8-00155d4dfe6c</code> is always the internal
-      identifier for the <code>small</code> plan.
-    </p>
-
-    The `total_results` field should equal `1`.
-
-4. Set a shell variable named `PLAN_GUID` to the GUID in the `metadata` object in step 3 above
+4. Set a shell variable named `PLAN_GUID` to the GUID of the small service plan
     by running:
 
     ```
     PLAN_GUID="$(cf curl "/v2/service_plans?q=service_guid:$SERVICE_GUID&q=unique_id:a556d1b4-5825-11ea-adb8-00155d4dfe6c" | jq -r .resources[0].metadata.guid)"
      ```
-    <%# Why does this SERVICE_GUID have a dollar sign but the similar command above does not? %>
+    <p class="note">
+      <strong>Note:</strong> <code>a556d1b4-5825-11ea-adb8-00155d4dfe6c</code> is always the internal
+      identifier for the <code>small</code> plan.
+    </p>
 
 5. Discover the service instances that must be updated by running:
 
     ```
-    cf curl "/v2/service_instances?q=service_plan_guid:PLAN_GUID"
+    cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID"
     ```
-    If the `total_results` field is `0`, then no service instances need to be updated and you can
-    skip the remainder of the migration steps.
+    For example:
+
+    <pre class="terminal">$ cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID"
+     ADD SAMPLE output here.
+    </pre> 
+
+    If the `total_results` field is `0`, then there are no service instances that need to be updated
+    and you can skip to [Remove the Small Plan from the Marketplace](#remove-failover).
 
 
 6. Obtain a list of only the GUIDs with the following command:
@@ -114,202 +114,105 @@ To update service instances after installing <%= vars.product_short %> v1.1.9:
     ```
     cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" | jq -r .resources[].metadata.guid
     ```
-    <%# Why does this PLAN_GUID have a dollar sign but the similar command above does not? %>
+    For example:
 
-7. For each service instance identified in step 5, discover the service instance name,
+    <pre class="terminal">$ cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" \
+    | jq -r .resources[].metadata.guid
+     DOES the backslash work for line continuation? 
+     ADD SAMPLE output here.
+    </pre> 
+
+
+7. For each service instance identified in step 4, discover the service instance name,
    space name, and organization name by running:
 
     ```
-    cf curl "/v2/service_instances/$GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
+    cf curl "/v2/service_instances/GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
     ```
-    Where `$GUID` is the GUID of a service instance, listed in the output of step 6.
+    Where `GUID` is the GUID of a service instance, listed in the output of step 4.
 
-    <%# Again, I'm confused by the $ sign. An example would help. Do I type `/service_instances/345ea6fd...` or 
-        `/service_instances/$345ea6fd...` %>
+    For example:
 
-8. For each service instance, update the service instance to the new small-v2 plan by running:
+    <pre class="terminal">$ cf curl "/v2/service_instances/GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
+     REPLACE GUID with example GUID output from the step above.
+     If backslash for line continuation works within cf command lines, break into multiple lines
+     ADD SAMPLE output.
+    </pre> 
 
-<%# We have to tell readers how to list find all the parameters that they might have set for an instance
-    so they can supply them correctly in the update-service line. How do they know what params were used originally?  %>
+###<a id=update-si-failover></a> Update Service Instances to Use small-v2 Plan
+
+Follow these steps for each service instance using the small plan.
+That is for each service instance in the list output in step 5 above.
+
+To update a service instance to use the small-v2 plan instead of the small plan:
+
+8. Target the org and space for the service instance by running:
 
     ```
     cf target -o ORGANIZATION-NAME -s SPACE-NAME
-    cf update-service SERVICE-INSTANCE-NAME -p small-v2  -c '{"PARAMETER-1-NAME":"PARAMETER-1-VALUE","PARAMETER-2-NAME":"PARAMETER-2-VALUE"}'
     ```
-    Where:
-    * `ORGANIZATION-NAME`, `SPACE-NAME`, and `SERVICE-INSTANCE-NAME` are the values obtained in step 7.
-    * `PARAMETER-n-NAME` and `PARAMETER-n-VALUE` are the names and values of any parameters that you set when you created or last updated the service instance. 
-     See [Configuration Parameters](reference.html#azure-mssql-fog-parameters) in _Service Plan Reference_. 
+    Where `ORGANIZATION-NAME`and `SPACE-NAME` are the values obtained in step 5 above.
 
     For example:
 
     <pre class="terminal">
     $ cf target -o ORGANIZATION-NAME -s SPACE-NAME
+    </pre>
+
+8. Update the service instance to use the new small-v2 plan by running:
+
+    ```
+    cf update-service SERVICE-INSTANCE-NAME -p small-v2  -c '{"PARAMETER-1-NAME":"PARAMETER-1-VALUE","PARAMETER-2-NAME":"PARAMETER-2-VALUE"}'
+    ```
+    Where:
+    * `SERVICE-INSTANCE-NAME` is the name obtained in step 5 above.
+    * `PARAMETER-n-NAME` and `PARAMETER-n-VALUE` are the names and values of any parameters
+       that you set when you created or last updated the service instance.
+       See [Configuration Parameters](reference.html#azure-mssql-fog-parameters) in _Service Plan Reference_.<br>
+       If you do not specify the parameters, either the default or the last used value is set. 
+       <%# Could you/should you write a known issue for this in the release notes? We could x-ref it from here %> 
+
+    For example:
+
+    <pre class="terminal">
     $ cf update-service SERVICE-INSTANCE-NAME -p small-v2 -c '{"instance_name": "myinstance"}'  </pre> 
 <%# Need to replace the placeholder text, all in caps now, with realistic examples %>
 
-9. Remove the obsolete `small` plan by running:
+
+###<a id="remove-failover"></a> Remove the Small Plan from the Marketplace
+
+The last task is to remove the small plan from the Marketplace
+so that no one can choose it in the future.
+
+9. Remove the original small plan by running:
 
     ```
-    cf curl -X DELETE /v2/$PLAN_GUID
+    cf curl -X DELETE /v2/service_plans/$PLAN_GUID
     ```
-<%# should this be `cf curl -X DELETE /v2/service_plans/$PLAN_GUID` ? more like the non-jq command? %>
-
-10. Check that the original small plan has been removed by running:
+10. Confirm that the original small plan has been removed by running:
 
     ```
     cf marketplace -s csb-azure-mssql-failover-group
     ```
-    Confirm that the `small` plan is no longer listed.
-    Only the `small-v2`, `medium`, and `large` plans should be listed.
-
-
-<%# If I exited at step 5, will the original small plan still be listed in the marketplace?  %>
-
-
-
-
-<hr>
-## <a id="update"></a> Update Service Instances (DELETE or turn into non-jq version)
-
-<%# This version of the procedure has both jq and manual steps. If you need a procedure that can be done without jq,
-modify this procedure for manual only. But, if you can get away with only the jq version, then delete the procedure entirely.
- %>
-
-You must update any service instances using `csb-azure-mssql-failover-group/small` to
-`csb-azure-mssql-failover-group/small-v2`.
-
-You do not need to perform these steps immediately after installing v1.1.9(?) or TAS v2.11 (?).
-You can perform them at any time, and each service instance can be updated independently.
-
-To update service instances after installing <%= vars.product_short %> v1.1.9:
-
-1. Discover the GUID of the `csb-azure-mssql-failover-group` service offering by running:
-
-    ```
-    cf curl /v2/services?q=label:csb-azure-mssql-failover-group
-    ```
-
-    The JSON response contains details of the `csb-azure-mssql-failover-group` service
-    offering. <%# Ask an engineer for some output to insert here %>
-    The `total_results` field should equal `1`.
-
-2. Set a shell variable named `SERVICE_GUID` to the `guid` in the `metadata` object above
-    by doing one of the following:
-    +  If you have the `jq` tool installed, save the GUID as a shell variable by running:
-
-        ```
-        SERVICE_GUID="$(cf curl /v2/services?q=label:csb-azure-mssql-failover-group | jq -r .resources[0].metadata.guid)"
-        ```
-    +  Manually by running:
-  
-        ```
-        export SERVICE_GUID="guid-id-from-curl-command-step-1"
-        ```
-        For example, 
-        <pre class="terminal">
-        $ export SERVICE_GUID="<%# Use the guid from the example output that you get from eng abovee %>"
-        </pre>
-    
-
-
-3. Discover the GUID of the `small` service plan by running:
-
-    ```
-    cf curl "/v2/service_plans?q=service_guid:SERVICE_GUID&q=unique_id:a556d1b4-5825-11ea-adb8-00155d4dfe6c"
-    ```
-
-    <p class="note">
-      <strong>Note:</strong> <code>a556d1b4-5825-11ea-adb8-00155d4dfe6c</code> is always the internal
-      identifier for the <code>small</code> plan.
-    </p>
-
-    The `total_results` field should equal `1`.
-
-4. Set a shell variable named `PLAN_GUID` to the `guid` in the `metadata` object in step 3 above
-    by doing one of the following:
-    +  If you have the `jq` tool installed, save the GUID as a shell variable by running:
-
-        ```
-        PLAN_GUID="$(cf curl "/v2/service_plans?q=service_guid:$SERVICE_GUID&q=unique_id:a556d1b4-5825-11ea-adb8-00155d4dfe6c" | jq -r .resources[0].metadata.guid)"
-        ```
-    <%# Why does this SERVICE_GUID have a dollar sign but the similar command above does not? %>
-    +  Manually by running:
-  
-        ```
-        export PLAN_GUID="guid-id-from-curl-command-step-3"
-        ```
-        For example, 
-        <pre class="terminal">
-        $ export PLAN_GUID="<%# Use the guid from the example output that you get from eng above %>"
-        </pre>
-    
-
-5. Discover the service instances that must be updated by running:
-
-    ```
-    cf curl "/v2/service_instances?q=service_plan_guid:PLAN_GUID"
-    ```
-    If the `total_results` field is `0`, then no service instances need to be updated and you can
-    skip the remainder of the migration steps.
-
-
-6. (Optional) If you have the `jq` tool, then you can obtain a list of only the GUIDs with the following command:
-
-    ```
-    cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" | jq -r .resources[].metadata.guid
-    ```
-    <%# Why does this PLAN_GUID have a dollar sign but the similar command above does not? %>
-
-7. For each service instance identified in step 5, discover the service instance name,
-space name, and organization name.
-You can find the space name from the `space_url` link, and you can find the organization name from
-the `organization_url` in the response to the space query. <%# Where do you get this link? %>
-Alternatively, if using the `jq` tool, the following query will return the service instance name,
-space name, and organization name:
-
-    ```
-    cf curl "/v2/service_instances/$GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
-    ```
-    Where `$GUID` is the GUID of a service instance.
-
-1. For each service instance, update the service instance by running:
-
-<%# We have to tell readers how to list find all the parameters that they might have set for an instance
-    so they can supply them correctly in the update-service line. How do they do this?  %>
-
-    ```
-    cf target -o ORGANIZATION-NAME -s SPACE-NAME
-    cf update-service SERVICE-INSTANCE-NAME -p small-v2  -c '{"PARAMETER-1-NAME":"PARAMETER-1-VALUE","PARAMETER-2-NAME":"PARAMETER-2-VALUE"}'
-    ```
-    Where:
-    * `ORGANIZATION-NAME`, `SPACE-NAME`, and `SERVICE-INSTANCE-NAME` are the values obtained in step 7.
-    * `PARAMETER-n-NAME` and `PARAMETER-n-VALUE` are the names and values of any parameters that you set when you created or last updated the service instance. 
-     See [Configuration Parameters](reference.html#azure-mssql-fog-parameters) in _Service Plan Reference_. 
-
     For example:
 
     <pre class="terminal">
-    $ cf target -o ORGANIZATION-NAME -s SPACE-NAME
-    $ cf update-service SERVICE-INSTANCE-NAME -p small-v2 -c '{"instance_name": "myinstance"}'  </pre> 
+    $ cf marketplace -s csb-azure-mssql-failover-group
+    ADD SAMPLE output
+    </pre>
 
-1. Remove the obsolete `small` plan by running:
 
-    ```
-    cf curl -X DELETE /v2/service_plans/PLAN-GUID
-    ```
-    Where `PLAN-GUID` is the value obtained in a previous step.
 
-    If you set the GUID as a shell variable, then run:
 
-    ```
-    cf curl -X DELETE /v2/$PLAN-GUID
-    ```
 
-1. Check that the plan has been removed by running:
 
-    ```
-    cf marketplace -s csb-azure-mssql-failover-group
-    ```
-    Confirm that the `small` plan is no longer listed.
-    Only the `small-v2`, `medium`, and `large` plans should be listed.
+## <a id="update-mssql"></a> Update csb-azure-mssql/small Service Instances
+
+<%# After the above procedures are perfect-enough, then copy them below and replace the service name.
+Although it seems repetitious, it will allow customers to copy/paste the commands
+
+Also remember to change the x-ref for the config params to reference.html#azure-mssql-fog-parameters %>
+
+These procedures are the same as for [Update csb-azure-mssql-failover-group/small Service
+Instances](#update-failover) above, except that the plan and service instances
+are for `csb-azure-mssql/small`.
