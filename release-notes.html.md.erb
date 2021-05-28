@@ -24,11 +24,20 @@ For more information, see
 
 ### Known Issues
 
-This release has the following issue:
+This release has the following issues:
 
 * **Installation on VMware Tanzu Application Service v2.11 fails:** due to an accidentally duplicated ID, installation will fail.
 For more information, see
 [Pull Request #34](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/34) in GitHub.
+* **Only properties specified during service instance creation are persisted during an update:**
+this means that if a property is set when a service instace is created then the value
+is stored and does not need to be specified again when a service instance is updated.
+However if a property is set or changed when a service instance is updated (for instance
+via `cf update-service`) then the same property and value must be specified when the
+service instance is next updated, otherwise it will revert to the value that it had
+when the service instance was first created.
+For more information, see
+[Bug #178213626](https://www.pivotaltracker.com/story/show/178213626) in Pivotal Tracker.
 
 
 ## <a id="1-1-7"></a> v1.1.7
