@@ -1,0 +1,216 @@
+---
+title: Updating from v1.1.8 and Earlier
+owner: Cloud Service Broker
+---
+
+<strong><%= modified_date %></strong>
+
+This is topic describes how to upgrade <%= vars.product_full %> v1.1.8 and earlier to v1.1.9.
+
+You need to follow the procedure in this topic only if you use:
+
++ <%= vars.product_short %> v1.1.8 or earlier
++ The `csb-azure-mssql-failover-group/small` plan or `csb-azure-mssql/small` plan
+
+<p class="note">
+   <strong>Note:</strong> Skip this topic if you do not use the exact components and versions listed above.
+</p>
+
+## <a id="overview"></a> Overview
+
+In <%= vars.product_short %> v1.1.8 and earlier, the `csb-azure-mssql-failover-group/small` plan
+and the `csb-azure-mssql/small` plan have the same internal identifier.
+These identifiers should be unique.
+
+<%= vars.app_runtime_abbr %> v2.11 checks for duplicate plan identifiers, resulting in
+<%= vars.product_short %> v1.1.8 and earlier failing to install on <%= vars.app_runtime_abbr %> v2.11.
+<%= vars.app_runtime_abbr %> v2.10 and earlier did not check for duplicate plan identifiers.
+
+In <%= vars.product_short %> v1.1.9, the `csb-azure-mssql-failover-group/small`
+plan is replaced by the `csb-azure-mssql-failover-group/small-v2` plan.
+And, the `csb-azure-mssql/small`
+plan is replaced by the `csb-azure-mssql/small-v2` plan.
+The new v2 plans have different internal identifiers, but are otherwise identical to the old small plans.
+
+## <a id="upgrade"></a> Process for Upgrading to <%= vars.product_short %> v1.1.9
+
+If you use the `csb-azure-mssql-failover-group/small` plan or the `csb-azure-mssql/small` plan, 
+the process for upgrading to v1.1.9 or later is:
+
+1. Upgrade the tile to v1.1.9 or later as you normally upgrade a tile.
+
+2. Identify the GUIDs for the service instances using the small plans of the `csb-azure-mssql`
+   and `csb-azure-mssql-failover-group/small` services.
+
+3. Update the service instances to use the new small-v2 plans for the two services.
+
+4. Remove the small plans from the Marketplace.
+
+Detailed procedures for steps 2–4 are below.
+See [Update csb-azure-mssql-failover-group/small Service Instances](#update-failover) and 
+[Update csb-azure-mssql/small Service Instances](#update-mssql).
+
+## <a id='prerequisites'></a> Prerequisite
+
+To follow the procedures in this topic, you need the jq tool installed.
+See [jq](https://stedolan.github.io/jq/).
+
+
+## <a id="update-failover"></a> Update csb-azure-mssql-failover-group/small Service Instances
+
+If your foundation uses the `csb-azure-mssql-failover-group/small` plan,
+follow the procedures below:
+
++ [Identify the GUIDs for the Service Instances Using the Small Plans](#id-failover)
++ [Update Service Instances to Use small-v2 Plan](#update-si-failover)
++ [Remove the Small Plan from the Marketplace](#remove-failover)
+
+You do not need to perform these steps immediately after upgrading to v1.1.9.
+You can perform them at any time, and, if necessary, you can update the service instances independently.
+
+###<a id="id-failover"></a>  Identify the GUIDs for the Service Instances Using the Small Plans
+
+The steps below describe how to get a list of service instance names that use the small plan.
+If you already have such a list, then skip to [Update Service Instances to Use small-v2 Plan](#update-si-failover) below.
+
+To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the `small` plan: 
+
+1. Set a shell variable named `SERVICE_GUID` to the GUID of the `csb-azure-mssql-failover-group` service
+   by running:
+
+    ```
+    SERVICE_GUID="$(cf curl /v2/services?q=label:csb-azure-mssql-failover-group | jq -r .resources[0].metadata.guid)"
+    ```
+
+4. Set a shell variable named `PLAN_GUID` to the GUID of the small service plan
+    by running:
+
+    ```
+    PLAN_GUID="$(cf curl "/v2/service_plans?q=service_guid:$SERVICE_GUID&q=unique_id:a556d1b4-5825-11ea-adb8-00155d4dfe6c" | jq -r .resources[0].metadata.guid)"
+     ```
+    <p class="note">
+      <strong>Note:</strong> <code>a556d1b4-5825-11ea-adb8-00155d4dfe6c</code> is always the internal
+      identifier for the <code>small</code> plan.
+    </p>
+
+5. Discover the GUIDs of the service instances that you need to update by running:
+
+    ```
+    cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" | jq -r .resources[].metadata.guid
+    ```
+    For example:
+
+    <pre class="terminal">$ cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" \
+    | jq -r .resources[].metadata.guid
+    c08199a9-a41d-483d-8d07-58347467623e
+    f28d32af-fbda-4057-9080-f655feda8c98
+    </pre> 
+
+    If the result is empty, then there are no service instances that need to be updated
+    and you can skip to [Remove the Small Plan from the Marketplace](#remove-failover).
+
+
+6. For each service instance identified in step 5, discover the service instance name,
+   space name, and org name by running:
+
+    ```
+    cf curl "/v2/service_instances/GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r \
+    '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
+    ```
+    Where `GUID` is the GUID of a service instance, listed in the output of step 5.
+
+    For example:
+
+    <pre class="terminal">$ cf curl "/v2/service_instances/c08199a9-a41d-483d-8d07-58347467623e?inline-relations-depth=2&include-relations=space,organization" | jq -r \
+    '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
+    {
+      "service": "my-database",
+      "space": "services",
+      "organization": "system"
+    }
+    </pre> 
+
+###<a id=update-si-failover></a> Update Service Instances to Use small-v2 Plan
+
+Follow these steps for each service instance using the small plan.
+That is for each service instance in the list output in step 5 above.
+
+To update a service instance to use the small-v2 plan instead of the small plan:
+
+7. Target the org and space for the service instance by running:
+
+    ```
+    cf target -o ORG-NAME -s SPACE-NAME
+    ```
+    Where `ORG-NAME`and `SPACE-NAME` are the values obtained in step 5 above.
+
+    For example:
+
+    <pre class="terminal">
+    $ cf target -o system -s services
+    </pre>
+
+8. Update the service instance to use the new small-v2 plan by running:
+
+    ```
+    cf update-service SERVICE-INSTANCE-NAME -p small-v2  -c '{"PARAMETER-1-NAME":"PARAMETER-1-VALUE","PARAMETER-2-NAME":"PARAMETER-2-VALUE"}'
+    ```
+    Where:
+    * `SERVICE-INSTANCE-NAME` is the name obtained in step 5 above.
+    * `PARAMETER-n-NAME` and `PARAMETER-n-VALUE` are the names and values of any parameters
+       that you set when you last updated the service instance.
+       For a list of the parameters,
+       see [Configuration Parameters](reference.html#azure-mssql-fog-parameters)
+       in _Service Plan Reference_.<br>
+       If you do not specify the parameters, the parameters default back to the values
+       that they had when the service instance was created.
+       For more information,
+       see [Known Issues](release-notes.html#1-1-9) in the _Release Notes_.
+
+    For example:
+
+    <pre class="terminal">
+    $ cf update-service my-database -p small-v2 -c '{"instance_name": "myinstance"}'  </pre> 
+
+
+###<a id="remove-failover"></a> Remove the Small Plan from the Marketplace
+
+The last task is to remove the small plan from the Marketplace
+so that no one can choose it in the future.
+
+9. Remove the original small plan by running:
+
+    ```
+    cf curl -X DELETE /v2/service_plans/$PLAN_GUID
+    ```
+
+    If you get an error with error code `CF-ServicePlanNotFound` then Cloud Foundry
+    has already detected that the plan is no longer in use and has removed it.
+
+10. Confirm that the original small plan has been removed by running:
+
+    ```
+    cf marketplace -s csb-azure-mssql-failover-group
+    ```
+    For example:
+
+    <pre class="terminal">
+    $ cf marketplace -s csb-azure-mssql-failover-group
+    Getting service plan information for service csb-azure-mssql-failover-group as admin...
+    OK
+
+    service plan   description                                                                                                                                                                      free or paid
+    small-v2       SQL Server latest version. Instance properties: General Purpose - Serverless ; 0.5 - 2 cores ; Max Memory: 6gb ; 50 GB storage ; auto-pause enabled after 1 hour of inactivity   paid
+    medium         SQL Server latest version. Instance properties: General Purpose - Provisioned ; Provisioned Capacity ; 8 cores ; 200 GB storage                                                  paid
+    large          SQL Server latest version. Instance properties: Business Critical ; Provisioned Capacity ; 32 cores ; 500GB storage ; 1 read replica; Auto-failover group enabled                paid
+    </pre>
+
+## <a id="update-mssql"></a> Update csb-azure-mssql/small Service Instances
+
+To update the service instances for the csb-azure-mssql/small plan to the csb-azure-mssql/small-v2 plan,
+follow the procedures in [Update csb-azure-mssql-failover-group/small Service
+Instances](#update-failover) above with the following differences:
+
+* Substitute `csb-azure-mssql` for `csb-azure-mssql-failover-group` throughout.
+* For list of parameters for the `csb-azure-mssql` group,
+  see [Configuration Parameters](reference.html#azure-mssql-parameters) in _Service Plan Reference_.
