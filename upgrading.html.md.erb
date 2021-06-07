@@ -5,9 +5,9 @@ owner: Cloud Service Broker
 
 <strong><%= modified_date %></strong>
 
-This is topic describes how to upgrade <%= vars.product_full %> v1.1.8 and earlier to v1.1.9.
+This topic describes how to upgrade <%= vars.product_full %> v1.1.8 and earlier to v1.1.9.
 
-You need to follow the procedure in this topic only if you use:
+Follow the procedure in this topic if you use:
 
 + <%= vars.product_short %> v1.1.8 or earlier
 + The `csb-azure-mssql-failover-group/small` plan or `csb-azure-mssql/small` plan
@@ -26,15 +26,16 @@ These identifiers should be unique.
 <%= vars.product_short %> v1.1.8 and earlier failing to install on <%= vars.app_runtime_abbr %> v2.11.
 <%= vars.app_runtime_abbr %> v2.10 and earlier did not check for duplicate plan identifiers.
 
-In <%= vars.product_short %> v1.1.9, the `csb-azure-mssql-failover-group/small`
-plan is replaced by the `csb-azure-mssql-failover-group/small-v2` plan.
-And, the `csb-azure-mssql/small`
-plan is replaced by the `csb-azure-mssql/small-v2` plan.
+In <%= vars.product_short %> v1.1.9:
+
+* The `csb-azure-mssql-failover-group/small-v2` plan replaces the `csb-azure-mssql-failover-group/small` plan
+* The `csb-azure-mssql/small-v2` plan replaces the `csb-azure-mssql/small` plan.
+
 The new v2 plans have different internal identifiers, but are otherwise identical to the old small plans.
 
 ## <a id="upgrade"></a> Process for Upgrading to <%= vars.product_short %> v1.1.9
 
-If you use the `csb-azure-mssql-failover-group/small` plan or the `csb-azure-mssql/small` plan, 
+If you use the `csb-azure-mssql-failover-group/small` plan or the `csb-azure-mssql/small` plan,
 the process for upgrading to v1.1.9 or later is:
 
 1. Upgrade the tile to v1.1.9 or later as you normally upgrade a tile.
@@ -46,9 +47,8 @@ the process for upgrading to v1.1.9 or later is:
 
 4. Remove the small plans from the Marketplace.
 
-Detailed procedures for steps 2–4 are below.
-See [Update csb-azure-mssql-failover-group/small Service Instances](#update-failover) and 
-[Update csb-azure-mssql/small Service Instances](#update-mssql).
+For detailed procedures for steps 2–4 see [Update csb-azure-mssql-failover-group/small Service Instances](#update-failover)
+and [Update csb-azure-mssql/small Service Instances](#update-mssql) below.
 
 ## <a id='prerequisites'></a> Prerequisite
 
@@ -73,7 +73,7 @@ You can perform them at any time, and, if necessary, you can update the service 
 The steps below describe how to get a list of service instance names that use the small plan.
 If you already have such a list, then skip to [Update Service Instances to Use small-v2 Plan](#update-si-failover) below.
 
-To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the `small` plan: 
+To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the `small` plan:
 
 1. Set a shell variable named `SERVICE_GUID` to the GUID of the `csb-azure-mssql-failover-group` service
    by running:
@@ -104,7 +104,7 @@ To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` 
     | jq -r .resources[].metadata.guid
     c08199a9-a41d-483d-8d07-58347467623e
     f28d32af-fbda-4057-9080-f655feda8c98
-    </pre> 
+    </pre>
 
     If the result is empty, then there are no service instances that need to be updated
     and you can skip to [Remove the Small Plan from the Marketplace](#remove-failover).
@@ -128,7 +128,7 @@ To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` 
       "space": "services",
       "organization": "system"
     }
-    </pre> 
+    </pre>
 
 ###<a id=update-si-failover></a> Update Service Instances to Use small-v2 Plan
 
@@ -170,7 +170,7 @@ To update a service instance to use the small-v2 plan instead of the small plan:
     For example:
 
     <pre class="terminal">
-    $ cf update-service my-database -p small-v2 -c '{"instance_name": "myinstance"}'  </pre> 
+    $ cf update-service my-database -p small-v2 -c '{"instance_name": "myinstance"}'  </pre>
 
 
 ###<a id="remove-failover"></a> Remove the Small Plan from the Marketplace
