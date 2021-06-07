@@ -15,12 +15,25 @@ These are release notes for <%= vars.product_short %>.
 to v1.1.9, see <a href="upgrading.html">Updating from v1.1.8 and Earlier</a>.
 </p>
 
+### Features
+
+* **Support for private endpoints in mysql and redis offerings:**
+  The brokerpak now supports creating `private endpoints` during provisioning of mysql and redis instances. See [pull reques #33] (https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/33).
+
 ### Resolved Issues
 
-This release has the following fix:
+This release has the following fixes:
 
 * **<%= vars.product_short %> v1.1.9 is compatible with <%= vars.app_runtime_full %> v2.11:**
   You cannot install earlier versions of <%= vars.product_short %> on <%= vars.app_runtime_full %> v2.11.
+* **Subsuming `failover groups`:instance creation failure causes underlying target resource to be deleted:**
+  Subsuming a failover group was actually causing a destructive operation in terraform due to mishandling of the `creation_mode` attribute on the terraform provider for secondary databases. For information, see [Issue #10](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/10).
+* **Plan upgrades for `Azure SQL Failover group` fail or partially complete:**
+  Upgrades were failing as a result of the terraform provider trying to update the size of the secondary db. A fix has been implemented in the provider to let Azure api keep primary/secondary databases size in sync. For more information see [Issue #20](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/20).
+* **Add dependency on MySQL DB instance for firewall/authorized network rules:**
+  MySQL instance creation was failing intermittently when authorized_networks were configured. The broker now ensures the operations are performed in the right order. See [Pull request #22](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/22).
+* **Upgrade to Go 1.16 for cloud-service-broker core**
+* **Broker logs should show correlation ID:** See [Pull request #221](https://github.com/cloudfoundry-incubator/cloud-service-broker/pull/221).
 
 ### Known Issues
 
