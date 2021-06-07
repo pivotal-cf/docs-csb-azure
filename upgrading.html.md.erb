@@ -47,7 +47,7 @@ the process for upgrading to v1.1.9 or later is:
 
 4. Remove the small plans from the Marketplace.
 
-For detailed procedures for steps 2–4 see [Update csb-azure-mssql-failover-group/small Service Instances](#update-failover)
+For detailed procedures for steps 2–4, see [Update csb-azure-mssql-failover-group/small Service Instances](#update-failover)
 and [Update csb-azure-mssql/small Service Instances](#update-mssql) below.
 
 ## <a id='prerequisites'></a> Prerequisite
@@ -75,14 +75,20 @@ If you already have such a list, then skip to [Update Service Instances to Use s
 
 To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the `small` plan:
 
-1. Set a shell variable named `SERVICE_GUID` to the GUID of the `csb-azure-mssql-failover-group`
-    service by running:
+1. Set a shell variable named `SERVICE_BROKER_GUID` to the GUID of the `cloud-service-broker-azure` service broker by running
 
     ```
-    SERVICE_GUID="$(cf curl /v2/services?q=label:csb-azure-mssql-failover-group | jq -r .resources[0].metadata.guid)"
+    SERVICE_BROKER_GUID="$(cf curl "v2/service_brokers?q=name:cloud-service-broker-azure" | jq -r .resources[0].metadata.guid)”
     ```
 
-1. Set a shell variable named `PLAN_GUID` to the GUID of the small service plan
+2. Set a shell variable named `SERVICE_GUID` to the GUID of the `csb-azure-mssql-failover-group` service
+   by running:
+
+    ```
+    SERVICE_GUID="$(cf curl "/v2/services?q=label:csb-azure-mssql-failover-group&q=service_broker_guid:$SERVICE_BROKER_GUID" | jq -r .resources[0].metadata.guid)"
+    ```
+
+3. Set a shell variable named `PLAN_GUID` to the GUID of the small service plan
     by running:
 
     ```
@@ -93,7 +99,7 @@ To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` 
       identifier for the <code>small</code> plan.
     </p>
 
-1. Discover the GUIDs of the service instances that you need to update by running:
+4. Discover the GUIDs of the service instances that you need to update by running:
 
     ```
     cf curl "/v2/service_instances?q=service_plan_guid:$PLAN_GUID" | jq -r .resources[].metadata.guid
@@ -110,14 +116,14 @@ To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` 
     and you can skip to [Remove the Small Plan from the Marketplace](#remove-failover).
 
 
-1. For each service instance identified earlier, discover the service instance name,
-    space name, and org name by running:
+5. For each service instance identified in the step above, discover the service instance name,
+   space name, and org name by running:
 
     ```
     cf curl "/v2/service_instances/GUID?inline-relations-depth=2&include-relations=space,organization" | jq -r \
     '{service: .entity.name, space: .entity.space.entity.name, organization: .entity.space.entity.organization.entity.name}'
     ```
-    Where `GUID` is the GUID of a service instance, listed in the output earlier.
+    Where `GUID` is the GUID of a service instance, listed in the output of the step above.
 
     For example:
 
@@ -133,7 +139,7 @@ To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` 
 ###<a id=update-si-failover></a> Update Service Instances to Use small-v2 Plan
 
 Follow these steps for each service instance using the small plan.
-That is for each service instance in the list output printed earlier.
+That is for each service instance in the list output in step 4 above.
 
 To update a service instance to use the small-v2 plan instead of the small plan:
 
@@ -142,7 +148,7 @@ To update a service instance to use the small-v2 plan instead of the small plan:
     ```
     cf target -o ORG-NAME -s SPACE-NAME
     ```
-    Where `ORG-NAME`and `SPACE-NAME` are the values obtained in the procedure above.
+    Where `ORG-NAME`and `SPACE-NAME` are the values obtained in step 4 above.
 
     For example:
 
@@ -156,7 +162,7 @@ To update a service instance to use the small-v2 plan instead of the small plan:
     cf update-service SERVICE-INSTANCE-NAME -p small-v2  -c '{"PARAMETER-1-NAME":"PARAMETER-1-VALUE","PARAMETER-2-NAME":"PARAMETER-2-VALUE"}'
     ```
     Where:
-    * `SERVICE-INSTANCE-NAME` is the name obtained in the procedure above.
+    * `SERVICE-INSTANCE-NAME` is the name obtained in step 4 above.
     * `PARAMETER-n-NAME` and `PARAMETER-n-VALUE` are the names and values of any parameters
        that you set when you last updated the service instance.
        For a list of the parameters,
@@ -165,14 +171,12 @@ To update a service instance to use the small-v2 plan instead of the small plan:
        If you do not specify the parameters, the parameters default back to the values
        that they had when the service instance was created.
        For more information,
-       see [Known Issues](https://docs.pivotal.io/csb-azure/1-1/release-notes.html#1-1-9)
-       in the _Release Notes_.
+       see [Known Issues](release-notes.html#1-1-9) in the _Release Notes_.
 
     For example:
 
     <pre class="terminal">
-    $ cf update-service my-database -p small-v2 -c '{"instance_name": "myinstance"}'
-    </pre>
+    $ cf update-service my-database -p small-v2 -c '{"instance_name": "myinstance"}'  </pre>
 
 
 ###<a id="remove-failover"></a> Remove the Small Plan from the Marketplace
@@ -180,7 +184,7 @@ To update a service instance to use the small-v2 plan instead of the small plan:
 The last task is to remove the small plan from the Marketplace
 so that no one can choose it in the future.
 
-1. Remove the original small plan by running:
+9. Remove the original small plan by running:
 
     ```
     cf curl -X DELETE /v2/service_plans/$PLAN_GUID
@@ -189,7 +193,7 @@ so that no one can choose it in the future.
     If you get an error with error code `CF-ServicePlanNotFound` then Cloud Foundry
     has already detected that the plan is no longer in use and has removed it.
 
-1. Confirm that the original small plan has been removed by running:
+10. Confirm that the original small plan has been removed by running:
 
     ```
     cf marketplace -s csb-azure-mssql-failover-group
@@ -208,11 +212,6 @@ so that no one can choose it in the future.
     </pre>
 
 ## <a id="update-mssql"></a> Update csb-azure-mssql/small Service Instances
-
-<%# After the above procedures are perfect-enough, then copy them below and replace the service name.
-Although it seems repetitious, it will allow customers to copy/paste the commands
-
-Also remember to change the x-ref for the config params to reference.html#azure-mssql-fog-parameters %>
 
 To update the service instances for the csb-azure-mssql/small plan to the csb-azure-mssql/small-v2 plan,
 follow the procedures in [Update csb-azure-mssql-failover-group/small Service
