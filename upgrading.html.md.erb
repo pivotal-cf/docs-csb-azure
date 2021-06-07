@@ -75,11 +75,17 @@ If you already have such a list, then skip to [Update Service Instances to Use s
 
 To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the `small` plan: 
 
-1. Set a shell variable named `SERVICE_GUID` to the GUID of the `csb-azure-mssql-failover-group` service
+1. Set a shell variable named `SERVICE_BROKER_GUID` to the GUID of the `cloud-service-broker-azure` service broker by running
+
+  ```
+  SERVICE_BROKER_GUID="$(cf curl "v2/service_brokers?q=name:cloud-service-broker-azure" | jq -r .resources[0].metadata.guid)”
+  ```
+
+2. Set a shell variable named `SERVICE_GUID` to the GUID of the `csb-azure-mssql-failover-group` service
    by running:
 
     ```
-    SERVICE_GUID="$(cf curl /v2/services?q=label:csb-azure-mssql-failover-group | jq -r .resources[0].metadata.guid)"
+    SERVICE_GUID="$(cf curl "/v2/services?q=label:csb-azure-mssql-failover-group&q=service_broker_guid:$SERVICE_BROKER_GUID" | jq -r .resources[0].metadata.guid)"
     ```
 
 4. Set a shell variable named `PLAN_GUID` to the GUID of the small service plan
