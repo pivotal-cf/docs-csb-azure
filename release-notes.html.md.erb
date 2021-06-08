@@ -11,17 +11,18 @@ These are release notes for <%= vars.product_short %>.
 
 **Release Date:** June 9, 2021
 
-<p class="note breaking"><strong> Breaking Change:</strong> Before upgrading <%= vars.product_short %>
-to v1.1.9, see <a href="upgrading.html">Updating from v1.1.8 and Earlier</a>.
+<p class="note breaking"><strong> Breaking Change:</strong> If you use the small plans of csb-azure-mssql
+or csb-azure-mssql-failover-group, you must create new versions of those plans.
+See <a href="upgrading.html">Updating from v1.1.8 and Earlier</a>.
 </p>
 
 ### Features
 
 New features and changes in this release:
 
-* **Support for private endpoints in mysql and redis offerings:**
-  Creating `private endpoints` during provisioning of mysql and redis instances is now supported.
-  See [pull request #33](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/33).
+* **Support for Private Endpoints in mysql and redis offerings:**
+  Creating Private Endpoints during provisioning of MySQL and Redis instances is now supported.
+  See [pull request #33](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/33) in GitHub.
 
 ### Resolved Issues
 
@@ -30,17 +31,18 @@ This release has the following fixes:
 * **<%= vars.product_short %> v1.1.9 is compatible with <%= vars.app_runtime_full %> v2.11:**
   You cannot install earlier versions of <%= vars.product_short %> on <%= vars.app_runtime_full %> v2.11.
 
-* **Subsuming `failover groups`:** fixed an issue which caused unexpected database deletion in some failure cases.
-  For information, see [Issue #10](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/10).
+* **Subsuming `failover groups`:** Fixed an issue which caused unexpected database deletion in some failure cases.
+  For information, see [Issue #10](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/10) in GitHub.
 
-* **Plan update for Azure SQL Failover Group:** fixed an issue where the service plan could not be updated.
-  For information, see [Issue #20](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/20).
+* **Plan update for Azure SQL Failover Group:** Fixed an issue where the service plan could not be updated.
+  For information, see [Issue #20](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/20) in GitHub.
 
-* **MySQL DB instance firewall/authorized network rules:** fixed an issue where MySQL instance creation failed intermittently when authorized_networks were configured.
+* **MySQL database instance firewall/authorized network rules:** Fixed an issue where MySQL instance creation
+  failed intermittently when authorized_networks were configured.
 
 * **golang:** Updated to v1.16.
 
-* **Broker logs contain the correlation ID:** Log lines relating to a request now show
+* **Broker logs contain the correlation ID:** Log entries relating to a request now show
   a correlation ID so that lines an be differentiated when there are concurrent requests.
 
 ### Known Issues
