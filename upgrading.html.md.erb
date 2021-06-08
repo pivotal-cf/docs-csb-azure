@@ -148,7 +148,7 @@ To update a service instance to use the small-v2 plan instead of the small plan:
     ```
     cf target -o ORG-NAME -s SPACE-NAME
     ```
-    Where `ORG-NAME`and `SPACE-NAME` are the values obtained in step 4 above.
+    Where `ORG-NAME`and `SPACE-NAME` are the values obtained in step 5 above.
 
     For example:
 
@@ -162,7 +162,7 @@ To update a service instance to use the small-v2 plan instead of the small plan:
     cf update-service SERVICE-INSTANCE-NAME -p small-v2  -c '{"PARAMETER-1-NAME":"PARAMETER-1-VALUE","PARAMETER-2-NAME":"PARAMETER-2-VALUE"}'
     ```
     Where:
-    * `SERVICE-INSTANCE-NAME` is the name obtained in step 4 above.
+    * `SERVICE-INSTANCE-NAME` is the name obtained in step 5 above.
     * `PARAMETER-n-NAME` and `PARAMETER-n-VALUE` are the names and values of any parameters
        that you set when you last updated the service instance.
        For a list of the parameters,
