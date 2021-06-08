@@ -73,9 +73,9 @@ You can perform them at any time, and, if necessary, you can update the service 
 The steps below describe how to get a list of service instance names that use the small plan.
 If you already have such a list, then skip to [Update Service Instances to Use small-v2 Plan](#update-si-failover) below.
 
-To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the `small` plan:
+To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` service that use the small plan:
 
-1. Set a shell variable named `SERVICE_BROKER_GUID` to the GUID of the `cloud-service-broker-azure` service broker by running
+1. Set a shell variable named `SERVICE_BROKER_GUID` to the GUID of the `cloud-service-broker-azure` service broker by running:
 
     ```
     SERVICE_BROKER_GUID="$(cf curl "v2/service_brokers?q=name:cloud-service-broker-azure" | jq -r .resources[0].metadata.guid)”
@@ -218,5 +218,5 @@ follow the procedures in [Update csb-azure-mssql-failover-group/small Service
 Instances](#update-failover) above with the following differences:
 
 * Substitute `csb-azure-mssql` for `csb-azure-mssql-failover-group` throughout.
-* For list of parameters for the `csb-azure-mssql` group,
+* For a list of parameters for the `csb-azure-mssql` group,
   see [Configuration Parameters](reference.html#azure-mssql-parameters) in _Service Plan Reference_.
