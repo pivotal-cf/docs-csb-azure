@@ -20,15 +20,8 @@ to v1.1.9, see <a href="upgrading.html">Updating from v1.1.8 and Earlier</a>.
 New features and changes in this release:
 
 * **Support for private endpoints in mysql and redis offerings:**
-  The brokerpak now supports creating `private endpoints` during provisioning of mysql and redis instances. See [pull reques #33] (https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/33).
-
-[//]: # ("redis offering" is not mentioned elsewhere. Is this "Azure Redis Cache"? Ditto for "Azure Database for MySQL" or Azure SQL (MySQL).)
-[//]: # ( Is just one brokerpak or more than one?  " Cloud Service Broker for Azure uses brokerpaks to expose services.")
-
-[//]: # (Should these two new parameters be documented in the Service Plan reference? )
-[//]: # (https://docs.pivotal.io/csb-azure/1-1/reference.html#azure-mssql-parameters)
-
-[//]: # (Also, should the Redis plan be documented on that Service Plan Reference page as well? )
+  Creating `private endpoints` during provisioning of mysql and redis instances is now supported.
+  See [pull request #33](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/33).
 
 ### Resolved Issues
 
@@ -37,22 +30,15 @@ This release has the following fixes:
 * **<%= vars.product_short %> v1.1.9 is compatible with <%= vars.app_runtime_full %> v2.11:**
   You cannot install earlier versions of <%= vars.product_short %> on <%= vars.app_runtime_full %> v2.11.
 
-* **Subsuming `failover groups`:instance creation failure causes underlying target resource to be deleted:**
-  Subsuming a failover group was actually causing a destructive operation in terraform due to mishandling of the `creation_mode` attribute on the terraform provider for secondary databases. For information, see [Issue #10](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/10).
-[//]: # (Can we say the above in a more simple way? Is it that if step 4 here (https://docs.pivotal.io/csb-azure/1-1/azure-mssql-fog-subsume.html#subsume) fails, then the MASB-brokered database is deleted? )
+* **Subsuming `failover groups`:** fixed an issue which caused unexpected database deletion in some failure cases.
+  For information, see [Issue #10](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/10).
 
-* **Plan upgrades for Azure SQL Failover Group complete now successfully:**
-  Upgrades were failing when the Terraform provider trying to update the size of the secondary database.
-  The underlying issue in the Terraform has been fixed.
-[//]: # (Do we have to say that they partially completed? or does that count as a fail?)
+* **Plan update for Azure SQL Failover Group:** fixed an issue where the service plan could not be updated.
+  For information, see [Issue #20](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/20).
 
-* **Add dependency on MySQL DB instance for firewall/authorized network rules:**
-MySQL instance creation failed intermittently when authorized_networks were configured. The broker now ensures the operations are performed in the right order.
-[//]: # (This heading sounds like the fix and not the issue. Is it "MySQL instance creation no longer fails when `authorized_networks are configured:")
-[//]: # (Does this only apply to Azure Storage Account? https://docs.pivotal.io/csb-azure/1-1/reference.html#azure-storage-account-parameters That's the only place I see the authorized_networks parameter.)
+* **MySQL DB instance firewall/authorized network rules:** fixed an issue where MySQL instance creation failed intermittently when authorized_networks were configured.
 
 * **golang:** Updated to v1.16.
-[//]: # (Original text says "for cloud-service-broker core" Is that needed? We don't use that term elsewhere. )
 
 * **Broker logs contain the correlation ID:** Log lines relating to a request now show
   a correlation ID so that lines an be differentiated when there are concurrent requests.
