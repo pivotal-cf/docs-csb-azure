@@ -22,7 +22,7 @@ See <a href="upgrading.html">Updating from v1.1.8 and Earlier</a>.
 New features and changes in this release:
 
 * **Support for Private Endpoints in MySQL and Redis offerings:**
-  Creating Private Endpoints during provisioning of MySQL and Redis instances is now supported.
+  Creating Private Endpoints during the provisioning of MySQL and Redis instances is now supported.
   See [pull request #33](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/33) in GitHub.
 
 ### Resolved Issues
@@ -32,7 +32,7 @@ This release has the following fixes:
 * **<%= vars.product_short %> v1.1.9 is compatible with <%= vars.app_runtime_full %> v2.11:**
   You cannot install earlier versions of <%= vars.product_short %> on <%= vars.app_runtime_full %> v2.11.
 
-* **Subsuming `failover groups`:** Fixed an issue which caused unexpected database deletion in some failure cases.
+* **Subsuming `failover groups`:** Fixed an issue that caused unexpected database deletion in some failure cases.
   For information, see [Issue #10](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/issues/10) in GitHub.
 
 * **Plan update for Azure SQL Failover Group:** Fixed an issue where the service plan could not be updated.
@@ -44,7 +44,7 @@ This release has the following fixes:
 * **golang:** Updated to v1.16.
 
 * **Broker logs contain the correlation ID:** Log entries relating to a request now show
-  a correlation ID so that lines an be differentiated when there are concurrent requests.
+  a correlation ID so that lines can be differentiated when there are concurrent requests.
 
 ### Known Issues
 
