@@ -23,7 +23,7 @@ See the section below for the service that you want:
 ## <a id="azure-mssql"></a> Azure SQL (MSSQL)
 
 This section applies to the csb-azure-mssql service.
-This section lists default plans and configuration for Azure SQL on Azure.
+This section lists default plans and configuration for Azure SQL.
 For more information about
 Azure SQL, see the [Microsoft documentation](https://docs.microsoft.com/en-gb/azure/azure-sql/).
 
@@ -41,7 +41,7 @@ The table below lists the default plans for the csb-azure-mssql service:
 
 ### <a id="azure-mssql-plans-config"></a> Plan Configuration Parameters
 
-When configuring the Cloud Service Broker you can add additional new plans.
+When configuring the <%= vars.product_short %> you can add additional new plans.
 The table below lists the plan parameters that you can configure when providing new plans:
 
 | Option Name | Values              | Default |
@@ -113,10 +113,11 @@ You can provision a service by running:
 cf create-service csb-azure-mssql PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
-E.g.
-```
-cf create-service csb-azure-mssql small mssql-dev -c '{"instance_name": "mssql-dev"}'
-```
+For example:
+
+<pre class="terminal">
+$ cf create-service csb-azure-mssql small mssql-dev -c '{"instance_name": "mssql-dev"}'
+</pre>
 
 You can update the plan or configuration parameters for a service instance by running:
 
@@ -242,7 +243,7 @@ You can bind a service to an app by running:
 cf bind-service APP_NAME SERVICE_INSTANCE --binding-name BINDING_NAME
 ```
 
-The format for binding credentials made available to tha app is as follows:
+The format for binding credentials made available to the app is as follows:
 
 ```json
 {
