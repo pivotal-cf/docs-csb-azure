@@ -23,7 +23,7 @@ See the section below for the service that you want:
 ## <a id="azure-mssql"></a> Azure SQL (MSSQL)
 
 This section applies to the csb-azure-mssql service.
-This section lists default plans and configuration for Azure SQL.
+This section lists default plans and configuration for [Azure SQL](https://docs.microsoft.com/en-gb/azure/azure-sql/).
 
 ### <a id="azure-mssql-plans"></a> Plans
 
@@ -32,7 +32,7 @@ The table below lists the default plans for the csb-azure-mssql service:
 | Plan        | CPUs | Storage Size      |
 |-------------|------|-------------------|
 | mini        | 1    | 5&nbsp;GB         |
-| small-v2    | 2    | 50&nbsp;GB        |
+| small-v2    | 2    | 5&nbsp;GB         |
 | medium      | 8    | 200&nbsp;GB       |
 | large       | 32   | 500&nbsp;GB       |
 | extra-large | 80   | 1&nbsp;TB         |
@@ -42,13 +42,16 @@ The table below lists the default plans for the csb-azure-mssql service:
 When configuring the Cloud Service Broker you can add aditional new plans.
 The table below lists the plan parameters that you can configure when providing new plans:
 
-| Option Name | Values              | Default |
-|-------------|---------------------|---------|
-| max\_storage\_gb  |            | 50      |
-| cores       | 1&ndash;80, multiples of 2 | 2       |
-| sku       | see [sku](#azure-mssql-skus) |        |
+| Parameter Name    | Values                          | Default   |
+|-------------------|---------------------------------|-----------|
+| name              | The plan name.                  |           |
+| id                | A unique guid.                  |           |
+| description       | Description of the new plan.    |           |
+| max\_storage\_gb  |                                 | 5         |
+| cores             | 1&ndash;64, multiples of 2      | 2         |
+| sku_name          | See [sku](#azure-mssql-skus)    |           |
 
-For details see [Configure Services with Cloud Service Broker for Azure](#services).
+For details see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
 <p class="note">
   <strong>Note:</strong> These configuration values cannot be changed by the developers during
@@ -265,7 +268,33 @@ The format for binding credentials made available to the app is as follows:
 
 This section applies to the service csb-azure-mssql-db.
 The csb-azure-mssql-db service manages Azure SQL databases on pre-configured
-database servers on Azure.
+database servers on [Azure SQL](https://docs.microsoft.com/en-gb/azure/azure-sql/).
+
+### <a id="azure-mssql-db-pre-configured-db-servers"></a> Configuring Service
+
+When configuring the Cloud Service Broker, the pre-configured database servers can be provided in the following format.
+
+```
+{
+   "server1":{
+      "server_name": "server1_fqdn",
+      "server_resource_group": "server1_resource_group",
+      "admin_username": "server1_admin_username",
+      "admin_password": "server1_admin_password"
+   },
+   "server2":{
+      "server_name": "server2_fqdn",
+      "server_resource_group": "server2_resource_group",
+      "admin_username": "server2_admin_username",
+      "admin_password": "server2_admin_password"
+   }
+}
+```
+
+For details see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+
+Alternatively these can be provided during service creation as a plan parameter. 
+See `server_credentials` in [Configuration Parameters](azure-mssql-db-parameters).
 
 ### <a id="azure-mssql-db-plans"></a> Plans
 
@@ -273,25 +302,32 @@ The table below lists the plans for the csb-azure-mssql-db service:
 
 | Plan       | CPUs | Maximum Storage Size |
 |------------|------|--------------|
-|small       | 2    | 50&nbsp;GB         |
-|medium      | 8    | 200&nbsp;GB        |
-|large       | 32   | 500&nbsp;GB       |
-|extra-large | 80   | 1&nbsp;TB          |
-|subsume*     |  N/A | N/A  |
+|mini        | 2    | 5&nbsp;GB    |
+|small       | 2    | 5&nbsp;GB    |
+|medium      | 8    | 200&nbsp;GB  |
+|large       | 32   | 500&nbsp;GB  |
+|extra-large | 80   | 1&nbsp;TB    |
+|subsume*    |  N/A | N/A          |
 
 <sup>*</sup>The subsume plan is used to import existing Azure MSSQL databases to bring them under
 the control of <%= vars.product_short %>. For more information, see
 [Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](azure-mssql-subsume.html).
 
-
 ### <a id="azure-mssql-db-plans-config"></a> Plan Configuration Parameters
 
+When configuring the Cloud Service Broker you can add aditional new plans.
 The table below lists the plan parameters that you can configure:
 
-| Parameter Name | Values              | Default |
-|-------------|------------------------|---------|
-| max\_storage\_gb  |                    |  50      |
-| cores       | 1&ndash;64, multiples of 2    | 2       |
+| Parameter Name    | Values                          | Default   |
+|-------------------|---------------------------------|-----------|
+| name              | The plan name.                  |           |
+| id                | A unique guid.                  |           |
+| description       | Description of the new plan.    |           |
+| max\_storage\_gb  |                                 | 5         |
+| cores             | 1&ndash;64, multiples of 2      | 2         |
+| sku_name          | See [sku](#azure-mssql-db-skus) |           |
+
+For details see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
 #### <a id="azure-mssql-db-skus"></a> SKUs
 
@@ -306,11 +342,7 @@ If you do not define a SKU using the <code>sku_name</code> parameter, the SKU is
 computed from the number of cores in your plan.
 See [Plans](#azure-mssql-db-plans) above.
 
-For a list of all valid SKUs, run:
-
-<pre><code>az sql db list-editions -l LOCATION -o table</code></pre>
-
-The table below shows the mapping of number of cores to the corresponding SKU:
+The table below shows the mapping of number of cores to the corresponding Azure SKU:
 
 | Cores | SKU |
 |-------|-----|
@@ -321,7 +353,10 @@ The table below shows the mapping of number of cores to the corresponding SKU:
 | 16 | GP\_Gen5\_16 |
 | 32 | GP\_Gen5\_32 |
 | 80 | GP\_Gen5\_80 |
-<%# Is this table necessary? Can we get this information from the links below? %>
+
+For a list of all valid SKUs, run:
+
+<pre><code>az sql db list-editions -l LOCATION -o table</code></pre>
 
 For information about the the vCore purchasing model, see the
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-vcore-single-databases">Microsoft documentation</a>.<br>
@@ -337,9 +372,8 @@ For information about the the DTU purchasing model, see the
 
 <p class="note">
   <strong>Note:</strong> When updating a service instance, the SKU for the updated
-  service instance must remain in the same family (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
-  <%# Should this say tier or family? GP_S is a tier. Can you only use the tiers listed here? %>
-  If you update to a different family, Azure refuses the update request.
+  service instance must remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
+  If you update to a different tier, Azure refuses the update request.
 </p>
 
 ### <a id="azure-mssql-db-parameters"></a> Configuration Parameters
@@ -350,6 +384,12 @@ You can provision a service by running:
 cf create-service csb-azure-mssql-db PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
+For example:
+
+<pre class="terminal">
+$ cf create-service csb-azure-mssql-db small mssql-dev -c '{"server":"server1"}'
+</pre>
+
 You can update the plan or configuration parameters for a service instance by running:
 
 ```
@@ -357,7 +397,7 @@ cf update-service SERVICE-INSTANCE [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMET
 ```
 
 The table below lists the parameters that you can configure, using the `-c` flag, when
-provisioning a csb-azure-mssql-db service:
+provisioning or updating a csb-azure-mssql-db service:
 
 <table>
   <thead>
@@ -372,14 +412,14 @@ provisioning a csb-azure-mssql-db service:
     <td><code>db_name</code></td>
     <td>string</td>
     <td>The name of the database.</td>
-    <td><code>csb-fog-db-INSTANCE-ID</code></td>
+    <td><code>csb-db-INSTANCE-ID</code></td>
   </tr>
   <tr>
     <td><code>server</code></td>
     <td>string</td>
     <td>
-      The name of the server on which to create the database.
-      This must match one of the <code>SERVER</code> parameters in <code>server_credentials</code>.
+      *Required* The name of the server on which to create the database. 
+      This must match one of the <code>SERVER</code> parameters in <code>server_credentials</code> or one of the servers configured when [configuring the service](#azure-mssql-db-pre-configured-db-servers).
       For example, <code>SERVER-1</code> in the code snippet in the <code>server_credentials</code> row below.
     </td>
     <td>n/a</td>
@@ -392,7 +432,7 @@ provisioning a csb-azure-mssql-db service:
       Format: <pre><code>{ "SERVER-1": { "server_name":"...", "server_resource_group":"...", "admin_username":"...", "admin_password":"..."}, "SERVER-2":{"server_name":..., ...}...}</code></pre>
       One of the values you use for <code>SERVER</code> must match the <code>server</code> parameter above.
     </td>
-    <td>n/a</td>
+    <td>Servers configured when [configuring the service](#azure-mssql-db-pre-configured-db-servers).</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
@@ -434,6 +474,12 @@ provisioning a csb-azure-mssql-db service:
     Set if the service principal being used does not have the rights to register providers.</td>
     <td><code>false</code></td>
   </tr>
+  <tr>
+    <td><code>short_term_retention_days</code></td>
+    <td>number</td>
+    <td>Retention period in days for short term retention (Point in Time Restore) policy. Can be up to 35 days.</td>
+    <td>7</td>
+  </tr>
 </table>
 
 ### <a id="azure-mssql-db-binding-creds"></a> Binding Credentials
@@ -447,8 +493,10 @@ The format for binding credentials for an Azure SQL database is as follows:
     "port" : "DATABASE-SERVER-PORT",
     "username" : "AUTHENTICATION-USERNAME",
     "password" : "AUTHENTICATION-PASSWORD",
+    "server" : "SERVER-NAME",
     "uri" : "DATABASE-CONNECTION-URI",
     "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
+    "jdbcUrlForAuditingEnabled" : "JDBC-FORMAT-CONNECTION-URI",
     "sqldbName" : "DATABASE-NAME",
     "sqlServerName" : "SERVER-NAME",
     "sqlServerFullyQualifiedDomainName" : "SERVER-FQDN",
@@ -456,9 +504,6 @@ The format for binding credentials for an Azure SQL database is as follows:
     "databaseLoginPassword" : "AUTHENTICATION-PASSWORD"
 }
 ```
-<%# Do we need to define placeholders here? %>
-
-
 
 ## <a id="azure-mssql-server"></a> Azure SQL (MSSQL) Server
 
