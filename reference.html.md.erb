@@ -23,7 +23,8 @@ See the section below for the service that you want:
 ## <a id="azure-mssql"></a> Azure SQL (MSSQL)
 
 This section applies to the csb-azure-mssql service.
-This section lists default plans and configuration for [Azure SQL](https://docs.microsoft.com/en-gb/azure/azure-sql/).
+This section lists default plans and configuration for Azure SQL. For more information about
+Azure SQL, see the [Microsoft documentation](https://docs.microsoft.com/en-gb/azure/azure-sql/).
 
 ### <a id="azure-mssql-plans"></a> Plans
 
@@ -39,23 +40,24 @@ The table below lists the default plans for the csb-azure-mssql service:
 
 ### <a id="azure-mssql-plans-config"></a> Plan Configuration Parameters
 
-When configuring the Cloud Service Broker you can add aditional new plans.
+When configuring <%= vars.product_short %> you can add additional new plans.
 The table below lists the plan parameters that you can configure when providing new plans:
 
 | Parameter Name    | Values                          | Default   |
 |-------------------|---------------------------------|-----------|
-| name              | The plan name.                  |           |
-| id                | A unique guid.                  |           |
-| description       | Description of the new plan.    |           |
+| name              | The plan name.                  | _n/a_     |
+| id                | A unique GUID.                  | _n/a_     |
+| description       | Description of the new plan.    | _n/a_     |
 | max\_storage\_gb  |                                 | 5         |
 | cores             | 1&ndash;64, multiples of 2      | 2         |
-| sku_name          | See [sku](#azure-mssql-skus)    |           |
+| sku_name          | See [sku](#azure-mssql-skus) below    | _n/a_     |
 
 For details see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
 <p class="note">
   <strong>Note:</strong> These configuration values cannot be changed by the developers during
-  provision or update operations unless specified in configuration parameters [list](#azure-mssql-parameters).
+  provision or update operations unless specified in the configuration parameters, as detailed in
+  <a href="#azure-mssql-parameters">Configuration Parameters</a> below.
 </p>
 
 #### <a id="azure-mssql-skus"></a> SKUs
@@ -109,7 +111,7 @@ For information about the the DTU purchasing model, see the
 
 You can provision a service by running:
 
-```
+```bash
 cf create-service csb-azure-mssql PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
@@ -121,8 +123,8 @@ $ cf create-service csb-azure-mssql small mssql-dev -c '{"instance_name": "mssql
 
 You can update the plan or configuration parameters for a service instance by running:
 
-```
-cf update-service SERVICE-INSTANCE [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```bash
+cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 The table below lists the parameters that you can configure, using the `-c` flag, when
@@ -213,7 +215,7 @@ main table {
       The Azure stock-keeping unit (SKU).
       For more information about configuring this parameter, see <a href="#azure-mssql-skus">SKUs</a> above.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
     <td>provision and update</td>
   </tr>
   <tr>
@@ -221,7 +223,7 @@ main table {
     <td>string</td>
     <td>The Azure subnet ID, in long form, that the instance is connected to through a service endpoint.
     The subnet must have the <code>Microsoft.sql</code> service enabled.</td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
     <td>provision and update</td>
   </tr>
   <tr>
@@ -239,7 +241,7 @@ main table {
 
 You can bind a service to an app by running:
 
-```
+```bash
 cf bind-service APP_NAME SERVICE_INSTANCE --binding-name BINDING_NAME
 ```
 
@@ -267,14 +269,16 @@ The format for binding credentials made available to the app is as follows:
 ## <a id="azure-mssql-db"></a>Azure SQL (MSSQL) Database
 
 This section applies to the service csb-azure-mssql-db.
-The csb-azure-mssql-db service manages Azure SQL databases on pre-configured
-database servers on [Azure SQL](https://docs.microsoft.com/en-gb/azure/azure-sql/).
+The csb-azure-mssql-db service manages Azure SQL databases on pre-configured database servers on
+Azure SQL. For more information about Azure SQL, see the
+[Microsoft documentation](https://docs.microsoft.com/en-gb/azure/azure-sql/).
 
 ### <a id="azure-mssql-db-pre-configured-db-servers"></a> Configuring Service
 
-When configuring the Cloud Service Broker, the pre-configured database servers can be provided in the following format.
+When configuring the <%= vars.product_short %>, the pre-configured database servers can be provided
+in the following format:
 
-```
+```json
 {
    "server1":{
       "server_name": "server1_fqdn",
@@ -293,8 +297,8 @@ When configuring the Cloud Service Broker, the pre-configured database servers c
 
 For details see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
-Alternatively these can be provided during service creation as a plan parameter. 
-See `server_credentials` in [Configuration Parameters](azure-mssql-db-parameters).
+Alternatively you can provide these during service creation as a plan parameter.
+See `server_credentials` in [Configuration Parameters](#azure-mssql-db-parameters) below.
 
 ### <a id="azure-mssql-db-plans"></a> Plans
 
@@ -315,17 +319,17 @@ the control of <%= vars.product_short %>. For more information, see
 
 ### <a id="azure-mssql-db-plans-config"></a> Plan Configuration Parameters
 
-When configuring the Cloud Service Broker you can add aditional new plans.
+When configuring the <%= vars.product_short %> you can add additional new plans.
 The table below lists the plan parameters that you can configure:
 
 | Parameter Name    | Values                          | Default   |
 |-------------------|---------------------------------|-----------|
-| name              | The plan name.                  |           |
-| id                | A unique guid.                  |           |
-| description       | Description of the new plan.    |           |
+| name              | The plan name.                  | _n/a_     |
+| id                | A unique GUID.                  | _n/a_     |
+| description       | Description of the new plan.    | _n/a_     |
 | max\_storage\_gb  |                                 | 5         |
 | cores             | 1&ndash;64, multiples of 2      | 2         |
-| sku_name          | See [sku](#azure-mssql-db-skus) |           |
+| sku_name          | See [sku](#azure-mssql-db-skus) | _n/a_     |
 
 For details see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
@@ -380,7 +384,7 @@ For information about the the DTU purchasing model, see the
 
 You can provision a service by running:
 
-```
+```bash
 cf create-service csb-azure-mssql-db PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
@@ -392,8 +396,8 @@ $ cf create-service csb-azure-mssql-db small mssql-dev -c '{"server":"server1"}'
 
 You can update the plan or configuration parameters for a service instance by running:
 
-```
-cf update-service SERVICE-INSTANCE [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```bash
+cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 The table below lists the parameters that you can configure, using the `-c` flag, when
@@ -418,11 +422,11 @@ provisioning or updating a csb-azure-mssql-db service:
     <td><code>server</code></td>
     <td>string</td>
     <td>
-      *Required* The name of the server on which to create the database. 
+      Required: The name of the server on which to create the database.
       This must match one of the <code>SERVER</code> parameters in <code>server_credentials</code> or one of the servers configured when [configuring the service](#azure-mssql-db-pre-configured-db-servers).
       For example, <code>SERVER-1</code> in the code snippet in the <code>server_credentials</code> row below.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>server_credentials</code></td>
@@ -465,7 +469,7 @@ provisioning or updating a csb-azure-mssql-db service:
       The Azure stock-keeping unit (SKU).
       For more information about configuring this parameter, see <a href="#azure-mssql-db-skus">SKUs</a> above.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -519,14 +523,14 @@ The only plan is `standard`.
 
 You can provision a service by running:
 
-```
+```bash
 cf create-service csb-azure-mssql-server standard SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 You can update the configuration parameters for a service instance by running:
 
-```
-cf update-service SERVICE-INSTANCE -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```bash
+cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 The table below lists the parameters that you can configure, using the `-c` flag, when
@@ -602,7 +606,7 @@ provisioning a csb-azure-mssql-server service:
     <td>string</td>
     <td>The Azure subnet ID, in long form, that the instance is connected to through a service endpoint.
     The subnet must have the <code>Microsoft.sql</code> service enabled.</td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -619,7 +623,7 @@ The format for binding credentials for Azure SQL Server is as follows:
 
 ```json
 {
-    "hostname" : "DATABASE-SERVER-HOST<%# |BOSH-DIRECTOR-IP| is preferred. %>",
+    "hostname" : "DATABASE-SERVER-HOST",
     "port" : "DATABASE-SERVER-PORT",
     "username" : "AUTHENTICATION-USERNAME",
     "password" : "AUTHENTICATION-PASSWORD",
@@ -630,7 +634,6 @@ The format for binding credentials for Azure SQL Server is as follows:
     "databaseLoginPassword" : "AUTHENTICATION-PASSWORD"
 }
 ```
-<%# Do we need to define the placeholders here? %>
 
 
 
@@ -800,14 +803,14 @@ provisioning a csb-azure-mssql-failover-group service:
       The Azure stock-keeping unit (SKU).
       For more information about configuring this parameter, see <a href="#azure-mssql-fog-skus">SKUs</a> above.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>authorized_network</code></td>
     <td>string</td>
     <td>The Azure subnet ID, in long form, that the instance is connected to through a service endpoint.
     The subnet must have the <code>Microsoft.sql</code> service enabled.</td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -856,7 +859,7 @@ The table below lists the plans for the csb-azure-mssql-db-failover-group servic
 |small       | 2    | 50&nbsp;GB         |
 |medium      | 8    | 200&nbsp;GB        |
 |large       | 32   | 500&nbsp;GB        |
-|existing    | n/a  | n/a          |
+|existing    | _n/a_ | _n/a_          |
 
 The `existing` plan connects to an existing failover group database to allow apps,
 typically in a second foundation, to bind to the database.
@@ -867,7 +870,7 @@ The table below lists the plan parameters that you can configure:
 
 | Parameter Name | Values           | Default |
 |-------------|---------------------|---------|
-| max\_storage\_gb  |             | 50      |
+| max\_storage\_gb  |               | 50      |
 | cores       | 1&ndash;64, multiples of 2 | 2       |
 
 #### <a id="azure-mssql-fog-preconfig-skus"></a> SKU
@@ -916,14 +919,14 @@ For information about the the DTU purchasing model, see the
 
 You can provision a service by running:
 
-```
+```bash
 cf create-service csb-azure-mssql-db-failover-group PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 You can update the plan or configuration parameters for a service instance by running:
 
-```
-cf update-service SERVICE-INSTANCE [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```bash
+cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 The table below lists the parameters that you can configure, using the `-c` flag, when
@@ -958,7 +961,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
       This must match one of the <code>PAIR</code> parameters in <code>server_credentials_pairs</code>.
       For example, <code>PAIR-1</code> in the code snippet in the <code>server_credentials_pairs</code> row below.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>server_credential_pairs</code></td>
@@ -968,7 +971,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
       Format: <pre><code>{ "PAIR-1": { "admin_username":"...", "admin_password":"...", "primary":{"server_name":"...", "resource_group":"..."}, "secondary":{"server_name":"...", "resource_group":"..."}, "PAIR-2":...}</code></pre>
       One of the values you use for <code>PAIR</code> must match the <code>server_pair</code> parameter above.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>read_write_endpoint_failover_policy</code></td>
@@ -1013,7 +1016,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
       The Azure stock-keeping unit (SKU).
       For more information about configuring this parameter, see <a href="#azure-mssql-fog-preconfig-skus">SKUs</a> above.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -1063,13 +1066,13 @@ The only plan is `standard`.
 
 You can provision a service by running:
 
-```
+```bash
 cf create-service csb-azure-mssql-fog-run-failover standard SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 You can update the configuration parameters for a service instance by running:
 
-```
+```bash
 cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
@@ -1089,7 +1092,7 @@ provisioning a csb-azure-mssql-fog-run-failover service:
     <td><code>fog_instance_name</code></td>
     <td>string</td>
     <td>The name of the service instance for the failover group to target.</td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>server_pair_name</code></td>
@@ -1099,7 +1102,7 @@ provisioning a csb-azure-mssql-fog-run-failover service:
       This must match one of the <code>PAIR</code> parameters in <code>server_pairs</code>.
       For example, <code>PAIR-1</code> in the code snippet in the <code>server_credentials_pairs</code> row below.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>server_pairs</code></td>
@@ -1109,7 +1112,7 @@ provisioning a csb-azure-mssql-fog-run-failover service:
       Format: <pre><code>{ "PAIR-1": { "primary":{"server_name":"...", "resource_group":..."}, "secondary":{"server_name":"...", "resource_group":..."}, "PAIR-2":...}</code></pre>
       One of the values you use for <code>PAIR</code> must match the <code>server_pair_name</code> parameter above.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
@@ -1248,13 +1251,13 @@ above, you can also configure service specific parameters.
 
 You can provision a service by running:
 
-```
+```bash
 cf create-service csb-azure-postgresql PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 You can update the plan or configuration parameters for a service instance by running:
 
-```
+```bash
 cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
@@ -1326,7 +1329,7 @@ provisioning a csb-azure-postgresql service:
       that is attached to this instance to allow remote access.
       By default no VNets are allowed access.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>sku_name</code></td>
@@ -1335,7 +1338,7 @@ provisioning a csb-azure-postgresql service:
       The Azure stock-keeping unit (SKU).
       For more information about configuring this parameter, see <a href="#azure-postgresql-skus">SKUs</a> above.
     </td>
-    <td>n/a</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>use_tls</code></td>
@@ -1386,13 +1389,13 @@ The table below lists the plans for Azure Storage Account:
 
 You can provision a service by running:
 
-```
+```bash
 cf create-service csb-azure-storage-account PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
 You can update the configuration parameters for a service instance by running:
 
-```
+```bash
 cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
