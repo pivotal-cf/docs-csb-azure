@@ -275,30 +275,33 @@ Azure SQL. For more information about Azure SQL, see the
 
 ### <a id="azure-mssql-db-pre-configured-db-servers"></a> Configuring Service
 
-When configuring the <%= vars.product_short %>, the pre-configured database servers can be provided
-in the following format:
+To configure the service:
 
-```json
-{
-   "server1":{
-      "server_name": "server1_fqdn",
-      "server_resource_group": "server1_resource_group",
-      "admin_username": "server1_admin_username",
-      "admin_password": "server1_admin_password"
-   },
-   "server2":{
-      "server_name": "server2_fqdn",
-      "server_resource_group": "server2_resource_group",
-      "admin_username": "server2_admin_username",
-      "admin_password": "server2_admin_password"
-   }
-}
-```
+1. Provide the pre-configured database servers during service creation as a plan parameter, or in
+the following format when configuring <%= product_short %>:
 
-For details see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+    ```json
+    {
+       "server1":{
+          "server_name": "server1_fqdn",
+          "server_resource_group": "server1_resource_group",
+          "admin_username": "server1_admin_username",
+          "admin_password": "server1_admin_password"
+       },
+       "server2":{
+          "server_name": "server2_fqdn",
+          "server_resource_group": "server2_resource_group",
+          "admin_username": "server2_admin_username",
+          "admin_password": "server2_admin_password"
+       }
+    }
+    ```
 
-Alternatively you can provide these during service creation as a plan parameter.
-See `server_credentials` in [Configuration Parameters](#azure-mssql-db-parameters) below.
+    For more information about the plan parameter option, see `server_credentials` in
+    [Configuration Parameters](#azure-mssql-db-parameters) below.
+
+    For more information about the <%= product_short %> configuration option, see
+    <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
 ### <a id="azure-mssql-db-plans"></a> Plans
 
@@ -311,7 +314,7 @@ The table below lists the plans for the csb-azure-mssql-db service:
 |medium      | 8    | 200&nbsp;GB  |
 |large       | 32   | 500&nbsp;GB  |
 |extra-large | 80   | 1&nbsp;TB    |
-|subsume*    |  N/A | N/A          |
+|subsume*    | _n/a_| _n/a_        |
 
 <sup>*</sup>The subsume plan is used to import existing Azure MSSQL databases to bring them under
 the control of <%= vars.product_short %>. For more information, see
@@ -329,13 +332,14 @@ The table below lists the plan parameters that you can configure:
 | description       | Description of the new plan.    | _n/a_     |
 | max\_storage\_gb  |                                 | 5         |
 | cores             | 1&ndash;64, multiples of 2      | 2         |
-| sku_name          | See [sku](#azure-mssql-db-skus) | _n/a_     |
+| sku_name          | See [sku](#azure-mssql-db-skus) below | _n/a_     |
 
 For details see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
 #### <a id="azure-mssql-db-skus"></a> SKUs
 
-SKUs are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>. Where:
+SKUs are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>.
+Where:
 <ul>
   <li>Examples of <code>TIER</code> are <code>GP\_S</code>, <code>GP</code>, and <code>HS</code></li>
   <li>Examples of <code>FAMILY</code> are <code>Gen4</code> and <code>Gen5</code></li>
@@ -358,9 +362,11 @@ The table below shows the mapping of number of cores to the corresponding Azure 
 | 32 | GP\_Gen5\_32 |
 | 80 | GP\_Gen5\_80 |
 
-For a list of all valid SKUs, run:
+1. For a list of all valid SKUs, run:
 
-<pre><code>az sql db list-editions -l LOCATION -o table</code></pre>
+    ```
+    az sql db list-editions -l LOCATION -o table
+    ```
 
 For information about the the vCore purchasing model, see the
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-vcore-single-databases">Microsoft documentation</a>.<br>
@@ -423,7 +429,9 @@ provisioning or updating a csb-azure-mssql-db service:
     <td>string</td>
     <td>
       Required: The name of the server on which to create the database.
-      This must match one of the <code>SERVER</code> parameters in <code>server_credentials</code> or one of the servers configured when [configuring the service](#azure-mssql-db-pre-configured-db-servers).
+      This must match one of the <code>SERVER</code> parameters in <code>server_credentials</code>
+      or one of the servers configured when configuring the service. For more information, see
+      <a href="#azure-mssql-db-pre-configured-db-servers">Configuring Service</a> below.
       For example, <code>SERVER-1</code> in the code snippet in the <code>server_credentials</code> row below.
     </td>
     <td><em>n/a</em></td>
@@ -436,7 +444,8 @@ provisioning or updating a csb-azure-mssql-db service:
       Format: <pre><code>{ "SERVER-1": { "server_name":"...", "server_resource_group":"...", "admin_username":"...", "admin_password":"..."}, "SERVER-2":{"server_name":..., ...}...}</code></pre>
       One of the values you use for <code>SERVER</code> must match the <code>server</code> parameter above.
     </td>
-    <td>Servers configured when [configuring the service](#azure-mssql-db-pre-configured-db-servers).</td>
+    <td>Servers configured when configuring the service. For more information, see
+    <a href="#azure-mssql-db-pre-configured-db-servers">Configuring Service</a> below.</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
@@ -481,7 +490,8 @@ provisioning or updating a csb-azure-mssql-db service:
   <tr>
     <td><code>short_term_retention_days</code></td>
     <td>number</td>
-    <td>Retention period in days for short term retention (Point in Time Restore) policy. Can be up to 35 days.</td>
+    <td>Retention period in days for short-term retention (Point in Time Restore) policy.
+    The maximum period is 35 days.</td>
     <td>7</td>
   </tr>
 </table>
