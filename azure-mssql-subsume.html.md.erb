@@ -98,7 +98,7 @@ the <%= vars.product_short %>:
 2. Get the Azure resource ID for the database by running the following on the Azure CLI:
 
     ```
-    az sql db show  --name DATABASE-NAME --server SERVER-NAME \
+    az sql db show --name DATABASE-NAME --server SERVER-NAME \
     --resource-group SERVER-RESOURCE-GROUP --query id -o tsv
     ```
 
@@ -112,18 +112,42 @@ the <%= vars.product_short %>:
     For example:
 
     <pre class="terminal">
-    $ az sql db show  --name my-database --server my-server \
+    $ az sql db show --name my-database --server my-server \
       --resource-group azure-service-broker --query id -o tsv
 
     /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database
     </pre>
 
-3. Create a new MSSQL service instance using <%= vars.product_short %>  and
+3. Configure <%= vars.product_short %> with credentials of the Azure database server
+
+    ```
+    cf set-env CLOUD-SERVICE-BROKER MSSQL_DB_SERVER_CREDS '{"SERVER-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","server_name":"SERVER-NAME","server_resource_group":"SERVER-RESOURCE-GROUP"}}'
+    cf set-env CLOUD-SERVICE-BROKER GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS '{"server_credentials":{"SERVER-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","server_name":"SERVER-NAME","server_resource_group":"SERVER-RESOURCE-GROUP"}}}'
+    cf restage CLOUD-SERVICE-BROKER
+    ```
+
+    Where:
+    * `CLOUD-SERVICE-BROKER` is the name of the <%= vars.product_short %> app
+    * `MSSQL_DB_SERVER_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS` are literal evironment variable names, that should be typed as written
+    * `SERVER-NAME` is the same as the previous step
+    * `SERVER-LABEL` is a label to use to refer to the server, which may be the same as the logical server name
+    * `SERVER-ADMIN-USERNAME` is the administrative username for the server
+    * `SERVER-ADMIN-PASSWORD` is the administrative password for the server
+    * `SERVER-RESOURCE-GROUP` is the same as the previous step.
+
+    Note that:
+    * This configuration only needs to be once for each server
+    * Where there is more than one server, the credentials should be combined into the same JSON object, for example:
+    ```
+    {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
+    ```
+
+4. Create a new MSSQL service instance using <%= vars.product_short %>  and
    import the existing MSSQL resource by choosing the "subsume" plan and including the metadata as shown:
 
     ```
     cf create-service csb-azure-mssql-db subsume NEW-SERVICE-INSTANCE \
-    -c '{"azure_db_id", "AZURE-RESOURCE-ID", "server": "SERVER-NAME"}'
+    -c '{"azure_db_id", "AZURE-RESOURCE-ID", "server": "SERVER-LABEL", "server-name": "SERVER-NAME"}'
     ```
 
     Where:
@@ -131,16 +155,16 @@ the <%= vars.product_short %>:
        that <%= vars.product_short %> creates to replace the MSAB service instance.
     * `AZURE-RESOURCE-ID` is the output of the `az sql db show` command in the previous step.
     * `SERVER-NAME` is the same as the previous step.
-
+    * `SERVER-LABEL` is the same as the previous step.
 
     For example:
 
     <pre class="terminal">
 $ cf create-service csb-azure-mssql-db subsume secondary-db \
-  -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "my-server"}'
+  -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
     </pre>
 
-4. Disconnect the app from the MASB service binding by running:
+5. Disconnect the app from the MASB service binding by running:
 
     ```
     cf unbind-service APP-NAME MASB-SERVICE-INSTANCE
@@ -155,7 +179,7 @@ $ cf create-service csb-azure-mssql-db subsume secondary-db \
 $ cf unbind-service my-app masb-instance
     </pre>
 
-5. Bind the app to the new service instance by running:
+6. Bind the app to the new service instance by running:
 
     ```
     cf bind-service APP-NAME NEW-SERVICE-INSTANCE
@@ -171,13 +195,13 @@ $ cf unbind-service my-app masb-instance
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
 
-6. Restage the app:
+7. Restage the app:
 
     ```
     cf restage APP-NAME
     ```
 
-1. Remove record of the old MAS-brokered database instance and any child objects
+8. Remove record of the old MAS-brokered database instance and any child objects
    from Cloud Foundry by running:
 
     ```
