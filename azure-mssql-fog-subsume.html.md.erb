@@ -166,12 +166,8 @@ the <%= vars.product_short %>:
     </p>
 
     ```
-    cf set-env cloud-service-broker MSSQL_DB_FOG_SERVER_PAIR_CREDS '{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}''
-    ```
-    ```
-    cf set-env cloud-service-broker GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS '{"server_credential_pairs":{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}}'
-    ```
-    ```
+    cf set-env CLOUD-SERVICE-BROKER-APP MSSQL_DB_FOG_SERVER_PAIR_CREDS '{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}'
+    cf set-env CLOUD-SERVICE-BROKER-APP GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS '{"server_credential_pairs":{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}}'
     cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
