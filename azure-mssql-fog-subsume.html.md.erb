@@ -140,14 +140,13 @@ the <%= vars.product_short %>:
     --resource-group FOG-RESOURCE-GROUP --query id -o tsv
     ```
     Where:
-    * `DATABASE-NAME` is the logical database name in the `message` line of the output from running `cf service masb-instance` in the step above.
+    * `DATABASE-NAME` is the logical database name in the `message` line of the output from running `cf service MASB-DATABASE-INSTANCE` in the step above.
     * `FOG-NAME` is the logical name in the `message` line of the output from running `cf service MASB-FOG-INSTANCE` in the step above.
     * `FOG-RESOURCE-GROUP` is the **Default Resource Group** in the Default Parameters Config pane
        of the Azure Service Broker tile.
       See [Default Parameters Config](https://docs.pivotal.io/partners/azure-sb/installing.html#defaultparameters-config)
       in _Installing and Configuring Microsoft Azure Service Broker_.
     * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the server names joined to the FoG.
-
 
     For example:
 
@@ -157,50 +156,56 @@ the <%= vars.product_short %>:
     /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/server-name/databases/database-name
     </pre>
 
-    The entire output of each of the three commands replaces the `-AZURE-DB-ID` variables in the next step.
+    The entire output of each of the three commands replaces the `-AZURE-DB-ID` variables in step 5 below.
 
-3. Configure <%= vars.product_short %> with credentials of the Azure database servers
+3. Configure <%= vars.product_short %> with the credentials of the Azure database servers by running these commands:
+
+    <p class="note">
+      <strong>Note:</strong> You only need to do this configuration once for each server.
+      If you have already done this configuration for a database server, you do not have to do it again.
+    </p>
 
     ```
     cf set-env cloud-service-broker MSSQL_DB_FOG_SERVER_PAIR_CREDS '{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}''
+    ```
+    ```
     cf set-env cloud-service-broker GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS '{"server_credential_pairs":{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}}'
-    cf restage CLOUD-SERVICE-BROKER
+    ```
+    ```
+    cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
     Where:
-    * `CLOUD-SERVICE-BROKER` is the name of the <%= vars.product_short %> app
-    * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS` are literal evironment variable names, that should be typed as written
-    * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondard database servers
-    * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server
-    * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server
-    * `SERVER-ADMIN-PASSWORD` is the administrative password for the primary server
-    * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside
+    * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS` are literal evironment variable names, that should be typed as written.
+    * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server. Where there is more than one server pair, the credentials should be combined into the same JSON object, for example:
 
-    Note that:
-    * This configuration only needs to be once for each server
-    * Where there is more than one server pair, the credentials should be combined into the same JSON object, for example:
-    ```
-    {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
-    ```
+        ```
+        {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
+        ```
+    * `SERVER-ADMIN-PASSWORD` is the administrative password for the primary server.
+    * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server.
+    * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
+    * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
+    * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
 
 4. Create a new MSSQL service instance using Cloud Service Broker and
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
 
       ```
-    cf create-service csb-azure-mssql-db-failover-group subsume NEW-SERVICE-INSTANCE -c
-        '{
-      "azure_primary_db_id": "PRIMARY-AZURE-DB-ID",
-      "azure_secondary_db_id": "SECONDARY-AZURE-DB-ID",
-      "auzure_fog_id": "FOG-AZURE-ID",
-      "server_pair": "SERVER-PAIR-LABEL"
-   }'
+      cf create-service csb-azure-mssql-db-failover-group subsume NEW-SERVICE-INSTANCE -c
+          '{
+        "azure_primary_db_id": "PRIMARY-AZURE-DB-ID",
+        "azure_secondary_db_id": "SECONDARY-AZURE-DB-ID",
+        "auzure_fog_id": "FOG-AZURE-ID",
+        "server_pair": "SERVER-PAIR-LABEL"
+     }'
      ```
 
     Where:
     * `NEW-SERVICE-INSTANCE` is a name you choose for the new service instance
        to replace the MSAB service instance.
-    * `SERVER-PAIR-LABEL` is the same as in the previous step.
     * `PRIMARY-AZURE-DB-ID` , `SECONDARY-AZURE-DB-ID` and `FOG-AZURE-ID` are found in the outputs of step 3 above.
+    * `SERVER-PAIR-LABEL` is the same as in the previous step.
 
 5. Disconnect the app from the MASB service binding by running:
 
@@ -224,7 +229,7 @@ $ cf unbind-service my-app masb-instance
     ```
 
     Where `NEW-SERVICE-INSTANCE` is the name of the <%= vars.product_short %> service instance
-    that you created in step 4 above.
+    that you created in step 5 above.
     <br><br>
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
