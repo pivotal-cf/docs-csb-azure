@@ -166,16 +166,17 @@ the <%= vars.product_short %>:
     </p>
 
     ```
-    cf set-env cloud-service-broker MSSQL_DB_FOG_SERVER_PAIR_CREDS '{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}''
+    cf set-env CLOUD-SERVICE-BROKER-APP MSSQL_DB_FOG_SERVER_PAIR_CREDS '{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}''
     ```
     ```
-    cf set-env cloud-service-broker GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS '{"server_credential_pairs":{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}}'
+    cf set-env CLOUD-SERVICE-BROKER-APP GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS '{"server_credential_pairs":{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}}'
     ```
     ```
     cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
     Where:
+    * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
     * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS` are literal evironment variable names, that should be typed as written.
     * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server.
     If there is more than one server pair, combine the credentials into the same JSON object, for example:
@@ -187,7 +188,6 @@ the <%= vars.product_short %>:
     * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server.
     * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
     * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
-    * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
 
 4. Create a new MSSQL service instance using Cloud Service Broker and
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
