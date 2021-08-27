@@ -177,7 +177,7 @@ the <%= vars.product_short %>:
 
     Where:
     * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
-    * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS` are literal evironment variable names, that should be typed as written.
+    * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS` are literal environment variable names, that should be typed as written.
     * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server.
     If there is more than one server pair, combine the credentials into the same JSON object, for example:
 
@@ -189,7 +189,7 @@ the <%= vars.product_short %>:
     * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
     * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
 
-4. Create a new MSSQL service instance using Cloud Service Broker and
+4. Create a new MSSQL service instance using <%= vars.product_short %> and
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
 
       ```
