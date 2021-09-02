@@ -118,29 +118,36 @@ the <%= vars.product_short %>:
     /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database
     </pre>
 
-3. Configure <%= vars.product_short %> with credentials of the Azure database server
+3. Configure <%= vars.product_short %> with credentials of the Azure database server by running these commands:
+
+    <p class="note">
+      <strong>Note:</strong> You only need to do this configuration once for each server.
+      If you have already done this configuration for a database server, you do not have to do it again.
+    </p>
 
     ```
-    cf set-env CLOUD-SERVICE-BROKER MSSQL_DB_SERVER_CREDS '{"SERVER-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","server_name":"SERVER-NAME","server_resource_group":"SERVER-RESOURCE-GROUP"}}'
-    cf set-env CLOUD-SERVICE-BROKER GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS '{"server_credentials":{"SERVER-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","server_name":"SERVER-NAME","server_resource_group":"SERVER-RESOURCE-GROUP"}}}'
-    cf restage CLOUD-SERVICE-BROKER
+    cf set-env CLOUD-SERVICE-BROKER-APP MSSQL_DB_SERVER_CREDS '{"SERVER-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","server_name":"SERVER-NAME","server_resource_group":"SERVER-RESOURCE-GROUP"}}'
+    ```
+    ```
+    cf set-env CLOUD-SERVICE-BROKER-APP GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS '{"server_credentials":{"SERVER-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","server_name":"SERVER-NAME","server_resource_group":"SERVER-RESOURCE-GROUP"}}}'
+    ```
+    ```
+    cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
     Where:
-    * `CLOUD-SERVICE-BROKER` is the name of the <%= vars.product_short %> app
-    * `MSSQL_DB_SERVER_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS` are literal evironment variable names, that should be typed as written
-    * `SERVER-NAME` is the same as the previous step
-    * `SERVER-LABEL` is a label to use to refer to the server, which may be the same as the logical server name
-    * `SERVER-ADMIN-USERNAME` is the administrative username for the server
-    * `SERVER-ADMIN-PASSWORD` is the administrative password for the server
-    * `SERVER-RESOURCE-GROUP` is the same as the previous step.
+    * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app
+    * `MSSQL_DB_SERVER_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS` are literal environment variable names, that should be typed as written
+    * `SERVER-LABEL` is a label to use to refer to the server, which might be the same as the logical server name.
+    If there is more than one server, combine the credentials into the same JSON object, for example:
 
-    Note that:
-    * This configuration only needs to be once for each server
-    * Where there is more than one server, the credentials should be combined into the same JSON object, for example:
-    ```
-    {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
-    ```
+        ```json
+        {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
+        ```
+    * `SERVER-ADMIN-PASSWORD` is the administrative password for the server.
+    * `SERVER-ADMIN-USERNAME` is the administrative username for the server.
+    * `SERVER-NAME` is the same as the previous step.
+    * `SERVER-RESOURCE-GROUP` is the same as the previous step.
 
 4. Create a new MSSQL service instance using <%= vars.product_short %>  and
    import the existing MSSQL resource by choosing the "subsume" plan and including the metadata as shown:
@@ -154,8 +161,8 @@ the <%= vars.product_short %>:
     * `NEW-SERVICE-INSTANCE` is a name you choose for the new service instance
        that <%= vars.product_short %> creates to replace the MSAB service instance.
     * `AZURE-RESOURCE-ID` is the output of the `az sql db show` command in the previous step.
-    * `SERVER-NAME` is the same as the previous step.
     * `SERVER-LABEL` is the same as the previous step.
+    * `SERVER-NAME` is the same as the previous step.
 
     For example:
 
@@ -186,7 +193,7 @@ $ cf unbind-service my-app masb-instance
     ```
 
     Where `NEW-SERVICE-INSTANCE` is the name of the <%= vars.product_short %> service instance
-    that you created in step 3 above.
+    that you created in step 4 above.
     <br><br>
     For example:
 
