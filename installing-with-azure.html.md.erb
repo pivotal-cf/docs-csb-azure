@@ -86,24 +86,20 @@ To configure <%= vars.product_short %> with a database:
 
 1. Click **Service Broker Config**.
 
-1. Enter the credentials for the state database.
+    <%= image_tag("images/service-broker-config-pane.png", :alt => "Fields for configuring the service broker.
+  See the following steps for detailed descriptions of the configurable fields.", :width => "400") %>
 
-1. Set up encryption for the sensitive data in the database.
 
-    * If you want the sensitive data to be encrypted in the database tick **Enable encryption of the Cloud Service Broker database** and add an encryption password in the list of **Database Encryption Passwords**.
-    For the password configure these fields:
-        * **Label**: Enter a unique password label. Do not change once saved.
-        * **Password**: Enter a secure password that is at least 20 characters long. Do not change once saved.
-        * **Primary**: Tick if this is the password that should be used to encrypt the data. You must mark one password as primary. Do not mark more than one password as primary.
+1. Configure the fields as follows:
 
-    * If you have already succesfully set an encryption password and want to rotate it you should:
-        * Untick **Primary** field from the password that is currently being used.
-        * Add a new encryption password in the list of **Database Encryption Passwords** and tick **Primary**.
-        * After this installation is completed successfully we recommend you remove all non primary passwords and apply changes again. 
-
-    * If you want the sensitive data to not be encrypted in the database untick **Enable encryption of the Cloud Service Broker database**.
-        * If the data was previously encrypted and you want to dissable encryption you should provide the password used to encrypt in the list of **Database Encryption Passwords** with **Primary** field untiked and all other fields unchanged. If you provide several passwords untick the "Primary" from all passwords provided.
-        * After this installation is completed successfully we recommend you remove all passwords and apply changes.
+    | Field | Instructions |
+    |-------|--------------|
+    | **Database host** | Enter the host name of the prerequisite database. |
+    | **Database username** and **Database password** | Enter the credentials for the database. |
+    | **Enable encryption of the Cloud Service Broker database** | If you want the sensitive data to be encrypted, select this checkbox and the **Add** button. If you do not want to encrypt the date, leave the checkbox unselected and do not fill in the Database Encryption Passwords fields. |
+    | **Label** | Enter a unique password label. You cannot change this label after you save. |
+    | **Password** | Enter a secure password that is at least 20 characters long. You cannot change this password after you save. |
+    | **Primary** | Select this checkbox if this is the password that you want to use to encrypt the data. You must mark one and only one password as primary.|
 
 1. Click **Save**.
 
@@ -112,6 +108,15 @@ To configure <%= vars.product_short %> with a database:
 1. Click **Review Pending Changes**.
 
 1. Click **Apply changes** to install the <%= vars.product_short %> tile.
+
+1. Set up encryption for the sensitive data in the database.
+
+Covered:     * If you want the sensitive data to be encrypted in the database tick **Enable encryption of the Cloud Service Broker database** and add an encryption password in the list of **Database Encryption Passwords**.
+    For the password configure these fields:
+        * **Label**: Enter a unique password label. Do not change once saved.
+        * **Password**: Enter a secure password that is at least 20 characters long. Do not change once saved.
+        * **Primary**: Tick if this is the password that should be used to encrypt the data. You must mark one password as primary. Do not mark more than one password as primary.
+
 
 <%# If needed, include additional configuration information below.
 For example, maybe there are configuration options not required for installation but which could be
@@ -149,3 +154,52 @@ For details about properties for each service configuration, see
 1. Click **Apply changes**.
 
 1. Review your Cloud Foundry Marketplace to see the new plan sizes.
+
+
+## <a id="rotate-password"></a>Rotate Password on the State Database
+
+If you have already set an encryption password and want to change it, follow the instructions below:
+
+To rotate the password on the state database:
+
+1. Click **Service Broker Config**.
+
+2. Clear the **Primary** checkbox.
+
+3. Click **Add**.
+
+4. Enter a new **Label** and **Password** for the new password, and select  **Primary**.
+
+    You cannot change the label or password after you save.
+
+1. Click **Save**.
+
+1. Return to the <%= vars.ops_manager %> Installation Dashboard.
+
+1. Click **Review Pending Changes**.
+
+1. Click **Apply changes** to install the <%= vars.product_short %> tile.
+
+1. (Recommended) After the apply changes process completes, delete the non-primary label and password pair and apply changes again. 
+
+## <a id="remove-encryption"></a> Remove Encryption from the State Database
+
+If the data in the state database was previously encrypted and you want to disable encryption, follow the instructions below.
+
+To remove encryption from the state database:
+
+1. Click **Service Broker Config**.
+
+2. Clear the **Enable encryption of the Cloud Service Broker database** checkbox.
+
+4. Clear the **Primary** checkbox, but do not change the Label or Password fields.
+
+1. Click **Save**.
+
+1. Return to the <%= vars.ops_manager %> Installation Dashboard.
+
+1. Click **Review Pending Changes**.
+
+1. Click **Apply changes** to install the <%= vars.product_short %> tile.
+
+1. (Recommended) After the apply changes process completes, delete all label and password pairs and apply changes again. 
