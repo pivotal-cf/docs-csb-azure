@@ -82,7 +82,7 @@ The broker requires this database to store its state.
 
 **Prerequisite:** A small MySQL database to use as the state database.
 
-To configure <%= vars.product_short %> with a database:
+To configure <%= vars.product_short %> with a state database:
 
 1. Click **Service Broker Config**.
 
@@ -94,12 +94,12 @@ To configure <%= vars.product_short %> with a database:
 
     | Field | Instructions |
     |-------|--------------|
-    | **Database host** | Enter the host name of the prerequisite database. |
-    | **Database username** and **Database password** | Enter the credentials for the database. |
-    | **Enable encryption of the Cloud Service Broker database** | If you want the sensitive data to be encrypted, select this checkbox and the **Add** button. If you do not want to encrypt the date, leave the checkbox unselected and do not fill in the Database Encryption Passwords fields. |
-    | **Label** | Enter a unique password label. You cannot change this label after you save. |
-    | **Password** | Enter a secure password that is at least 20 characters long. You cannot change this password after you save. |
-    | **Primary** | Select this checkbox if this is the password that you want to use to encrypt the data. You must mark one and only one password as primary.|
+    | **Database host** | Enter the host name of the prerequisite state database.|
+    | **Database username** and **Database password** | Enter the credentials for the state database.|
+    | **Enable encryption of the Cloud Service Broker database**| If you want the sensitive data to be encrypted, select this checkbox and the **Add** button. If you do not want to encrypt the date, leave the checkbox unselected and do not fill in the Database Encryption Passwords fields.|
+    | **Label**| Enter a unique password label. You cannot change this label after you save.|
+    | **Password**| Enter a secure password that is at least 20 characters long. You cannot change this password after you save.|
+    | **Primary**| Select this checkbox if this is the password that you want to use to encrypt the data. You must mark one and only one password as primary.|
 
 1. Click **Save**.
 
@@ -111,12 +111,10 @@ To configure <%= vars.product_short %> with a database:
 
 1. Set up encryption for the sensitive data in the database.
 
-Covered:     * If you want the sensitive data to be encrypted in the database tick **Enable encryption of the Cloud Service Broker database** and add an encryption password in the list of **Database Encryption Passwords**.
-    For the password configure these fields:
-        * **Label**: Enter a unique password label. Do not change once saved.
-        * **Password**: Enter a secure password that is at least 20 characters long. Do not change once saved.
-        * **Primary**: Tick if this is the password that should be used to encrypt the data. You must mark one password as primary. Do not mark more than one password as primary.
-
+If you later want to change the password on the state database,
+see [Rotate Password on the State Database](#rotate-password) below.<br>
+If you later want to turn off encryption,
+see [Remove Encryption from the State Database](#remove-encryption) below.
 
 <%# If needed, include additional configuration information below.
 For example, maybe there are configuration options not required for installation but which could be
