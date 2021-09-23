@@ -80,7 +80,23 @@ This section describes how to associate <%= vars.product_short %> with a MySQL d
 the _state database_.
 The broker requires this database to store its state.
 
-**Prerequisite:** A small MySQL database to use as the state database.
+#### About Encrypting the State Database
+
+In production environments, VMware recommends that you enable encryption.
+This encrypts certain sensitive information in the state database, such as IaaS credentials.
+The encryption password that you enter on the Service Broker Config pane is used to generate an encryption key.
+
+<p class="note">
+<strong>Note:</strong>
+Start-up takes longer than normal when the data is first encrypted and when you change the
+encryption password.
+</p>
+
+#### Prerequisite
+
+You must have a small MySQL database to use as the state database.
+
+#### Procedure: Configure a State Database
 
 To configure <%= vars.product_short %> with a state database:
 
@@ -96,6 +112,7 @@ To configure <%= vars.product_short %> with a state database:
     |-------|--------------|
     | **Database host** | Enter the host name of the prerequisite state database.|
     | **Database username** and **Database password** | Enter the credentials for the state database.|
+    | **TLS Enforcement** | Select the type of TLS enforcement you want. If you select **Custom**, enter your certificate. |
     | **Enable encryption of the Cloud Service Broker database**| If you want the sensitive data to be encrypted, select this checkbox and the **Add** button. If you do not want to encrypt the date, leave the checkbox unselected and do not fill in the Database Encryption Passwords fields.|
     | **Label**| Enter a unique password label. You cannot change this label after you save.|
     | **Password**| Enter a secure password that is at least 20 characters long. You cannot change this password after you save.|
@@ -112,7 +129,7 @@ To configure <%= vars.product_short %> with a state database:
 1. Set up encryption for the sensitive data in the database.
 
 If you later want to change the password on the state database,
-see [Rotate Password on the State Database](#rotate-password) below.<br>
+see [Rotate the Encryption Password on the State Database](#rotate-password) below.<br>
 If you later want to turn off encryption,
 see [Remove Encryption from the State Database](#remove-encryption) below.
 
@@ -154,7 +171,7 @@ For details about properties for each service configuration, see
 1. Review your Cloud Foundry Marketplace to see the new plan sizes.
 
 
-## <a id="rotate-password"></a>Rotate Password on the State Database
+## <a id="rotate-password"></a>Rotate the Encryption Password on the State Database
 
 If you have already set an encryption password and want to change it, follow the instructions below:
 
