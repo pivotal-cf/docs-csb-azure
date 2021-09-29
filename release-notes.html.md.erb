@@ -7,7 +7,7 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_full %>.
 
-##<a id="1-2-0"></a> v1.2.0
+##<a id="1-2-0"</a> v1.2.0
 
 **Release Date:** October 4, 2021
 
@@ -15,37 +15,38 @@ These are release notes for <%= vars.product_full %>.
 
 New features and changes in this release:
 
-* **Support for encryption of sensitive data:** <%= vars.product_short %> can now encrypt sensitive 
-data that is provided or genearated during provisioning and binding and stored in the state database. 
-A key generated from the password you configure in the tile is used for the encryption. 
+* **Support for encryption of sensitive data:** <%= vars.product_short %> can now encrypt sensitive
+data that is provided or genearated during provisioning and binding and stored in the state database.
+A key generated from the password you configure in the tile is used for the encryption.
 For how to configure encryption, see <a href="installing-with-azure.html#state-db">Configure a State Database</a>.
 
-* **Support for Private Endpoints in MongoDB:** <%= vars.product_short %> now supports creating Private Endpoints 
-during the provisioning of MongoDB instances. 
+* **Support for Private Endpoints in MongoDB:** <%= vars.product_short %> now supports creating Private Endpoints
+during the provisioning of MongoDB instances.
 For more information, see [pull request #103](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/103) in GitHub.
 
-* **`azurerm_mssql_database` - Databases smaller then 1GB can be subsumed:** 
-Subsume is now supported for MSSQL databases less then 1GB. 
+* **`azurerm_mssql_database` - Databases smaller then 1&nbsp;GB can be subsumed:**
+Subsume is now supported for MSSQL databases less then 1&nbsp;GB.
 
 ### Resolved Issues
 
 This release has the following fixes:
 
-* **Use restricted user to connect to Credhub:** The broker uses `cf.uaa.services_credhub_credentials` 
-instead of `cf.uaa.credhub_admin_client_client_credentials` to communicate with Credhub. 
-The new credentials have restriced access.
+* **Use restricted user to connect to CredHub:** The broker uses `cf.uaa.services_credhub_credentials`
+instead of `cf.uaa.credhub_admin_client_client_credentials` to communicate with CredHub.
+The new credentials have restricted access.
 
-* **Update optional mini plans:** `mini` plans for `csb-azure-eventhubs`, `csb-azure-mssql` 
-and `csb-azure-mssql-db-failover-group` were reusing identifiers and were not compatible 
-with  <%= vars.app_runtime_full %> v2.11. 
-They have been renamed to `mini-v2` and their IDs have been updated to be unique. 
+* **Update optional mini plans:** `mini` plans for `csb-azure-eventhubs`, `csb-azure-mssql`
+and `csb-azure-mssql-db-failover-group` were reusing identifiers and were not compatible
+with  <%= vars.app_runtime_full %> v2.11.
+They have been renamed to `mini-v2` and their IDs have been updated to be unique.
 If you were using any of these plans in the mentioned service offerings, update all instances to use `mini-v2`.
 
-* **`csb-azure-mssql-failover-group` - Users are propagated to the secondary database:** 
+* **`csb-azure-mssql-failover-group` - Users are propagated to the secondary database:**
 You no longer need to rebind apps after a failover event.
 
 
 ### Known Issues
+
 This release has the following issues:
 
 <%= partial vars.path_to_partials + 'cf-update-ki'  %>
