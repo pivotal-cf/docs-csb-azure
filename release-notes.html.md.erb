@@ -24,7 +24,7 @@ For how to configure encryption, see <a href="installing-with-azure.html#state-d
 during the provisioning of MongoDB instances.
 For more information, see [pull request #103](https://github.com/cloudfoundry-incubator/csb-brokerpak-azure/pull/103) in GitHub.
 
-* **`azurerm_mssql_database` - Databases smaller then 1&nbsp;GB can be subsumed:**
+* **For `azurerm_mssql_database`, databases smaller then 1&nbsp;GB can be subsumed:**
 Subsume is now supported for MSSQL databases less then 1&nbsp;GB.
 
 ### Resolved Issues
@@ -41,7 +41,7 @@ with  <%= vars.app_runtime_full %> v2.11.
 They have been renamed to `mini-v2` and their IDs have been updated to be unique.
 If you were using any of these plans in the mentioned service offerings, update all instances to use `mini-v2`.
 
-* **`csb-azure-mssql-failover-group` - Users are propagated to the secondary database:**
+* **For `csb-azure-mssql-failover-group`, users are propagated to the secondary database:**
 You no longer need to rebind apps after a failover event.
 
 
