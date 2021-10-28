@@ -277,8 +277,7 @@ Azure SQL. For more information about Azure SQL, see the
 
 To configure the service:
 
-1. Provide the pre-configured database servers during service creation as a plan parameter, or in
-the following format when configuring <%= vars.product_short %>:
+1. Provide the pre-configured database servers in the following format when configuring <%= vars.product_short %>:
 
     ```json
     {
@@ -296,9 +295,6 @@ the following format when configuring <%= vars.product_short %>:
        }
     }
     ```
-
-    For more information about the plan parameter option, see `server_credentials` in
-    [Configuration Parameters](#azure-mssql-db-parameters) below.
 
     For more information about the <%= vars.product_short %> configuration option, see
     <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
@@ -429,23 +425,9 @@ provisioning or updating a csb-azure-mssql-db service:
     <td>string</td>
     <td>
       Required: The name of the server on which to create the database.
-      This must match one of the <code>SERVER</code> parameters in <code>server_credentials</code>
-      or one of the servers configured when configuring the service. For more information, see
-      <a href="#azure-mssql-db-pre-configured-db-servers">Configuring Service</a> below.
-      For example, <code>SERVER-1</code> in the code snippet in the <code>server_credentials</code> row below.
+      This must match one of the <code>SERVER</code> parameters in one of the servers configured when configuring the service. 
     </td>
     <td><em>n/a</em></td>
-  </tr>
-  <tr>
-    <td><code>server_credentials</code></td>
-    <td>JSON</td>
-    <td>
-      A list of server credentials on which databases can be created.
-      Format: <pre><code>{ "SERVER-1": { "server_name":"...", "server_resource_group":"...", "admin_username":"...", "admin_password":"..."}, "SERVER-2":{"server_name":..., ...}...}</code></pre>
-      One of the values you use for <code>SERVER</code> must match the <code>server</code> parameter above.
-    </td>
-    <td>Servers configured when configuring the service. For more information, see
-    <a href="#azure-mssql-db-pre-configured-db-servers">Configuring Service</a> below.</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
