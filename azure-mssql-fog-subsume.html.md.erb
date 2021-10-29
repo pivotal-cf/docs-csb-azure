@@ -158,36 +158,67 @@ the <%= vars.product_short %>:
 
     The entire output of each of the three commands replaces the `-AZURE-DB-ID` variables in step 5 below.
 
-3. Configure <%= vars.product_short %> with the credentials of the Azure database servers by running these commands:
+3. Configure <%= vars.product_short %> with the credentials of the Azure database servers following one of the options bellow:
+
+  Option 1: Configure from the tile
+
+  Add the MASB pre-configured database servers in **Existing SQL Server Credentials** in the following format when configuring 
+  **Azure SQL Failover Group Config And Plans On Pre-configured Server Pairs** settings in <%= vars.product_short %>:
+
+    ```json
+    {
+      ...
+       "SERVER-PAIR-LABEL":{
+          "admin_username": "SERVER-ADMIN-USERNAME",
+          "admin_password": "SERVER-ADMIN-PASSWORD",
+          "primary":{ 
+            "resource_group": "PRIMARY-SERVER-RESOURCE-GROUP",
+            "server_name": "PRIMARY-SERVER-NAME"
+          },
+          "secondary":{
+            "resource_group": "SECONDARY-SERVER-RESOURCE-GROUP",
+            "server_name": "SECONDARY-SERVER-NAME"
+          }
+       }
+       ...
+    }
+    ```
+
+  For more information about the <%= vars.product_short %> configuration option, see
+  <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+
+  Option 2: Configure the environment variables
 
     <p class="note">
       <strong>Note:</strong> You only need to do this configuration once for each server.
       If you have already done this configuration for a database server, you do not have to do it again.
     </p>
 
+    <p class="note">
+      <strong>Note:</strong> This configuration will be lost, if the following configurations are not also 
+      included in the tile the next time the tile changes are applied.
+    </p>
+
     ```
     cf set-env CLOUD-SERVICE-BROKER-APP MSSQL_DB_FOG_SERVER_PAIR_CREDS '{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}''
-    ```
-    ```
-    cf set-env CLOUD-SERVICE-BROKER-APP GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS '{"server_credential_pairs":{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}}'
     ```
     ```
     cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
-    Where:
-    * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
-    * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS` are literal environment variable names, that should be typed as written.
-    * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server.
-    If there is more than one server pair, combine the credentials into the same JSON object, for example:
+  Where:
+  * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
+  * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` is literal environment variable name, that should be typed as written.
+  * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server.
+  If there is more than one server pair, combine the credentials into the same JSON object, for example:
 
-        ```json
-        {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
-        ```
-    * `SERVER-ADMIN-PASSWORD` is the administrative password for the primary server.
-    * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server.
-    * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
-    * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
+      ```json
+      {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
+      ```
+  * `SERVER-ADMIN-PASSWORD` is the administrative password for the primary server.
+  * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server.
+  * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
+  * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
 
 4. Create a new MSSQL service instance using <%= vars.product_short %> and
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
