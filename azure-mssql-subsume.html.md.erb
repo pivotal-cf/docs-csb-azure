@@ -118,11 +118,21 @@ the <%= vars.product_short %>:
     /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database
     </pre>
 
-3. Configure <%= vars.product_short %> with credentials of the Azure database server by running these commands:
+3. (If you added the credentials for the pre-configured servers when you configured <%= vars.product_short %>,
+   in [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services), then skip this step.)
+
+    Add credentials for the pre-existing server by following step 3 in
+    [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services)
+    or by configuring environment variables as follows:
 
     <p class="note">
       <strong>Note:</strong> You only need to do this configuration once for each server.
       If you have already done this configuration for a database server, you do not have to do it again.
+    </p>
+
+    <p class="note">
+      <strong>Note:</strong> This configuration will be lost, if the following configurations are not also
+      included in the tile the next time the tile changes are applied.
     </p>
 
     ```
