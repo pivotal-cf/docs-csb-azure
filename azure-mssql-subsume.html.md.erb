@@ -118,38 +118,20 @@ the <%= vars.product_short %>:
     /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database
     </pre>
 
-3. Configure <%= vars.product_short %> with credentials of the Azure database server following one of the options bellow:
+3. (If you added the credentials for the pre-configured servers when you configured <%= vars.product_short %>, 
+   in [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services), then skip this step.) 
 
-  Option 1: Configure via the tile
-
-  Add the MASB pre-configured database servers in **Existing SQL Server Credentials** in the following format when configuring 
-  **Azure SQL Config And Plans To Create Databases On Pre-configured Servers** settings in <%= vars.product_short %>:
-
-    ```json
-    {
-      ...
-       "SERVER-PAIR-LABEL":{
-          "admin_username": "SERVER-ADMIN-USERNAME",
-          "admin_password": "SERVER-ADMIN-PASSWORD",
-          "resource_group": "PRIMARY-SERVER-RESOURCE-GROUP",
-          "server_name": "PRIMARY-SERVER-NAME"
-       }
-       ...
-    }
-    ```
-
-  For more information about the <%= vars.product_short %> configuration option, see
-  <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
-
-  Option 2: Configure via environment variables
-
+    Add credentials for the pre-existing server by following step 3 in
+    [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services)
+    or by configuring environment variables as follows:
+    
     <p class="note">
       <strong>Note:</strong> You only need to do this configuration once for each server.
       If you have already done this configuration for a database server, you do not have to do it again.
     </p>
 
     <p class="note">
-      <strong>Note:</strong> This configuration will be lost, if the following configurations are not also 
+      <strong>Note:</strong> This configuration will be lost, if the following configurations are not also
       included in the tile the next time the tile changes are applied.
     </p>
 
@@ -163,19 +145,19 @@ the <%= vars.product_short %>:
     cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
-  Where:
-  * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
-  * `MSSQL_DB_SERVER_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS` are literal environment variable names, that should be typed as written.
-  * `SERVER-LABEL` is a label to use to refer to the server, which might be the same as the logical server name.
-  If there is more than one server, combine the credentials into the same JSON object, for example:
+    Where:
+    * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
+    * `MSSQL_DB_SERVER_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS` are literal environment variable names, that should be typed as written.
+    * `SERVER-LABEL` is a label to use to refer to the server, which might be the same as the logical server name.
+    If there is more than one server, combine the credentials into the same JSON object, for example:
 
-      ```json
-      {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
-      ```
-  * `SERVER-ADMIN-PASSWORD` is the administrative password for the server.
-  * `SERVER-ADMIN-USERNAME` is the administrative username for the server.
-  * `SERVER-NAME` is the same as the previous step.
-  * `SERVER-RESOURCE-GROUP` is the same as the previous step.
+        ```json
+        {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
+        ```
+    * `SERVER-ADMIN-PASSWORD` is the administrative password for the server.
+    * `SERVER-ADMIN-USERNAME` is the administrative username for the server.
+    * `SERVER-NAME` is the same as the previous step.
+    * `SERVER-RESOURCE-GROUP` is the same as the previous step.
 
 4. Create a new MSSQL service instance using <%= vars.product_short %>  and
    import the existing MSSQL resource by choosing the "subsume" plan and including the metadata as shown:
