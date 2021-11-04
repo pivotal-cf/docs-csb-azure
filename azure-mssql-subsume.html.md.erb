@@ -118,12 +118,12 @@ the <%= vars.product_short %>:
     /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database
     </pre>
 
-3. (If you added the credentials for the pre-configured servers when you configured <%= vars.product_short %>,
+3. (If you added the credentials for the MASB-brokered pre-configured servers when you configured <%= vars.product_short %>,
    in [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services), then skip this step.)
 
-    Add credentials for the pre-existing server by following step 3 in
+    Add credentials for the MASB-brokered pre-existing servers by following step 3 in
     [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services)
-    or by configuring environment variables as follows:
+    or by configuring environment variables as follows.
 
     <p class="note">
       <strong>Note:</strong> You only need to do this configuration once for each server.
@@ -137,9 +137,6 @@ the <%= vars.product_short %>:
 
     ```
     cf set-env CLOUD-SERVICE-BROKER-APP MSSQL_DB_SERVER_CREDS '{"SERVER-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","server_name":"SERVER-NAME","server_resource_group":"SERVER-RESOURCE-GROUP"}}'
-    ```
-    ```
-    cf set-env CLOUD-SERVICE-BROKER-APP GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS '{"server_credentials":{"SERVER-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","server_name":"SERVER-NAME","server_resource_group":"SERVER-RESOURCE-GROUP"}}}'
     ```
     ```
     cf restage CLOUD-SERVICE-BROKER-APP
