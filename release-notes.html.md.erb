@@ -7,6 +7,19 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_full %>.
 
+## <a id="1-2-1"></a> v1.2.1
+
+**Release Date:** November 5, 2021
+
+### Resolved Issues
+
+This release has the following fixes:
+
+* **Terraform workspaces larger then 64K no longer fail to save** The database migration will succeed for all terraform workspaces. 
+Also, new terraform deployment workspaces larger then 64K can be stored.
+* **For `azure-msssql-db` and `csb-azure-mssql-db-failover`, pre-provisioned server credentials can no longer be passed during provisioning.
+Passing of the credentials during provision would cause binding to fail.
+
 ## <a id="1-2-0"></a> v1.2.0
 
 **Release Date:** October 14, 2021
