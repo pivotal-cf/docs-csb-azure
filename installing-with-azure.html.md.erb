@@ -163,7 +163,7 @@ the **Settings** tab.
     <img src="images/settings-config-and-plans-pane.png" alt="Azure SQL Config And Plans To Create Databases On Pre-configured Servers (csb-azure-mssql-db)
     pane shows the Existing SQL Server Credentials field and the Additional Azure SQL DB Plans field" width="650">
 
-1. For plans on pre-configured database servers, enter **Existing SQL Server Credentials**.
+1. For services using pre-configured database servers, enter **Existing SQL Server Credentials**.
   <ul>
   <li> For the **Azure SQL Config And Plans To Create Databases On Pre-configured Servers** plan,
     enter the credentials in the following format:
@@ -185,9 +185,7 @@ the **Settings** tab.
       <ul>
         <li>`SERVER-ADMIN-USERNAME` is the administrative username for the server.</li>
         <li> `SERVER-ADMIN-PASSWORD` is the administrative password for the server.</li>
-        <li> `SERVER-RESOURCE-GROUP` is XXXXXXX. 
-              For example, see [Default Parameters Config](https://docs.pivotal.io/partners/azure-sb/installing.html#defaultparameters-config)
-              in the _Azure Service Broker_ documentation.</li>
+        <li> `SERVER-RESOURCE-GROUP` is the Azure resource group.</li>
         <li> `SERVER-NAME` is the logical server name.</li>
       </ul>
   </li>
@@ -217,10 +215,10 @@ the **Settings** tab.
       <ul>
          <li>`SERVER-ADMIN-USERNAME` is the administrative username for the server.</li>
          <li>`SERVER-ADMIN-PASSWORD` is the administrative password for the server.</li>
-         <li>`PRIMARY-SERVER-RESOURCE-GROUP` is </li>
-         <li>`PRIMARY-SERVER-NAME` is </li>
-         <li>`SECONDARY-SERVER-RESOURCE-GROUP` is </li>
-         <li>`SECONDARY-SERVER-NAME` is </li>
+         <li>`PRIMARY-SERVER-RESOURCE-GROUP` is the Azure Resource Group in which the primary database server resides.</li>
+         <li>`PRIMARY-SERVER-NAME` is the name of the primary server in the failover group.</li>
+         <li>`SECONDARY-SERVER-RESOURCE-GROUP` is the Azure Resource Group in which the secondary database server resides.</li>
+         <li>`SECONDARY-SERVER-NAME` is the name of the secondary server in the failover group.</li>
       </ul>
   </li>
   </ul>
