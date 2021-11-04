@@ -34,7 +34,6 @@ see [Azure Service Broker](https://docs.pivotal.io/partners/azure-sb/index.html)
 Detailed steps for subsuming are given below.
 However, the outline of the process is:
 
-+ Create a new Cloud Service-brokered instance.
 + Import information about the MSSQL FoG database instance using the "subsume" plan
 in the Cloud Foundry Marketplace.
 + Unbind apps from the old MAS-brokered instance.
@@ -88,7 +87,7 @@ the <%= vars.product_short %>:
     updated:   2020-08-20T21:08:04Z
     </pre>
 
-1. Get the MASB-brokered FoG instance details by running:
+2. Get the MASB-brokered FoG instance details by running:
 
     ```
     cf service MASB-FOG-INSTANCE
@@ -119,7 +118,7 @@ the <%= vars.product_short %>:
     There are no bound apps for this service.
     </pre>
 
-2. Get the Azure resource IDs for the FoG and its databases by running the following on the Azure CLI:
+3. Get the Azure resource IDs for the FoG and its databases by running the following on the Azure CLI:
 <br><br>
     Primary database ID:
 
@@ -158,45 +157,21 @@ the <%= vars.product_short %>:
 
     The entire output of each of the three commands replaces the `-AZURE-DB-ID` variables in step 5 below.
 
-3. Configure <%= vars.product_short %> with the credentials of the Azure database servers following one of the options bellow:
+4. (If you added the credentials for the pre-configured servers when you configured <%= vars.product_short %>, 
+   in [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services), then skip this step.)
+   <br><br>
+    Add credentials for the MASB-brokered pre-existing servers by following step 3 in
+    [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services)
+    or temporarily add the credentials with environment variables as follows.
 
-  Option 1: Configure from the tile
-
-  Add the MASB pre-configured database servers in **Existing SQL Server Credentials** in the following format when configuring 
-  **Azure SQL Failover Group Config And Plans On Pre-configured Server Pairs** settings in <%= vars.product_short %>:
-
-    ```json
-    {
-      ...
-       "SERVER-PAIR-LABEL":{
-          "admin_username": "SERVER-ADMIN-USERNAME",
-          "admin_password": "SERVER-ADMIN-PASSWORD",
-          "primary":{ 
-            "resource_group": "PRIMARY-SERVER-RESOURCE-GROUP",
-            "server_name": "PRIMARY-SERVER-NAME"
-          },
-          "secondary":{
-            "resource_group": "SECONDARY-SERVER-RESOURCE-GROUP",
-            "server_name": "SECONDARY-SERVER-NAME"
-          }
-       }
-       ...
-    }
-    ```
-
-  For more information about the <%= vars.product_short %> configuration option, see
-  <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
-
-  Option 2: Configure the environment variables
+    <p class="note">
+      <strong>Note:</strong> Adding the credentials with environment variables is only for <em>testing</em>.
+      This is because the credentials are lost when you apply changes to the tile.
+    </p>
 
     <p class="note">
       <strong>Note:</strong> You only need to do this configuration once for each server.
       If you have already done this configuration for a database server, you do not have to do it again.
-    </p>
-
-    <p class="note">
-      <strong>Note:</strong> This configuration will be lost, if the following configurations are not also 
-      included in the tile the next time the tile changes are applied.
     </p>
 
     ```
@@ -206,15 +181,14 @@ the <%= vars.product_short %>:
     cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
-  Where:
+      Where:
   * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
   * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` is literal environment variable name, that should be typed as written.
   * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server.
   If there is more than one server pair, combine the credentials into the same JSON object, for example:
-
-      ```json
+      <pre>
       {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
-      ```
+      </pre>
   * `SERVER-ADMIN-PASSWORD` is the administrative password for the primary server.
   * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server.
   * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
