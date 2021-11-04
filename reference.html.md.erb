@@ -316,7 +316,7 @@ The table below lists the plans for the csb-azure-mssql-db service:
 |extra-large | 80   | 1&nbsp;TB    |
 |subsume*    | _n/a_| _n/a_        |
 
-<sup>*</sup>The subsume plan is used to import existing Azure MSSQL databases to bring them under
+<sup>*</sup> The subsume plan is used to import existing Azure MSSQL databases to bring them under
 the control of <%= vars.product_short %>. For more information, see
 [Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](azure-mssql-subsume.html).
 
@@ -362,11 +362,11 @@ The table below shows the mapping of number of cores to the corresponding Azure 
 | 32 | GP\_Gen5\_32 |
 | 80 | GP\_Gen5\_80 |
 
-1. For a list of all valid SKUs, run:
+For a list of all valid SKUs, run:
 
-    ```
-    az sql db list-editions -l LOCATION -o table
-    ```
+```
+az sql db list-editions -l LOCATION -o table
+```
 
 For information about the the vCore purchasing model, see the
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-vcore-single-databases">Microsoft documentation</a>.<br>
@@ -882,6 +882,12 @@ The table below lists the plan parameters that you can configure:
 |-------------|---------------------|---------|
 | max\_storage\_gb  |               | 50      |
 | cores       | 1&ndash;64, multiples of 2 | 2       |
+|subsume*    | _n/a_| _n/a_        |
+
+<sup>*</sup> The subsume plan is used to import existing Azure MSSQL databases to bring them under
+the control of <%= vars.product_short %>.
+For more information, see
+[Subsuming a Microsoft Azure Service Broker MSSQL Failover Group Instance](azure-mssql-fog-subsume.html).
 
 #### <a id="azure-mssql-fog-preconfig-skus"></a> SKU
 
