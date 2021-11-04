@@ -113,16 +113,16 @@ the <%= vars.product_short %>:
 
     Add credentials for the MASB-brokered pre-existing servers by following step 3 in
     [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services)
-    or by configuring environment variables as follows.
-    
+    or do a test by adding the credentials with environment variables as follows.
+
     <p class="note">
-      <strong>Note:</strong> You only need to do this configuration once for each server.
-      If you have already done this configuration for a database server, you do not have to do it again.
+      <strong>Note:</strong> Adding the credentials with environment variables is only for <em>testing</em>.
+      This is because the credentials are lost when you apply changes to the tile.
     </p>
 
     <p class="note">
-      <strong>Note:</strong> This configuration will be lost, if the following configurations are not also
-      included in the tile the next time the tile changes are applied.
+      <strong>Note:</strong> You only need to do this configuration once for each server.
+      If you have already done this configuration for a database server, you do not have to do it again.
     </p>
 
     ```
