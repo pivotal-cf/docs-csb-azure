@@ -70,9 +70,9 @@ You no longer need to rebind apps after a failover event.
 
 This release has the following issues:
 
-* **Database failure for terraform workspaces larger then 64&nbsp;K:** The database migration fails if you migrate to this version
-and there is a stored terraform deployment workspace that is larger then 64&nbsp;K in the database.
-Also, when new terraform deployment workspaces larger then 64&nbsp;K are stored, they are truncated.
+* **Database failure for terraform workspaces larger than 64&nbsp;K:** The database migration fails if you migrate to this version
+and there is a stored terraform deployment workspace that is larger than 64&nbsp;K in the database.
+Also, when new terraform deployment workspaces larger than 64&nbsp;K are stored, they are truncated.
 
 <%= partial vars.path_to_partials + '/csb-azure/cf-update-ki' %>
 
