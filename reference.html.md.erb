@@ -685,7 +685,6 @@ The table below shows the mapping of number of cores to the corresponding SKU:
 | 16 | GP\_Gen5\_16 |
 | 32 | GP\_Gen5\_32 |
 | 80 | GP\_Gen5\_80 |
-<%# Is this table necessary? Can we get this information from the links below? %>
 
 For information about the the vCore purchasing model, see the
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-vcore-single-databases">Microsoft documentation</a>.<br>
@@ -701,9 +700,8 @@ For information about the the DTU purchasing model, see the
 
 <p class="note">
   <strong>Note:</strong> When updating a service instance, the SKU for the updated
-  service instance must remain in the same family (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
-  <%# Should this say tier or family? GP_S is a tier. Can you only use the tiers listed here? %>
-  If you update to a different family, Azure refuses the update request.
+  service instance must remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
+  If you update to a different tier, Azure refuses the update request.
 </p>
 
 ### <a id="azure-mssql-fog-parameters"></a> Configuration Parameters
