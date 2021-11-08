@@ -23,6 +23,12 @@ New features and changes in this release:
 
 This release has the following fixes:
 
+* **Revised `mini` plan examples provided in the tile:** For new CSB tile installations all `mini` plans are now correct.
+For existing tile installations that still have the following plans: `csb-azure-redis/mini`, `csb-azure-mysql/mini`, `csb-azure-mssql-failover-group/mini-manual-v2` you need to make the following changes to the existing plans.
+If you want to use `csb-azure-redis/mini` add the following properties `tls_min_version` and `firewall_rules`.
+If you want to use `csb-azure-mysql/mini` add the following properties `tls_min_version`, `firewall_rules`, `authorized_networks`.
+If you want to use `csb-azure-mssql-failover-group/mini-manual-v2` replace `storage_gb` property name with `max_storage_gb`.
+
 * **RUN-IN HEADING:** DESCRIPTION
 
 
