@@ -18,18 +18,19 @@ This release has the following fixes:
 * **Terraform workspaces larger then 64&nbsp;K no longer fail to save:** The database migration succeeds for all terraform workspaces.
 Also, new terraform deployment workspaces larger then 64&nbsp;K can be stored.
 
-* **For `azure-msssql-db` and `csb-azure-mssql-db-failover`, pre-provisioned server credentials can no longer be passed during provisioning:**
-  Passing the credentials during provisioning caused binding to fail.
+* **For `azure-mssql-db` and `csb-azure-mssql-db-failover`, you can no longer pass
+pre-provisioned server credentials during provisioning:**
+Passing the credentials during provisioning caused binding to fail.
 
-* **For `csb-azure-mssql-failover-group` Serverless databases can be created:**
-Databases can now be created in serviceless tier by defining a `sku_name` from `GP_S` tier.
+* **For `csb-azure-mssql-failover-group`, you can create Serverless databases:**
+You can now create databases in the serviceless tier by defining a `sku_name` from the `GP_S` tier.
 
-* **Revised `mini` plan examples provided in the tile:**
-For new CSB tile installations all `mini` plans are now correct.
-For existing tile installations that still have the following plans: `csb-azure-redis/mini`, `csb-azure-mysql/mini`, `csb-azure-mssql-failover-group/mini-manual-v2` you need to make the following changes to the existing plans.
-If you want to use `csb-azure-redis/mini` add the following properties `tls_min_version` and `firewall_rules`.
-If you want to use `csb-azure-mysql/mini` add the following properties `tls_min_version`, `firewall_rules`, `authorized_networks`.
-If you want to use `csb-azure-mssql-failover-group/mini-manual-v2` replace `storage_gb` property name with `max_storage_gb`.
+* **Revised `mini` plan examples are provided in the tile:**
+For new <%= vars.product_short %> tile installations all `mini` plans are now correct.
+For existing tile installations, you need to make the following changes to existing plans:
+  - For `csb-azure-redis/mini`, add the properties `tls_min_version` and `firewall_rules`.
+  - For `csb-azure-mssql/mini`, add the properties `tls_min_version`, `firewall_rules`, `authorized_networks`.
+  - For `csb-azure-mssql-failover-group/mini-manual-v2`, replace `storage_gb` property name with `max_storage_gb`.
 
 ### Known Issues
 
@@ -80,11 +81,20 @@ You no longer need to rebind apps after a failover event.
 
 This release has the following issues:
 
-* **Database failure for terraform workspaces larger than 64&nbsp;K:** The database migration fails if you migrate to this version
+<%= partial vars.path_to_partials + '/csb-azure/cf-update-ki' %>
+
+* **Database failure for terraform workspaces larger than 64&nbsp;K:**
+The database migration fails if you migrate to this version
 and there is a stored terraform deployment workspace that is larger than 64&nbsp;K in the database.
 Also, when new terraform deployment workspaces larger than 64&nbsp;K are stored, they are truncated.
 
-<%= partial vars.path_to_partials + '/csb-azure/cf-update-ki' %>
+* **For `azure-mssql-db` and `csb-azure-mssql-db-failover`, passing pre-provisioned
+server credentials during provisioning causes binding to fail.**
+
+* **For `csb-azure-mssql-failover-group`, you cannot create Serverless databases.**
+
+* **For `csb-azure-redis`, `csb-azure-mssql`, and `csb-azure-mssql-failover-group`,
+`mini` plans are incorrect.**
 
 ## <a id="view"></a> View Release Notes for Another Version
 
