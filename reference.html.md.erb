@@ -765,16 +765,13 @@ provisioning a csb-azure-mssql-failover-group service:
   <tr>
     <td><code>min_capacity</code></td>
     <td>number</td>
-    <td>The minimum capacity in GB that the database has allocated, if not paused.
-      You can only set this property for General Purpose Serverless databases.</td>
+    <td>Minimal capacity that database will always have allocated in GB, if not paused. This property is only settable for General Purpose Serverless databases.</td>
     <td><code>1</code></td>
   </tr>
   <tr>
     <td><code>auto_pause_delay</code></td>
     <td>number</td>
-    <td>The time in minutes after which the database is automatically paused.
-      A value of <code>-1</code> means that automatic pause is deactivated.
-      You can only set this property for General Purpose Serverless databases.</td>
+    <td>Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. This property is only settable for General Purpose Serverless databases.</td>
     <td><code>-1</code></td>
   </tr>
   <tr>
