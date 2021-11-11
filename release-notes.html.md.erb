@@ -9,7 +9,7 @@ These are release notes for <%= vars.product_full %>.
 
 ## <a id="1-2-1"></a> v1.2.1
 
-**Release Date:** November 10, 2021
+**Release Date:** November 11, 2021
 
 ### Resolved Issues
 
@@ -22,14 +22,14 @@ Also, new terraform deployment workspaces larger then 64&nbsp;K can be stored.
 pre-provisioned server credentials during provisioning:**
 Passing the credentials during provisioning caused binding to fail.
 
-* **For `csb-azure-mssql-failover-group`, you can create Serverless databases:**
-You can now create databases in the serviceless tier by defining a `sku_name` from the `GP_S` tier.
+* **For `csb-azure-mssql-failover-group`, you can create serverless databases:**
+You can now create databases in the serverless tier by defining a `sku_name` from the `GP_S` tier.
 
 * **Revised `mini` plan examples are provided in the tile:**
 For new <%= vars.product_short %> tile installations all `mini` plans are now correct.
 For existing tile installations, you need to make the following changes to existing plans:
   - For `csb-azure-redis/mini`, add the properties `tls_min_version` and `firewall_rules`.
-  - For `csb-azure-mssql/mini`, add the properties `tls_min_version`, `firewall_rules`, `authorized_networks`.
+  - For `csb-azure-mysql/mini`, add the properties `tls_min_version`, `firewall_rules`, `authorized_networks`.
   - For `csb-azure-mssql-failover-group/mini-manual-v2`, replace `storage_gb` property name with `max_storage_gb`.
 
 ### Known Issues
@@ -88,13 +88,13 @@ The database migration fails if you migrate to this version
 and there is a stored terraform deployment workspace that is larger than 64&nbsp;K in the database.
 Also, when new terraform deployment workspaces larger than 64&nbsp;K are stored, they are truncated.
 
-* **For `azure-mssql-db` and `csb-azure-mssql-db-failover`, passing pre-provisioned
-server credentials during provisioning causes binding to fail.**
+* For `azure-mssql-db` and `csb-azure-mssql-db-failover`, passing pre-provisioned
+server credentials during provisioning causes binding to fail.
 
-* **For `csb-azure-mssql-failover-group`, you cannot create Serverless databases.**
+* For `csb-azure-mssql-failover-group`, you cannot create serverless databases.
 
-* **For `csb-azure-redis`, `csb-azure-mssql`, and `csb-azure-mssql-failover-group`,
-`mini` plans are incorrect.**
+* For `csb-azure-redis`, `csb-azure-mysql`, and `csb-azure-mssql-failover-group`,
+`mini` plans have incorrect parameters.
 
 ## <a id="view"></a> View Release Notes for Another Version
 
