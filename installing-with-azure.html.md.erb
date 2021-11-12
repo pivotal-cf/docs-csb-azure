@@ -168,32 +168,32 @@ the **Settings** tab.
   <li> For the **Azure SQL Config And Plans To Create Databases On Pre-configured Servers** plan,
     enter the credentials in the following format:
 
-      <pre>
-      {
-        ...
-         "SERVER-PAIR-LABEL":{
-            "admin_username": "SERVER-ADMIN-USERNAME",
-            "admin_password": "SERVER-ADMIN-PASSWORD",
-            "resource_group": "SERVER-RESOURCE-GROUP",
-            "server_name": "SERVER-NAME"
-         }
-         ...
-      }
-      </pre>
+    <pre>
+    {
+      ...
+       "SERVER-LABEL":{
+          "admin_username": "SERVER-ADMIN-USERNAME",
+          "admin_password": "SERVER-ADMIN-PASSWORD",
+          "resource_group": "SERVER-RESOURCE-GROUP",
+          "server_name": "SERVER-NAME"
+       }
+       ...
+    }
+    </pre>
 
-      Where:
-      <ul>
-        <li><code>SERVER-PAIR-LABEL</code> is a label to refer to the pairing of the primary and secondary server.</li>
-        <li><code>SERVER-ADMIN-USERNAME</code> is the administrative username for the server.</li>
-        <li><code>SERVER-ADMIN-PASSWORD</code> is the administrative password for the server.</li>
-        <li><code>SERVER-RESOURCE-GROUP</code> is the Azure resource group.</li>
-        <li><code>SERVER-NAME</code> is the logical server name.</li>
-      </ul>
+    Where:
+    <ul>
+      <li><code>SERVER-LABEL</code> is a label to refer to the server, which might be the same as the logical server name..</li>
+      <li><code>SERVER-ADMIN-USERNAME</code> is the administrative username for the server.</li>
+      <li><code>SERVER-ADMIN-PASSWORD</code> is the administrative password for the server.</li>
+      <li><code>SERVER-RESOURCE-GROUP</code> is the Azure resource group.</li>
+      <li><code>SERVER-NAME</code> is the logical server name.</li>
+    </ul>
   </li>
   <li> For the **Azure SQL Failover Group Config And Plans On Pre-configured Server Pairs** plan,
     enter the credentials in the following format:
 
-      <pre>
+    <pre>
     {
       ...
        "SERVER-PAIR-LABEL":{
@@ -212,16 +212,16 @@ the **Settings** tab.
     }
     </pre>
 
-      Where:
-      <ul>
-        <li><code>SERVER-PAIR-LABEL</code> is a label to refer to the pairing of the primary and secondary server.</li>
-        <li><code>SERVER-ADMIN-USERNAME</code> is the administrative username for the server.</li>
-        <li><code>SERVER-ADMIN-PASSWORD</code> is the administrative password for the server.</li>
-        <li><code>PRIMARY-SERVER-RESOURCE-GROUP</code> is the Azure Resource Group in which the primary database server resides.</li>
-        <li><code>PRIMARY-SERVER-NAME</code> is the name of the primary server in the failover group.</li>
-        <li><code>SECONDARY-SERVER-RESOURCE-GROUP</code> is the Azure Resource Group in which the secondary database server resides.</li>
-        <li><code>SECONDARY-SERVER-NAME</code> is the name of the secondary server in the failover group.</li>
-      </ul>
+    Where:
+    <ul>
+      <li><code>SERVER-PAIR-LABEL</code> is a label to refer to the pairing of the primary and secondary server.</li>
+      <li><code>SERVER-ADMIN-USERNAME</code> is the administrative username for the server.</li>
+      <li><code>SERVER-ADMIN-PASSWORD</code> is the administrative password for the server.</li>
+      <li><code>PRIMARY-SERVER-RESOURCE-GROUP</code> is the Azure Resource Group in which the primary database server resides.</li>
+      <li><code>PRIMARY-SERVER-NAME</code> is the name of the primary server in the failover group.</li>
+      <li><code>SECONDARY-SERVER-RESOURCE-GROUP</code> is the Azure Resource Group in which the secondary database server resides.</li>
+      <li><code>SECONDARY-SERVER-NAME</code> is the name of the secondary server in the failover group.</li>
+    </ul>
   </li>
   </ul>
 
