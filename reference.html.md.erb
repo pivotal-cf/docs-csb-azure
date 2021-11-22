@@ -1495,6 +1495,7 @@ The format for binding credentials for Azure Storage Account is as follows:
 }
 ```
 
+
 ## <a id="azure-resource-group"></a> Azure Resource Group
 
 This section applies to csb-azure-resource-group.
@@ -1579,4 +1580,177 @@ provisioning a csb-azure-storage-account service:
     Set if the service principal being used does not have the rights to register providers.</td>
     <td><code>false</code></td>
   </tr>
+  </table>
+
+
+## <a id="azure-cosmosdb-sql"></a> Azure Cosmos DB SQL API
+
+This section applies to csb-azure-cosmosdb-sql.
+This section details the plans and configuration parameters available for Azure Cosmos DB SQL API.
+
+### <a id="azure-cosmosdb-sql-plans"></a> Plans
+
+The table below lists the plans for Azure Cosmos DB SQL API:
+
+| Plan | Description |
+|------|-------------|
+| small | SQL Cosmos DB Account, no redundancy, 400 request units |
+| medium | SQL Cosmos DB Account, single read failover location, 1,000 request units |
+| large | SQL Cosmos DB Account, single read/write failover location, 10,000 request units |
+
+### <a id="azure-cosmosdb-sql-parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-cosmosdb-sql PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-cosmosdb-sql service:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="50%">Description</th>
+      <th width="20%">Default</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>request_units</code></td>
+    <td>integer</td>
+    <td>
+      The throughput of the MongoDB collection (RU/s). Must be set in increments of 100. The minimum value is 400.
+    </td>
+    <td><code>400</code></td>
+  </tr>
+  <tr>
+    <td><code>failover_locations</code></td>
+    <td>array</td>
+    <td>A list of location for the Cosmos DB account. The first location is the default write location.</td>
+    <td><code>westus</code></td>
+  </tr>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>Account name for your Cosmos DB</td>
+    <td><code>csb-INSTANCE-ID</code></td>
+  </tr>
+  <tr>
+    <td><code>resource_group</code></td>
+    <td>string</td>
+    <td>The Azure resource group in which to create the instance.</td>
+    <td><code>rg-ACCOUNT-NAME</code> (<code>ACCOUNT-NAME</code> is always generated)</td>
+  </tr>
+  <tr>
+    <td><code>db_name</code></td>
+    <td>string</td>
+    <td>Name for your Cosmos DB database</td>
+    <td><code>csb-db-INSTANCE-ID</code></td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>The location of the CosmosDB account</td>
+    <td><code>westus</code></td>
+  </tr>
+  <tr>
+    <td><code>ip_range_filter</code></td>
+    <td>string</td>
+    <td>
+      CosmosDB Firewall Support.
+      This value specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IP's for a given database account.
+      IP addresses/ranges must be comma separated and must not contain any spaces. 0.0.0.0 allows access from Azure networks.
+      An empty string "" allows access from all public networks.
+    </td>
+    <td><code>0.0.0.0</code></td>
+  </tr>
+  <tr>
+    <td><code>consistency_level</code></td>
+    <td>string</td>
+    <td>The Consistency Level to use for this CosmosDB Account - can be either BoundedStaleness, Eventual, Session, Strong or ConsistentPrefix</td>
+    <td><code>Session</code></td>
+  </tr>
+  <tr>
+    <td><code>max_interval_in_seconds</code></td>
+    <td>integer</td>
+    <td>When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400 (1 day). Defaults to 5. Required when consistency_level is set to BoundedStaleness.</td>
+    <td><code>5</code></td>
+  </tr>
+  <tr>
+    <td><code>max_staleness_prefix</code></td>
+    <td>integer</td>
+    <td>When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 10 – 2147483647. Defaults to 100. Required when consistency_level is set to BoundedStaleness.</td>
+    <td><code>100</code></td>
+  </tr>
+  <tr>
+    <td><code>enable_multiple_write_locations</code></td>
+    <td>boolean</td>
+    <td>Enable multiple write locations for this Cosmos DB account</td>
+    <td><code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>enable_automatic_failover</code></td>
+    <td>boolean</td>
+    <td>Enable automatic fail over for this Cosmos DB account</td>
+    <td><code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>authorized_networks</code></td>
+    <td>list (string)</td>
+    <td>A list of resource IDs for subnets of the authorized Azure Vnet.</td>
+    <td><code>[]</code></td>
+  </tr>
 </table>
+
+### <a id="azure-cosmosdb-sql-binding-creds"></a> Binding Credentials
+
+The format for binding credentials for Azure Cosmos DB SQL API is as follows:
+
+```json
+{
+    "cosmosdb_host_endpoint" : "COSMOS-DB-HOST-ENDPOINT",
+    "cosmosdb_master_key" : "COSMOS-DB-READ-WRITE-KEY",
+    "cosmosdb_readonly_master_key" : "COSMOS-DB-READ-ONLY-KEY",
+    "cosmosdb_database_id" : "COSMOS-DB-DATABASE-ID"
+}
+```
