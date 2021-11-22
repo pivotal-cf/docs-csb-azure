@@ -73,6 +73,9 @@ To configure Azure credentials:
 
 1. Click **Save**.
 
+<p class="note">
+  <strong>Note:</strong> It is possible to use different Azure credentials per service plan. `azure_tenant_id`, `azure_subscription_id`, `azure_client_secret`, and `azure_client_id` can be set when [configuring a service plan](installing-with-azure.html#services) in the tile, or given as parameters when creating a service using the cf cli e.g `cf create-service ... -c '{ "azure_subscription_id":"...", ... "'`
+</p>
 
 ### <a id="state-db"></a>Configure a State Database
 
@@ -237,6 +240,24 @@ For details about properties for each service configuration, see
 
 1. Review your Cloud Foundry Marketplace to see the new plan sizes.
 
+By default, the newly created plan will use the Azure credentials specified in the `Azure Config` tab. However, different credentials can be supplied as properties to a plan instance when configuring a service. 
+
+<pre>
+[
+  {
+    "name" : "a_small_plan",
+    "id" : "uid",
+    "sku_name" : "sku_name",
+    "description" : "An example plan"
+    "azure_tenant_id" : "value"
+    "azure_subscription_id" : "value"
+    "azure_client_secret" : "value"
+    "azure_client_id" : "value"
+    ...
+  }
+]
+</pre>
+</p>
 
 ## <a id="rotate-password"></a>Rotate the Encryption Password on the State Database
 
