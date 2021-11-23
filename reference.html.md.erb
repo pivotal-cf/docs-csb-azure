@@ -18,6 +18,8 @@ See the section below for the service that you want:
 - [Azure SQL Failover Group Failover Runner](#azure-mssql-fog-runner)
 - [Azure PostgreSQL](#azure-postgresql)
 - [Azure Storage Account](#azure-storage-account)
+- [Azure Eventhub](#azure-eventhub)
+
 
 
 ## <a id="azure-mssql"></a> Azure SQL (MSSQL)
@@ -425,7 +427,7 @@ provisioning or updating a csb-azure-mssql-db service:
     <td>string</td>
     <td>
       Required: The name of the server on which to create the database.
-      This must match one of the <code>SERVER</code> parameters in one of the servers configured when configuring the service. 
+      This must match one of the <code>SERVER</code> parameters in one of the servers configured when configuring the service.
     </td>
     <td><em>n/a</em></td>
   </tr>
@@ -953,7 +955,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
     <td><code>server_pair</code></td>
     <td>string</td>
     <td>
-      This must match one of the <code>server_credential_pairs</code> parameters in one of the servers configured when configuring the service. 
+      This must match one of the <code>server_credential_pairs</code> parameters in one of the servers configured when configuring the service.
     </td>
     <td><em>n/a</em></td>
   </tr>
@@ -1476,5 +1478,166 @@ The format for binding credentials for Azure Storage Account is as follows:
     "storage_account_name" : "STORAGE-ACCOUNT-NAME",
     "primary_access_key" : "PRIMARY-ACCESS-KEY",
     "secondary_access_key" : "SECONDARY-ACCESS-KEY"
+}
+```
+
+## <a id="azure-eventhub"></a> Azure Eventhub
+
+This section applies to csb-azure-eventhubs.
+This section details the plans and configuration parameters available for Azure Eventhubs.
+
+### <a id="azure-eventhubs"></a> Plans
+
+The table below lists the plans for Azure Cosmos DB SQL API:
+
+| Plan | Description |
+|------|-------------|
+| basic | Basic Tier, 1 Consumer group, 100 Brokered connections |
+| standard | Standard Tier, 20 Consumer groups, 1000 Brokered connections, Additional Storage, Publisher Policies |
+
+### <a id="azure-eventhubs-parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-eventhubs PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-cosmosdb-sql service:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="40%">Description</th>
+      <th width="10%">Default</th>
+      <th width="20%">Constraints</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>Name for your Eventhub instance.</td>
+    <td><code>csb-eventhubs-INSTANCE-ID</code></td>
+    <td>
+      maxLength: 98
+      minLength: 6
+      pattern: ^[a-z][a-z0-9-]+$
+    </td>
+  </tr>
+  <tr>
+    <td><code>resource_group</code></td>
+    <td>string</td>
+    <td>Name for the resource group for this instance.</td>
+    <td><code>""</code></td>
+    <td>
+      maxLength: 64
+      minLength: 0
+      pattern: ^[a-z][a-z0-9-]+$|^$
+      **Can not be updated**
+    </td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>The location of the mysql instance.</td>
+    <td><code>westus</code></td>
+    <td>
+See locations [here](https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography)
+**Can not be updated**
+    </td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>The location of the mysql instance.</td>
+    <td><code>westus</code></td>
+    <td>
+See locations [here](https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography)
+**Can not be updated**
+    </td>
+  </tr>
+<tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>Azure Tenant to create resource in</td>
+    <td>Value set in `Azure Config` tab</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>Azure Subscription to create resource in</td>
+    <td>Value set in `Azure Config` tab</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>Client ID of Azure principal</td>
+    <td>Value set in `Azure Config` tab</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>Client secret for Azure principal</td>
+    <td>Value set in `Azure Config` tab</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Skip automatic Azure provider registration, set to true if service principal being used does not have rights to register providers</td>
+    <td>false</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>sku</code></td>
+    <td>boolean</td>
+    <td>Defines which tier to use.</td>
+    <td>Basic</td>
+    <td><code>Basic || Standard</code></td>
+  </tr>
+  <tr>
+    <td><code>auto_inflate_enabled</code></td>
+    <td>boolean</td>
+    <td>Auto Inflate enabled for the EventHub Namespace.</td>
+    <td>false</td>
+    <td><code>true || false</code></td>
+  </tr>
+  <tr>
+    <td><code>partition_count</code></td>
+    <td>integer</td>
+    <td>Specifies the current number of shards on the Event Hub.</td>
+    <td>2</td>
+    <td>Changing this forces a new resource to be created.</td>
+  </tr>
+  <tr>
+    <td><code>message_retention</code></td>
+    <td>integer</td>
+    <td>Specifies the number of days to retain the events for this Event Hub.</td>
+    <td>1</td>
+    <td>Needs to be between 1 and 7 days; or 1 day when using a Basic SKU for the parent EventHub</td>
+  </tr>
+</table>
+
+### <a id="azure-eventhubs-binding-creds"></a> Binding Credentials
+
+The format for binding credentials for Azure Eventhubs is as follows:
+
+```json
+{
+    "eventhub_rg_name" : "Resource group containing the eventhub namespace.",
+    "namespace_name" : "Specifies the name of the EventHub Namespace.",
+    "eventhub_name" : "Specifies the name of the EventHub. ",
 }
 ```
