@@ -18,7 +18,8 @@ See the section below for the service that you want:
 - [Azure SQL Failover Group Failover Runner](#azure-mssql-fog-runner)
 - [Azure MySQL](#azure-mysql)
 - [Azure PostgreSQL](#azure-postgresql)
-- [Azure Cosmos](#azure-cosmosdb-sql)
+- [Azure CosmosDB](#azure-cosmosdb-sql)
+- [Azure MongoDB](#azure-cosmosdb-mongo)
 - [Azure Storage Account](#azure-storage-account)
 - [Azure Eventhub](#azure-eventhub)
 
@@ -1622,218 +1623,6 @@ The format for binding credentials for PostgreSQL is as follows:
 }
 ```
 
-
-## <a id="azure-storage-account"></a> Azure Storage Account
-
-This section applies to csb-azure-storage-account.
-This section details the plans and configuration parameters available for Azure Storage Account.
-
-### <a id="azure-storage-account-plans"></a> Plans
-
-The table below lists the plans for Azure Storage Account:
-
-| Plan | Description |
-|------|-------------|
-| standard | General-purpose V2 account. Locally redundant, standard tier |
-
-### <a id="azure-storage-account-parameters"></a> Configuration Parameters
-
-You can provision a service by running:
-
-```bash
-cf create-service csb-azure-storage-account PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
-```
-
-You can update the configuration parameters for a service instance by running:
-
-```bash
-cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
-```
-
-The table below lists the parameters that you can configure, using the `-c` flag, when
-provisioning a csb-azure-storage-account service:
-
-<table>
-  <thead>
-    <tr>
-      <th width="20%">Parameter Name</th>
-      <th width="10%">Type</th>
-      <th width="50%">Description</th>
-      <th width="20%">Default</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>storage_account_type</code></td>
-    <td>string</td>
-    <td>
-      The account type - <code>BlobStorage</code>, <code>BlockBlobStorage</code>,
-      <code>FileStorage</code>, <code>Storage</code>, or <code>StorageV2</code>.
-    </td>
-    <td><code>StorageV2</code></td>
-  </tr>
-  <tr>
-    <td><code>tier</code></td>
-    <td>string</td>
-    <td>The storage tier to use - <code>Standard</code> or <code>Premium</code>.</td>
-    <td><code>Standard</code></td>
-  </tr>
-  <tr>
-    <td><code>replication_type</code></td>
-    <td>string</td>
-    <td>The replication type - <code>LRS</code>, <code>GRS</code>, <code>RAGRS</code>, or <code>ZRS</code>.</td>
-    <td><code>LRS</code></td>
-  </tr>
-  <tr>
-    <td><code>location</code></td>
-    <td>string</td>
-    <td>The Azure region in which to deploy the service instance. <%# Should we add the note about not being available in all regions here like in Azure SQL above? %></td>
-    <td><code>westus</code></td>
-  </tr>
-  <tr>
-    <td><code>resource_group</code></td>
-    <td>string</td>
-    <td>The Azure resource group in which to create the instance.</td>
-    <td><code>rg-ACCOUNT-NAME</code> (<code>ACCOUNT-NAME</code> is always generated)</td>
-  </tr>
-  <tr>
-    <td><code>azure_tenant_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure tenant for the service instance.</td>
-    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_subscription_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure subscription for the service instance.</td>
-    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_secret</code></td>
-    <td>string</td>
-    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>skip_provider_registration</code></td>
-    <td>boolean</td>
-    <td>Set to <code>true</code> to skip automatic Azure provider registration.
-    Set if the service principal being used does not have the rights to register providers.</td>
-    <td><code>false</code></td>
-  </tr>
-  <tr>
-    <td><code>authorized_networks</code></td>
-    <td>list (string)</td>
-    <td>A list of resource IDs for subnets of the authorized Azure Vnet.</td>
-    <td><code>[]</code></td>
-  </tr>
-</table>
-
-### <a id="azure-storage-account-binding-creds"></a> Binding Credentials
-
-The format for binding credentials for Azure Storage Account is as follows:
-
-```json
-{
-    "storage_account_name" : "STORAGE-ACCOUNT-NAME",
-    "primary_access_key" : "PRIMARY-ACCESS-KEY",
-    "secondary_access_key" : "SECONDARY-ACCESS-KEY"
-}
-```
-
-
-## <a id="azure-resource-group"></a> Azure Resource Group
-
-This section applies to csb-azure-resource-group.
-This section details the plans and configuration parameters available for Azure Resource Group.
-
-### <a id="azure-resource-group-plans"></a> Plans
-
-The table below lists the plans for Azure Storage Account:
-
-| Plan | Description |
-|------|-------------|
-| standard | An Azure Resource Group |
-
-### <a id="azure-resource-group-parameters"></a> Configuration Parameters
-
-You can provision a service by running:
-
-```bash
-cf create-service csb-azure-resource-group PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
-```
-
-You can update the configuration parameters for a service instance by running:
-
-```bash
-cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
-```
-
-The table below lists the parameters that you can configure, using the `-c` flag, when
-provisioning a csb-azure-storage-account service:
-
-<table>
-  <thead>
-    <tr>
-      <th width="20%">Parameter Name</th>
-      <th width="10%">Type</th>
-      <th width="50%">Description</th>
-      <th width="20%">Default</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>instance_name</code></td>
-    <td>string</td>
-    <td>
-      The name of the Azure Resource Group
-    </td>
-    <td>N/A</td>
-  </tr>
-  <tr>
-    <td><code>location</code></td>
-    <td>string</td>
-    <td>The location of the Azure Resource Group.</td>
-    <td><code>westus</code></td>
-  </tr>
-  <tr>
-    <td><code>azure_tenant_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure tenant for the service instance.</td>
-    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_subscription_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure subscription for the service instance.</td>
-    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_secret</code></td>
-    <td>string</td>
-    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>skip_provider_registration</code></td>
-    <td>boolean</td>
-    <td>Set to <code>true</code> to skip automatic Azure provider registration.
-    Set if the service principal being used does not have the rights to register providers.</td>
-    <td><code>false</code></td>
-  </tr>
-  </table>
-
-
 ## <a id="azure-cosmosdb-sql"></a> Azure Cosmos DB SQL API
 
 This section applies to csb-azure-cosmosdb-sql.
@@ -2006,6 +1795,477 @@ The format for binding credentials for Azure Cosmos DB SQL API is as follows:
 }
 ```
 
+## <a id="azure-cosmosdb-mongo"></a> Azure Cosmos DB Mongo API
+
+This section applies to csb-azure-mongodb.
+This section details the plans and configuration parameters available for Azure Cosmos DB Mongo API.
+
+### <a id="azure-cosmosdb-mongo-plans"></a> Plans
+
+The table below lists the plans for Azure Cosmos DB Mongo API:
+
+| Plan | Description |
+|------|-------------|
+| small | Mongo Cosmos DB Account, no redundancy, 400 request units |
+| medium | Mongo Cosmos DB Account, single read failover location, 1,000 request units |
+| large | Mongo Cosmos DB Account, single read/write failover location, 10,000 request units |
+
+### <a id="azure-cosmosdb-mongo-plans-config"></a> Plan Configuration Parameters
+
+When configuring <%= vars.product_short %> you can add additional new plans.
+The table below lists parameters which can only be added at the plan level. Further [configuration properties](#azure-cosmosdb-mongo-parameters) can also be supplied as parameters in plan creation.
+
+| Parameter Name    | Description                     | Default   | Example Value |
+|-------------------|---------------------------------|-----------|---------------|
+| name              | The plan name.                  | _n/a_     | "plan_1"      |
+| id                | A unique GUID.                  | _n/a_     | "guid"        |
+| description       | Description of the new plan.    | _n/a_     | "This is a plan" |
+| private_endpoint_subnet_id | ID of the Subnet within which Private Endpoint for the CosmosDB account will be created.  | "" | "exampleID"
+| private_dns_zone_ids | Array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints  | [] | ["exampleID1", "exampleID2"]
+
+Further information on plan curation is available in <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+
+<p class="note">
+  <strong>Note:</strong> These configuration values set in the plan cannot be changed by the developers during provision or update operations.
+</p>
+
+### <a id="azure-cosmosdb-mongo-parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-mongodb PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-mongodb service:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="40%">Description</th>
+      <th width="10%">Default</th>
+      <th width="20%">Constraints</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>request_units</code></td>
+    <td>integer</td>
+    <td>The throughput of the MongoDB collection (RU/s).</td>
+    <td><code>400</code></td>
+    <td>
+      maximum: 100000
+      minimum: 400
+      multipleOf: 100
+    </td>
+  </tr>
+  <tr>
+    <td><code>failover_locations</code></td>
+    <td>array</td>
+    <td>A list of location for the Cosmos DB account.  The first location is the default write location</td>
+    <td><code>[ "westus" ]</code></td>
+    <td>
+See locations [here](https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography)
+    </td>
+  </tr>
+  <tr>
+    <td><code>failover_locations</code></td>
+    <td>array</td>
+    <td>A list of location for the Cosmos DB account.  The first location is the default write location</td>
+    <td><code>[ "westus" ]</code></td>
+    <td>
+See locations [here](https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography)
+    </td>
+  </tr>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>Name for your Cosmos DB with API for MongoDB instance</td>
+    <td><code>csb-mongo-INSTANCE-ID</code></td>
+    <td>
+maxLength: 98
+minLength: 6
+pattern: ^[a-z][a-z0-9-]+$
+</td>
+  </tr>
+  <tr>
+    <td><code>account_name</code></td>
+    <td>string</td>
+    <td>Account name for your Cosmos DB with API for MongoDB instance</td>
+    <td><code>csbINSTANCE-ID</code></td>
+    <td>
+      maxLength: 44
+      minLength: 6
+      pattern: ^[a-z][a-z0-9-]+$ 
+      **(Can not be updated)**
+    </td>
+  </tr>
+  <tr>
+    <td><code>resource_group</code></td>
+    <td>string</td>
+    <td>Name for the resource group for this instance</td>
+    <td><code>""</code></td>
+    <td>
+      maxLength: 64
+      minLength: 0
+      pattern: ^[a-z][a-z0-9-]+$|^$
+      **(Can not be updated)**
+    </td>
+  </tr>
+  <tr>
+    <td><code>db_name</code></td>
+    <td>string</td>
+    <td>Name for your Cosmos DB database with API for Mongo DB</td>
+    <td><code>csb-dbINSTANCE-ID</code></td>
+    <td>
+      maxLength: 255
+      pattern: ^[a-z][a-z0-9-_]*$
+    </td>
+  </tr>
+  <tr>
+    <td><code>collection_name</code></td>
+    <td>string</td>
+    <td>Name for your collection</td>
+    <td><code>default_collection</code></td>
+    <td>
+      maxLength: 255
+    </td>
+  </tr>
+  <tr>
+    <td><code>shard_key</code></td>
+    <td>string</td>
+    <td>Name for your shard key</td>
+    <td><code>uniqueKey</code></td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>The location of the mongodb instance.</td>
+    <td><code>westus</code></td>
+    <td>See locations [here](https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography)
+</td>
+  </tr>
+  <tr>
+    <td><code>ip_range_filter</code></td>
+    <td>string</td>
+    <td>CosmosDB Firewall Support. This value specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IP's for a given database account.</td>
+    <td><code>"0.0.0.0"</code></td>
+    <td>IP addresses/ranges must be comma separated and must not contain any spaces. 0.0.0.0 allows access from Azure networks.  An empty string "" allows access from all public networks.</td>
+  </tr>
+  <tr>
+    <td><code>consistency_level</code></td>
+    <td>string</td>
+    <td>The Consistency Level to use for this CosmosDB Account.</td>
+    <td><code>Session</code></td>
+    <td>Can be either <code>BoundedStaleness</code>, <code>Eventual</code>, <code>Session</code>, <code>Strong</code> or <code>ConsistentPrefix</code></td>
+  </tr>
+  <tr>
+    <td><code>max_interval_in_seconds</code></td>
+    <td>integer</td>
+    <td>(Optional) When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated.</td>
+    <td><code>5</code></td>
+    <td> Accepted range for this value is 5 - 86400 (1 day). Defaults to 5. Required when consistency_level is set to BoundedStaleness.</td>
+  </tr>
+  <tr>
+    <td><code>max_staleness_prefix </code></td>
+    <td>integer</td>
+    <td>(Optional) When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated.</td>
+    <td><code>100</code></td>
+    <td>Accepted range for this value is 10 – 2147483647. Required when consistency_level is set to BoundedStaleness.</td>
+  </tr>
+  <tr>
+    <td><code>enable_multiple_write_locations</code></td>
+    <td>boolean</td>
+    <td>Enable multi-master support for this Cosmos DB account.</td>
+    <td><code>false</code></td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>enable_automatic_failover</code></td>
+    <td>boolean</td>
+    <td>Enable automatic fail over for this Cosmos DB account.</td>
+    <td><code>false</code></td>
+    <td>n/a</td>
+  </tr>
+ <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>Azure Tenant to create resource in</td>
+    <td>Value set in `Azure Config` tab</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>Azure Subscription to create resource in</td>
+    <td>Value set in `Azure Config` tab</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td> Client ID of Azure principal</td>
+    <td>Value set in `Azure Config` tab</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>Client secret for Azure principal</td>
+    <td>Value set in `Azure Config` tab</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Skip automatic Azure provider registration, set to true if service principal being used does not have rights to register providers</td>
+    <td>false</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>authorized_network</code></td>
+    <td>string</td>
+    <td>The subnet ID of the Azure VNET to which the instance is locked down to. If left unspecified, it will be public.</td>
+    <td>""</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <td><code>public_network_access_enabled</code></td>
+    <td>boolean</td>
+    <td>Whether or not public network access is allowed for this CosmosDB account. </td>
+    <td>true</td>
+    <td>n/a</td>
+  </tr>
+</table>
+
+### <a id="azure-cosmosdb-mongo-binding-creds"></a> Binding Credentials
+
+The format for binding credentials for Azure Cosmos DB SQL API is as follows:
+
+```json
+{
+    "uri" : "The primary master mongodb uri of the Cosmos DB Mongo Collection.",
+    "status" : "Status of db"
+}
+```
+
+## <a id="azure-storage-account"></a> Azure Storage Account
+
+This section applies to csb-azure-storage-account.
+This section details the plans and configuration parameters available for Azure Storage Account.
+
+### <a id="azure-storage-account-plans"></a> Plans
+
+The table below lists the plans for Azure Storage Account:
+
+| Plan | Description |
+|------|-------------|
+| standard | General-purpose V2 account. Locally redundant, standard tier |
+
+### <a id="azure-storage-account-parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-storage-account PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-storage-account service:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="50%">Description</th>
+      <th width="20%">Default</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>storage_account_type</code></td>
+    <td>string</td>
+    <td>
+      The account type - <code>BlobStorage</code>, <code>BlockBlobStorage</code>,
+      <code>FileStorage</code>, <code>Storage</code>, or <code>StorageV2</code>.
+    </td>
+    <td><code>StorageV2</code></td>
+  </tr>
+  <tr>
+    <td><code>tier</code></td>
+    <td>string</td>
+    <td>The storage tier to use - <code>Standard</code> or <code>Premium</code>.</td>
+    <td><code>Standard</code></td>
+  </tr>
+  <tr>
+    <td><code>replication_type</code></td>
+    <td>string</td>
+    <td>The replication type - <code>LRS</code>, <code>GRS</code>, <code>RAGRS</code>, or <code>ZRS</code>.</td>
+    <td><code>LRS</code></td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>The Azure region in which to deploy the service instance. <%# Should we add the note about not being available in all regions here like in Azure SQL above? %></td>
+    <td><code>westus</code></td>
+  </tr>
+  <tr>
+    <td><code>resource_group</code></td>
+    <td>string</td>
+    <td>The Azure resource group in which to create the instance.</td>
+    <td><code>rg-ACCOUNT-NAME</code> (<code>ACCOUNT-NAME</code> is always generated)</td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>authorized_networks</code></td>
+    <td>list (string)</td>
+    <td>A list of resource IDs for subnets of the authorized Azure Vnet.</td>
+    <td><code>[]</code></td>
+  </tr>
+</table>
+
+### <a id="azure-storage-account-binding-creds"></a> Binding Credentials
+
+The format for binding credentials for Azure Storage Account is as follows:
+
+```json
+{
+    "storage_account_name" : "STORAGE-ACCOUNT-NAME",
+    "primary_access_key" : "PRIMARY-ACCESS-KEY",
+    "secondary_access_key" : "SECONDARY-ACCESS-KEY"
+}
+```
+
+## <a id="azure-resource-group"></a> Azure Resource Group
+
+This section applies to csb-azure-resource-group.
+This section details the plans and configuration parameters available for Azure Resource Group.
+
+### <a id="azure-resource-group-plans"></a> Plans
+
+The table below lists the plans for Azure Storage Account:
+
+| Plan | Description |
+|------|-------------|
+| standard | An Azure Resource Group |
+
+### <a id="azure-resource-group-parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-resource-group PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-storage-account service:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="50%">Description</th>
+      <th width="20%">Default</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>
+      The name of the Azure Resource Group
+    </td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>The location of the Azure Resource Group.</td>
+    <td><code>westus</code></td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+  </tr>
+  </table>
 
 ## <a id="azure-eventhub"></a> Azure Eventhub
 
