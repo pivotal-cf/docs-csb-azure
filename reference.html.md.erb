@@ -516,6 +516,8 @@ No databases are created or managed.
 
 ### <a id="azure-mssql-server-plans"></a> Plans
 
+The only plan available pre-configured is `standard`
+
 When configuring the <%= vars.product_short %> you can add additional new plans.
 The table below lists the plan parameters that you can configure:
 
@@ -2366,11 +2368,16 @@ This section details the plans and configuration parameters available for Azure 
 
 ### <a id="azure-resource-group-plans"></a> Plans
 
-The table below lists the plans for Azure Storage Account:
+The only plan available by default when the tile is installed is `standard`. 
 
-| Plan | Description |
-|------|-------------|
-| standard | An Azure Resource Group |
+When configuring the <%= vars.product_short %> you can add additional new plans.
+The table below lists the plan parameters that you can configure:
+
+| Parameter Name    | Values                          | Default   |
+|-------------------|---------------------------------|-----------|
+| name              | The plan name.                  | _n/a_     |
+| id                | A unique GUID.                  | _n/a_     |
+| description       | Description of the new plan.    | _n/a_     |
 
 ### <a id="azure-resource-group-parameters"></a> Configuration Parameters
 
