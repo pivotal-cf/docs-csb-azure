@@ -1157,17 +1157,17 @@ The table below lists parameters which can only be added at the plan level.
 
 | Parameter Name    | Description                     | Default   |
 |-------------------|---------------------------------|-----------|
-| name              | The plan name.                  | _n/a_     |
-| id                | A unique GUID.                  | _n/a_     |
-| description       | Description of the new plan.    | _n/a_     |
-| use_tls           | Use TLS for connection.         | `true`    |
-| tls_min_version   | Minimum enforced TLS version.  Possible values are `TLSEnforcementDisabled`, `TLS1_0`, `TLS1_1`, and `TLS1_2`.  | `TLS1_1`    |
-| enable_threat_detection_policy   | Set to `true` to enable the threat Detection Policy.   | `false`   |
-| threat_detection_policy_emails   | A list of email addresses which alerts should be sent to. For example, `["account1@example.com", "account2@example.com"]`.  | _n/a_   |
-| email_account_admins   | Account administrators emailed when threat alert triggered  | `false`   |
-| firewall_rules   | Array of firewall rule start/end IP pairs. For example, `[["1.2.3.4", "2.3.4.5"]`. | `[]`   |
-| private_endpoint_subnet_id   | The ID of the Subnet within which the Private Endpoint is created. For example, `"idofsubnet"`. | `""`   |
-| private_dns_zone_ids   | An array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints. For example, `["idOfSubnet", "anotherIdOfSubnet"] `. | `[]`   |
+| `name`              | The plan name.                  | _n/a_     |
+| `id`                | A unique GUID.                  | _n/a_     |
+| `description`       | Description of the new plan.    | _n/a_     |
+| `use_tls`           | Use TLS for connection.         | `true`    |
+| `tls_min_version`   | Minimum enforced TLS version.  Possible values are `TLSEnforcementDisabled`, `TLS1_0`, `TLS1_1`, and `TLS1_2`.  | `TLS1_1`    |
+| `enable_threat_detection_policy`   | Set to `true` to enable the threat Detection Policy.   | `false`   |
+| `threat_detection_policy_emails`   | A list of email addresses which alerts should be sent to. For example, `["account1@example.com", "account2@example.com"]`.  | _n/a_   |
+| `email_account_admins`   | Account administrators emailed when threat alert triggered  | `false`   |
+| `firewall_rules`   | Array of firewall rule start/end IP pairs. For example, `[["1.2.3.4", "2.3.4.5"]`. | `[]`   |
+| `private_endpoint_subnet_id`   | The ID of the Subnet within which the Private Endpoint is created. For example, `"idofsubnet"`. | `""`   |
+| `private_dns_zone_ids`   | An array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints. For example, `["idOfSubnet", "anotherIdOfSubnet"] `. | `[]`   |
 
 <p class="note">
   <strong>Note:</strong> When creating or updating a service instance, developers
