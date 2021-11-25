@@ -261,7 +261,7 @@ The format for binding credentials made available to the app is as follows:
     "port" : "DATABASE-SERVER-PORT",
     "username" : "AUTHENTICATION-USERNAME",
     "password" : "AUTHENTICATION-PASSWORD",
-    "uri" : "DATABASE CONNECTION-URI",
+    "uri" : "DATABASE-CONNECTION-URI",
     "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
     "jdbcUrlForAuditingEnabled": "JDBC-FORMAT-CONNECTION-URI",
     "sqldbName" : "DATABASE-NAME",
@@ -1172,7 +1172,7 @@ Azure MySQL, see the [Microsoft documentation](https://docs.microsoft.com/en-gb/
 
 ### <a id="azure-mysql-plans"></a> Plans
 
-The table below lists the default plans for the csb-azure-mssql service:
+The following table lists the default plans for the csb-azure-mysql service:
 
 | Plan        | CPUs | Storage Size      |
 |-------------|------|-------------------|
@@ -1183,29 +1183,29 @@ The table below lists the default plans for the csb-azure-mssql service:
 ### <a id="azure-mysql-plans-config"></a> Plan Configuration Parameters
 
 When configuring <%= vars.product_short %> you can add additional new plans.
-The table below lists parameters which can only be added at the plan level. Further [configuration properties](#azure-mysql-parameters) can also be supplied as parameters in plan creation.
+Further [configuration properties](#azure-mysql-parameters) can also be supplied as parameters in plan creation.
+The table below lists parameters which can only be added at the plan level.
 
-| Parameter Name    | Description                     | Default   | Example Value |
-|-------------------|---------------------------------|-----------|---------------|
-| name              | The plan name.                  | _n/a_     | "plan_1"      |
-| id                | A unique GUID.                  | _n/a_     | "guid"        |
-| description       | Description of the new plan.    | _n/a_     | "This is a plan" |
-| use_tls           | Use TLS for connection.         | true      | true
-| tls_min_version   | Minimum enforced TLS version.  Possible values are TLSEnforcementDisabled, TLS1_0, TLS1_1 (default), and TLS1_2  | TLS1_1    | TLS1_1 |
-| enable_threat_detection_policy   | Threat Detection Policy.   | false   | false |
-| threat_detection_policy_emails   | A list of email addresses which alerts should be sent to.   | _n/a_   |  ["account@email.com"] |
-| email_account_admins   | Account administrators emailed when threat alert triggered  | false   | false |
-| firewall_rules   | Array of firewall rule start/end IP pairs  | []   | [["1.2.3.4", "2.3.4.5"] |
-| private_endpoint_subnet_id   | ID of the Subnet within which Private Endpoint will be created  | ""   | "idofsubnet" |
-| private_dns_zone_ids   | Array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints  | []   | ["idOfSubnet", "anotherIdOfSubnet"] |
-
-For further configuration parameters see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+| Parameter Name    | Description                     | Default   |
+|-------------------|---------------------------------|-----------|
+| name              | The plan name.                  | _n/a_     |
+| id                | A unique GUID.                  | _n/a_     |
+| description       | Description of the new plan.    | _n/a_     |
+| use_tls           | Use TLS for connection.         | `true`    |
+| tls_min_version   | Minimum enforced TLS version.  Possible values are `TLSEnforcementDisabled`, `TLS1_0`, `TLS1_1`, and `TLS1_2`.  | `TLS1_1`    |
+| enable_threat_detection_policy   | Set to `true` to enable the threat Detection Policy.   | `false`   |
+| threat_detection_policy_emails   | A list of email addresses which alerts should be sent to. For example, `["account1@example.com", "account2@example.com"]`.  | _n/a_   |
+| email_account_admins   | Account administrators emailed when threat alert triggered  | `false`   |
+| firewall_rules   | Array of firewall rule start/end IP pairs. For example, `[["1.2.3.4", "2.3.4.5"]`. | `[]`   |
+| private_endpoint_subnet_id   | The ID of the Subnet within which the Private Endpoint is created. For example, `"idofsubnet"`. | `""`   |
+| private_dns_zone_ids   | An array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints. For example, `["idOfSubnet", "anotherIdOfSubnet"] `. | `[]`   |
 
 <p class="note">
-  <strong>Note:</strong> These configuration values set in the plan cannot be changed by the developers during provision or update operations.
+  <strong>Note:</strong> When creating or updating a service instance, developers
+  cannot change the configuration values set in the plan.
 </p>
 
-#### <a id="azure-mssql-skus"></a> SKUs
+#### <a id="azure-mysql-skus"></a> SKUs
 
 Stock-keeping units (SKU) are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>. Where:
 <ul>
@@ -1218,7 +1218,7 @@ For more information see [Azure MySQL pricing tiers](https://docs.microsoft.com/
 
 If you do not define a SKU using the <code>sku_name</code> parameter, the SKU is
 computed from the number of cores in your plan.
-See [Plans](#azure-mssql-plans) above.
+See [Plans](#azure-mysql-plans) above.
 
 <p class="note">
   <strong>Note:</strong> When updating a service instance, the SKU for the updated
@@ -1247,155 +1247,156 @@ cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PA
 ```
 
 The table below lists the parameters that you can configure, using the `-c` flag, when
-provisioning or updating a csb-azure-mssql service:
-
-<style>
-main table {
-  table-layout: fixed;
-}
-</style>
+provisioning or updating a csb-azure-mysql service:
 
 <table>
   <thead>
     <tr>
       <th width="20%">Parameter Name</th>
       <th width="10%">Type</th>
-      <th width="40%">Description</th>
-      <th width="10%">Default</th>
-      <th width="20%">Constraints</th>
+      <th width="50%">Description</th>
+      <th width="20%">Default</th>
     </tr>
   </thead>
   <tr>
     <td><code>cores</code></td>
     <td>integer</td>
-    <td>Number vcores for the instance (upto the maximum allowed for the service tier)</td>
+    <td>
+      Number vcores for the instance (upto the maximum allowed for the service tier).
+      This parameter has the following constraints:
+      <ul>
+        <li>maximum: 64</li>
+        <li>minimum: 1</li>
+        <li>multipleOf: 2</li>
+      </ul>
+    </td>
     <td><code>2</code> </td>
-    <td><code>maximum: 64
-minimum: 1
-multipleOf: 2</code></td>
+    <td></td>
   </tr>
   <tr>
     <td><code>storage_gb</code></td>
     <td>integer</td>
-    <td>Storage allocated to the database instance in GB</td>
-    <td><code>5</code> </td>
-    <td><code>maximum: 16384
-minimum: 5</code> </td>
+    <td>
+      Storage allocated to the database instance in gigabytes.
+      This parameter has the following constraints:
+      <ul>
+        <li>maximum: 16384</li>
+        <li>minimum: 5</li>
+      </ul>
+    </td>
   </tr>
   <tr>
     <td><code>mysql_version</code></td>
     <td>string</td>
-    <td>The version for the MySQL instance.</td>
+    <td>
+      The version for the MySQL instance. After being set, this cannot be updated. <br>
+      The available versions are: <code>"5.6"</code>, <code>"5.7"</code>, and <code>"8.0"</code>.
+    </td>
     <td><code>"5.7"</code></td>
-    <td><code>"5.6": MySQL v5.6
-        "5.7": MySQL v5.7
-        "8.0": MySQL v8.0</code></td>
-  </tr>
-  <tr>
-    <td><code>mysql_version</code></td>
-    <td>string</td>
-    <td>The version for the MySQL instance.</td>
-    <td><code>"5.7"</code></td>
-    <td><code>"5.6": MySQL v5.6
-        "5.7": MySQL v5.7
-        "8.0": MySQL v8.0</code> (Can not be updated)</td>
+    <td></td>
   </tr>
   <tr>
     <td><code>instance_name</code></td>
     <td>string</td>
-    <td>Name for your MySQL instance</td>
+    <td>
+      Name for your MySQL instance. This parameter has the following constraints:
+      <ul>
+        <li>maxLength: 98</li>
+        <li>minLength: 6</li>
+        <li>pattern: ^[a-z][a-z0-9-]+$</li>
+      </ul>
+    </td>
     <td><code>csb-mysql-INSTANCE-ID</code></td>
-    <td><code>maxLength: 98
-        minLength: 6
-        pattern: ^[a-z][a-z0-9-]+$</code></td>
   </tr>
   <tr>
     <td><code>resource_group</code></td>
     <td>string</td>
-    <td>Name for the resource group for this instance.</td>
+    <td>
+      The name of the resource group for this instance. After being set, this cannot be updated. <br>
+      This parameter has the following constraints:
+      <ul>
+        <li>maxLength: 64</li>
+        <li>minLength: 0</li>
+        <li>pattern: ^[a-z][a-z0-9-]+$|^$</li>
+      </ul>
+    </td>
     <td><code>""</code></td>
-    <td><code>maxLength: 64
-        minLength: 0
-        pattern: ^[a-z][a-z0-9-]+$|^$</code>
-(Can not be updated)</td>
   </tr>
   <tr>
     <td><code>db_name</code></td>
     <td>string</td>
-    <td>Name for your database</td>
+    <td>The name for your database. This parameter has the following constraint: <code>maxLength: 64</code>.</td>
     <td><code>csb-db</code></td>
-    <td><code>maxLength: 64</code></td>
   </tr>
   <tr>
     <td><code>authorized_network</code></td>
     <td>string</td>
-    <td>The subnet ID of the Azure VNET to which the instance is locked down to.</td>
+    <td>The subnet ID of the Azure Virtual Network (VNet) that is attached to this instance.</td>
     <td><code>default</code></td>
-    <td>n/a</td>
   </tr>
   <tr>
     <td><code>authorized_networks</code></td>
     <td>array</td>
-    <td>The subnet IDs of the Azure VNETs to which the instance is locked down to.</td>
+    <td>The subnet IDs of the Azure Virtual Network (VNet) that is attached to this instance.</td>
     <td><code>default</code></td>
-    <td>n/a</td>
   </tr>
   <tr>
     <td><code>location</code></td>
     <td>string</td>
-    <td>The location of the mysql instance.</td>
+    <td>
+      The location of the MySQL instance. After being set, this cannot be updated. <br>
+      For available locations, see the
+      <a href="https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography">Microsoft documentation</a>.
+    </td>
     <td><code>westus</code></td>
-    <td>See locations [here](https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography)
-(Can not be updated)</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
     <td>string</td>
-    <td>Azure Tenant to create resource in</td>
-    <td>Value set in `Azure Config` tab</td>
-    <td>n/a</td>
+    <td>The ID of the Azure tenant for the instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_subscription_id</code></td>
     <td>string</td>
-    <td>Azure Subscription to create resource in</td>
-    <td>Value set in `Azure Config` tab</td>
-    <td>n/a</td>
+    <td>The ID of the Azure subscription for the instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_client_id</code></td>
     <td>string</td>
-    <td> Client ID of Azure principal</td>
-    <td>Value set in `Azure Config` tab</td>
-    <td>n/a</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_client_secret</code></td>
     <td>string</td>
-    <td>Client secret for Azure principal</td>
-    <td>Value set in `Azure Config` tab</td>
-    <td>n/a</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
     <td>boolean</td>
-    <td>Skip automatic Azure provider registration, set to true if service principal being used does not have rights to register providers</td>
-    <td>false</td>
-    <td>n/a</td>
+    <td>
+      Set to <code>true</code> to skip automatic Azure provider registration.
+      Set if the service principal being used does not have the rights to register providers.
+    </td>
+    <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>sku_name</code></td>
     <td>string</td>
-    <td>Azure sku (typically, tier [B,GP,MO] + family [Gen4,Gen5] + cores, e.g. B_Gen4_1, GP_Gen5_8, see https://docs.microsoft.com/en-us/azure/mysql/concepts-pricing-tiers) Will be computed from cores if empty.</td>
-    <td>""</td>
-    <td>Can not be updated</td>
+    <td>
+      The Azure stock-keeping unit (SKU). For more information about configuring this parameter, see
+      <a href="#azure-mysql-skus">SKUs</a>SKUs above. After being set, this cannot be updated.
+    </td>
+    <td><code>""</code></td>
   </tr>
   <tr>
     <td><code>backup_retention_days</code></td>
     <td>integer</td>
-    <td>Backup retention days for the server, supported values are between 7 and 35 days.</td>
-    <td>7</td>
-    <td>n/a</td>
+    <td>The number of backup retention days for the server. Supported values are between <code>7</code> and <code>35</code> days.</td>
+    <td><code>7</code></td>
   </tr>
 </table>
 
@@ -1404,19 +1405,25 @@ minimum: 5</code> </td>
 You can bind a service to an app by running:
 
 ```bash
-cf bind-service APP_NAME SERVICE_INSTANCE --binding-name BINDING_NAME
+cf bind-service APP-NAME SERVICE-INSTANCE --binding-name BINDING-NAME
 ```
 
 The format for binding credentials made available to the app is as follows:
 
 ```json
 {
-    "jdbcUrl" : "The jdbc url to connect to the database instance and database.",
-    "username" : "The username to authenticate to the database instance.",
-    "password" : "The password to authenticate to the database instance.",
-    "uri" : "The uri to connect to the database instance and database.",
+    "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
+    "username" : "AUTHENTICATION-USERNAME",
+    "password" : "AUTHENTICATION-PASSWORD",
+    "uri" : "DATABASE-CONNECTION-URI"
 }
 ```
+
+Where:
+- `JDBC-FORMAT-CONNECTION-URI` is the Java Database Connectivity (JDBC) URL to connect to the database instance and database.
+- `AUTHENTICATION-USERNAME` is the username to authenticate to the database instance.
+- `AUTHENTICATION-PASSWORD` is the password to authenticate to the database instance.
+- `DATABASE-CONNECTION-URI` is the URI to connect to the database instance and database.
 
 ## <a id="azure-postgresql"></a> Azure PostgreSQL
 
@@ -2509,7 +2516,7 @@ provisioning a csb-azure-eventhubs service:
     <td><code>resource_group</code></td>
     <td>string</td>
     <td>
-      The name of the resource group for the instance. This cannot be updated. <br>
+      The name of the resource group for the instance. After being set, this cannot be updated. <br>
       This parameter has the following constraints:
       <ul>
         <li>maxLength: 64</li>
@@ -2522,7 +2529,7 @@ provisioning a csb-azure-eventhubs service:
   <tr>
     <td><code>location</code></td>
     <td>string</td>
-    <td>The location of the mysql <!-- should this be Event Hub? --> instance. This cannot be updated. <br>
+    <td>The location of the mysql <!-- should this be Event Hub? --> instance. After being set, this cannot be updated. <br>
       For available locations, see the
       <a href="https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography">Microsoft documentation</a>.
     </td>
