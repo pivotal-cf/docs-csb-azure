@@ -516,7 +516,16 @@ No databases are created or managed.
 
 ### <a id="azure-mssql-server-plans"></a> Plans
 
-The only plan is `standard`.
+When configuring the <%= vars.product_short %> you can add additional new plans.
+The table below lists the plan parameters that you can configure:
+
+| Parameter Name    | Values                          | Default   |
+|-------------------|---------------------------------|-----------|
+| name              | The plan name.                  | _n/a_     |
+| id                | A unique GUID.                  | _n/a_     |
+| description       | Description of the new plan.    | _n/a_     |
+
+In addition to these values which must be set, you can add configuration parameters listed in the next section.
 
 ### <a id="azure-mssql-server-parameters"></a> Configuration Parameters
 
