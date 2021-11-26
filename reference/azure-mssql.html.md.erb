@@ -27,6 +27,10 @@ The table below lists the default plans for the csb-azure-mssql service:
 
 When configuring <%= vars.product_short %> you can add additional plans.
 For how to configure plans, see <a href="../installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+<p class="note">
+  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
+  change the value when creating or updating service instances.
+</p>
 
 The table below lists the plan parameters that you can configure when creating plans:
 
@@ -38,11 +42,6 @@ The table below lists the plan parameters that you can configure when creating p
 | max\_storage\_gb  |                                 | 5         |
 | cores             | 1&ndash;64, multiples of 2      | 2         |
 | sku_name          | See [sku](#skus) below    | _n/a_     |
-
-<p class="note">
-  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
-  change the value when creating or updating service instances.
-</p>
 
 ### <a id="skus"></a> SKUs
 
