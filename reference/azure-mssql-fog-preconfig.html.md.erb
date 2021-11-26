@@ -1,0 +1,205 @@
+---
+title: Pre-Configured Server Pairs for Azure SQL (MSSQL) Failover Groups Reference
+owner: Cloud Service Broker
+---
+
+<strong><%= modified_date %></strong>
+
+This topic provides reference information about the csb-azure-mssql-db-failover-group service.
+It details the plans, configuration parameters, and binding credentials.
+
+This service manages Azure SQL Failover Group databases on pre-configured server pairs on Azure.
+If you already have a failover group database server pre-configured,
+use this service instead of the more general Azure SQL Failover Group service.
+
+## <a id="plans"></a> Plans
+
+The table below lists the plans available for the csb-azure-mssql-db-failover-group service:
+
+| Plan       | CPUs | Storage Size |
+|------------|------|--------------|
+|small       | 2    | 50&nbsp;GB         |
+|medium      | 8    | 200&nbsp;GB        |
+|large       | 32   | 500&nbsp;GB        |
+|existing    | _n/a_ | _n/a_          |
+
+The `existing` plan connects to an existing failover group database to allow apps,
+typically in a second foundation, to bind to the database.
+
+## <a id="plans-config"></a> Plan Configuration Parameters
+
+The table below lists the plan parameters that you can configure:
+
+| Parameter Name   | Values                     | Default |
+|------------------|----------------------------|---------|
+| max\_storage\_gb |                            | 50      |
+| cores            | 1&ndash;64, multiples of 2 | 2       |
+| subsume*         | _n/a_                      | _n/a_   |
+
+<sup>*</sup> The subsume plan is used to import existing Azure MSSQL databases to bring them under
+the control of <%= vars.product_short %>.
+For more information, see
+[Subsuming a Microsoft Azure Service Broker MSSQL Failover Group Instance](azure-mssql-fog-subsume.html).
+
+### <a id="skus"></a> SKU
+
+SKUs are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>. Where:
+<ul>
+  <li>Examples of <code>TIER</code> are <code>GP\_S</code>, <code>GP</code>, and <code>HS</code></li>
+  <li>Examples of <code>FAMILY</code> are <code>Gen4</code> and <code>Gen5</code></li>
+</ul>
+Example SKUs are <code>GP\_S\_Gen4\_1</code> and <code>GP\_Gen5\_8</code>.
+
+If you do not define a SKU using the <code>sku_name</code> parameter, the SKU is
+computed from the number of cores in your plan.
+See [Plans](#plans) above.
+
+For a list of all valid SKUs, run:
+
+<pre><code>az sql db list-editions -l LOCATION -o table</code></pre>
+
+The table below shows the mapping of number of cores to the corresponding SKU:
+
+| Cores | SKU |
+|-------|-----|
+| 1  | GP\_Gen5\_1 |
+| 2  | GP\_Gen5\_2 |
+| 4  | GP\_Gen5\_4 |
+| 8  | GP\_Gen5\_8  |
+| 16 | GP\_Gen5\_16 |
+| 32 | GP\_Gen5\_32 |
+| 80 | GP\_Gen5\_80 |
+<%# Is this table necessary? Can we get this information from the links below? %>
+
+For information about the the vCore purchasing model, see the
+<a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-vcore-single-databases">Microsoft documentation</a>.<br>
+For information about the the DTU purchasing model, see the
+<a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases">Microsoft documentation</a>.
+
+<p class="note">
+  <strong>Note:</strong> Azure SQL service instances use the vCore model and the Gen5
+  hardware generation unless you override this default using the <code>sku_name</code> parameter.
+  For more information about the vCore model, see the
+  <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
+</p>
+
+## <a id="parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-mssql-db-failover-group PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the plan or configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-mssql-db-failover-group service:
+
+<table>
+  <thead>
+    <tr>
+    <th width="20%">Parameter Name</th>
+    <th width="10%">Type</th>
+    <th width="50%">Description</th>
+    <th width="20%">Default</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>The name of the failover group service instance.</td>
+    <td><code>csb-azsql-fog-INSTANCE-ID</code></td>
+  </tr>
+  <tr>
+    <td><code>db_name</code></td>
+    <td>string</td>
+    <td>The name of the database.</td>
+    <td><code>csb-fog-db-INSTANCE-ID</code></td>
+  </tr>
+  <tr>
+    <td><code>server_pair</code></td>
+    <td>string</td>
+    <td>
+      This must match one of the <code>server_credential_pairs</code> parameters in one of the servers configured when configuring the service.
+    </td>
+    <td><em>n/a</em></td>
+  </tr>
+  <tr>
+    <td><code>read_write_endpoint_failover_policy</code></td>
+    <td>string</td>
+    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>
+    <td><code>Automatic</code></td>
+  </tr>
+  <tr>
+    <td><code>failover_grace_minutes</code></td>
+    <td>number</td>
+    <td>The grace period in minutes before failover with data loss is attempted.</td>
+    <td><code>60</code></td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>sku_name</code></td>
+    <td>string</td>
+    <td>
+      The Azure stock-keeping unit (SKU).
+      For more information about configuring this parameter, see <a href="#skus">SKUs</a> above.
+    </td>
+    <td><em>n/a</em></td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+  </tr>
+</table>
+
+## <a id="binding-creds"></a> Binding Credentials
+
+The format for binding credentials for Azure SQL Failover Group is as follows:
+
+```json
+{
+    "name" : "DATABASE-NAME",
+    "hostname" : "DATABASE-SERVER-HOST",
+    "port" : "DATABASE-SERVER-PORT",
+    "username" : "AUTHENTICATION-USERNAME",
+    "password" : "AUTHENTICATION-PASSWORD",
+    "uri" : "DATABASE-CONNECTION-URI",
+    "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
+    "sqldbName" : "DATABASE-NAME",
+    "sqlServerName" : "SERVER-NAME",
+    "sqlServerFullyQualifiedDomainName" : "SERVER-FQDN",
+    "databaseLogin" : "AUTHENTICATION-USERNAME",
+    "databaseLoginPassword" : "AUTHENTICATION-PASSWORD"
+}
+```

@@ -1,0 +1,222 @@
+---
+title: Azure PostgreSQL Reference
+owner: Cloud Service Broker
+---
+
+<strong><%= modified_date %></strong>
+
+This topic provides reference information about the Azure PostgreSQL service (csb-azure-postgresql).
+It details the plans, configuration parameters, and binding credentials.
+
+## <a id="plans"></a> Plans
+
+The table below lists the plans available for the csb-azure-postgresql service:
+
+| Plan | Version | CPUs | Memory Size | Disk Size |
+|------|---------|------|-------------|-----------|
+|small | 11      | 2    | minimum 4&nbsp;GB    | 5&nbsp;GB       |
+|medium| 11      | 4    | minimum 8&nbsp;GB    | 10&nbsp;GB      |
+|large | 11      | 8    | minimum 16&nbsp;GB   | 20&nbsp;GB     |
+
+## <a id="config-options"></a> Configuration Options
+
+The table below lists the options you can configure across all supported platforms:
+
+| Option Name | Values | Default |
+|-------------|--------|---------|
+| postgres_version | 9.5, 9.6, 10, 11 | 11    |
+| storage_gb  | 5 - 4096| 5      |
+| cores       | 1,2,4,8,16,32,64 | 1      |
+| db_name     | | csb-db |
+
+## <a id="platform-parameters"></a> Platform Specific Configuration Parameters
+
+Notes below document platform specific information for mapping that might be required.
+
+The following table lists the CPU/memory size mapped onto Azure SKUs:
+
+| Plan   | Sku       |
+|--------|-----------|
+| small  | GP_Gen5_2 |
+| medium | GP_Gen5_4 |
+| large  | GP_Gen5_8 |
+
+For more information about the pricing tiers in Azure Database for PostgreSQL, see the
+[Microsoft documentation](https://docs.microsoft.com/en-us/azure/postgresql/concepts-pricing-tiers)
+
+<p class="note">
+  <strong>Note:</strong> The maximum vCores is dependent on the Service Tier.
+  <code>B_</code> = Basic, <code>GP_</code> = General Purpose, and <code>MO_</code> = Memory Optimized.
+  See below for details.
+</p>
+
+<%# The note below used to be "Note: the same family (B, GP, or MO.) Otherwise Azure will refuse the update request."
+I copied the new note from above. %>
+<p class="note">
+  <strong>Note:</strong> When updating a service instance, the SKU for the updated
+  service instance must remain in the same family (<code>B</code>, <code>GP</code>, or <code>MO</code>).
+  <%# Should this say tier or family? GP_S is a tier. Can you only use the tiers listed here? %>
+  If you update to a different family, Azure refuses the update request.
+</p>
+
+### <a id="storage"></a>Storage
+
+Storage auto grow is enabled on Azure.
+For more information about storage auto grow, see the
+[Microsoft documentation](https://docs.microsoft.com/en-us/azure/postgresql/concepts-pricing-tiers#storage-auto-grow)
+Initial storage sizes are per plan.
+
+### <a id="skus"></a> SKUs
+
+This is usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>. Where:
+<ul>
+  <li>Examples of <code>TIER</code> are <code>B</code>, <code>GP</code>, and <code>MO</code></li>
+  <li>Examples of <code>FAMILY</code> are <code>Gen4</code> and <code>Gen5</code></li>
+</ul>
+Example SKUs are <code>B\_Gen4\_1</code> and <code>G\P_Gen5\_8</code>.
+
+This overrides the number of <code>cores</code> conversion into SKU per the table below.
+
+The table below shows the mapping of number of cores to the corresponding SKU:
+
+| Cores | Instance class |
+|-------|----------------|
+| 1     | GP\_Gen5\_1      |
+| 2     | GP\_Gen5\_2      |
+| 4     | GP\_Gen5\_4      |
+| 8     | GP\_Gen5\_8      |
+| 16    | GP\_Gen5\_16     |
+| 32    | GP\_Gen5\_32     |
+| 64    | GP\_Gen5\_64     |
+<%# Is this table necessary? Can we link to this information in the Microsoft docs? %>
+
+For more information about Azure SKUs, see the
+<a href="https://docs.microsoft.com/en-us/azure/mysql/concepts-pricing-tiers">Microsoft documentation</a>.
+
+## <a id="azure-parameters"></a> Azure Specific Configuration Parameters
+
+As well as those the parameters in [Platform Specific Configuration Parameters](#platform-parameters)
+above, you can also configure service specific parameters.
+<%# What is the difference between the platform and Azure specific config parameter sections? %>
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-postgresql PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the plan or configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-postgresql service:
+
+<table>
+  <thead>
+    <tr>
+    <th width="20%">Parameter Name</th>
+    <th width="10%">Type</th>
+    <th width="50%">Description</th>
+    <th width="20%">Default</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>The name of the Azure instance to create.</td>
+    <td><code>csb-mysql-INSTANCE-ID</code></td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>
+      The Azure region in which to deploy the service instance.
+      <p class="note">
+        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
+        If you configure a region that is unavailable, <%= vars.product_short %> fails.
+      </p>
+    </td>
+    <td><code>westus</code></td>
+  </tr>
+  <tr>
+    <td><code>resource_group</code></td>
+    <td>string</td>
+    <td>The Azure resource group in which to create the instance.</td>
+    <td><code>rg-INSTANCE-NAME</code></td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>authorized_network</code></td>
+    <td>string</td>
+    <td>
+      The subnet ID, in long form, of the Azure Virtual Network (VNet) or subnet
+      that is attached to this instance to allow remote access.
+      By default no VNets are allowed access.
+    </td>
+    <td><em>n/a</em></td>
+  </tr>
+  <tr>
+    <td><code>sku_name</code></td>
+    <td>string</td>
+    <td>
+      The Azure stock-keeping unit (SKU).
+      For more information about configuring this parameter, see <a href="#skus">SKUs</a> above.
+    </td>
+    <td><em>n/a</em></td>
+  </tr>
+  <tr>
+    <td><code>use_tls</code></td>
+    <td>boolean</td>
+    <td>Use TLS for database connections.</td>
+    <td><code>true</code></td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+  </tr>
+</table>
+
+## <a id="binding-creds"></a> Binding Credentials
+
+The format for binding credentials for PostgreSQL is as follows:
+
+```json
+{
+    "name" : "DATABASE-NAME",
+    "hostname" : "DATABASE-SERVER-HOST",
+    "port" : "DATABASE-SERVER-PORT",
+    "username" : "AUTHENTICATION-USERNAME",
+    "password" : "AUTHENTICATION-PASSWORD",
+    "uri" : "DATABASE-CONNECTION-URI",
+    "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI"
+}
+```
