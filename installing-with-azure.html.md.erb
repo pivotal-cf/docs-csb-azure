@@ -239,6 +239,10 @@ the **Settings** tab.
 1. Enter additional plans as additional JSON objects within the provided field.
 For details about properties for each service configuration, see
 <a href="reference.html">Service Plan Reference</a>.
+<p class="note">
+  <strong>Note:</strong> When developers create a service instance, they cannot override
+  any plan level properties that have been set in this field.
+</p>
 
 1. (Optional) If you want to use different credentials to the ones specified in the **Azure Config** tab,
 supply the credentials as properties to a plan instance in the additional plans box:
@@ -266,7 +270,6 @@ supply the credentials as properties to a plan instance in the additional plans 
 1. Click **Apply changes**.
 
 1. Review your Cloud Foundry Marketplace to see the new plan sizes.
-
 
 
 ## <a id="rotate-password"></a>Rotate the Encryption Password on the State Database
