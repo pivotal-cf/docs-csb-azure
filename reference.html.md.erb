@@ -1657,13 +1657,13 @@ This section details the plans and configuration parameters available for Azure 
 
 ### <a id="azure-cosmosdb-sql-plans"></a> Plans
 
-The table below lists the plans for Azure Cosmos DB SQL API:
+The following table lists the plans for Azure Cosmos DB SQL API:
 
-| Plan | Description |
-|------|-------------|
-| small | SQL Cosmos DB Account, no redundancy, 400 request units |
-| medium | SQL Cosmos DB Account, single read failover location, 1,000 request units |
-| large | SQL Cosmos DB Account, single read/write failover location, 10,000 request units |
+| Plan   | Description |
+|--------|-------------|
+| small  | SQL Cosmos DB Account, no redundancy, and 400 request units. |
+| medium | SQL Cosmos DB Account, single read failover location, and 1,000 request units. |
+| large  | SQL Cosmos DB Account, single read/write failover location, and 10,000 request units. |
 
 ### <a id="azure-cosmosdb-sql-parameters"></a> Configuration Parameters
 
@@ -1695,20 +1695,28 @@ provisioning a csb-azure-cosmosdb-sql service:
     <td><code>request_units</code></td>
     <td>integer</td>
     <td>
-      The throughput of the MongoDB collection (RU/s). Must be set in increments of 100. The minimum value is 400.
+      The throughput of the Cosmos DB collection (RU/s). This parameter has the following constraints:
+      <ul>
+        <li>minimum: 400</li>
+        <li>multipleOf: 100</li>
+      </ul>
     </td>
     <td><code>400</code></td>
   </tr>
   <tr>
     <td><code>failover_locations</code></td>
     <td>array</td>
-    <td>A list of location for the Cosmos DB account. The first location is the default write location.</td>
-    <td><code>westus</code></td>
+  <td>
+    A list of locations for the Cosmos DB account. The first location is the default write location.
+    For available locations, see the
+    <a href="https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography">Microsoft documentation</a>.
+  </td>
+  <td><code>westus</code></td>
   </tr>
   <tr>
     <td><code>instance_name</code></td>
     <td>string</td>
-    <td>Account name for your Cosmos DB</td>
+    <td>Account name for your Cosmos DB <%# should this be instance name? %> </td>
     <td><code>csb-INSTANCE-ID</code></td>
   </tr>
   <tr>
@@ -1720,73 +1728,91 @@ provisioning a csb-azure-cosmosdb-sql service:
   <tr>
     <td><code>db_name</code></td>
     <td>string</td>
-    <td>Name for your Cosmos DB database</td>
+    <td>The name for your Cosmos DB database.</td>
     <td><code>csb-db-INSTANCE-ID</code></td>
   </tr>
   <tr>
     <td><code>location</code></td>
     <td>string</td>
-    <td>The location of the CosmosDB account</td>
+    <td>The location of the CosmosDB account.</td>
     <td><code>westus</code></td>
   </tr>
   <tr>
     <td><code>ip_range_filter</code></td>
     <td>string</td>
     <td>
-      CosmosDB Firewall Support.
-      This value specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IP's for a given database account.
-      IP addresses/ranges must be comma separated and must not contain any spaces. 0.0.0.0 allows access from Azure networks.
-      An empty string "" allows access from all public networks.
+      CosmosDB Firewall Support. This value specifies the set of IP addresses or
+      IP address ranges in CIDR form to be included as the allowed list of client
+      IP addresses for a given database account. <br>
+      IP addresses and ranges must be comma separated and must not contain any spaces.
+      <code>0.0.0.0</code> allows access from Azure networks.
+      An empty string <code>""</code> allows access from all public networks.
     </td>
     <td><code>0.0.0.0</code></td>
   </tr>
   <tr>
     <td><code>consistency_level</code></td>
     <td>string</td>
-    <td>The Consistency Level to use for this CosmosDB Account - can be either BoundedStaleness, Eventual, Session, Strong or ConsistentPrefix</td>
+    <td>
+      The Consistency Level to use for this Cosmos DB Account.
+      The options are <code>BoundedStaleness</code>, <code>Eventual</code>,
+      <code>Session</code>, <code>Strong</code>, and <code>ConsistentPrefix</code>.
+      If you choose <code>BoundedStaleness</code>, you must also set
+      <code>max_interval_in_seconds</code> and <code>max_staleness_prefix</code>.
+    </td>
     <td><code>Session</code></td>
   </tr>
   <tr>
     <td><code>max_interval_in_seconds</code></td>
     <td>integer</td>
-    <td>When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400 (1 day). Defaults to 5. Required when consistency_level is set to BoundedStaleness.</td>
+    <td>
+      When used with the Bounded Staleness consistency level, this value represents
+      the time amount of staleness (in seconds) tolerated.
+      Accepted range for this value is 5 - 86400 (1 day). Defaults to 5.
+      Required when consistency_level is set to BoundedStaleness.
+    </td>
     <td><code>5</code></td>
   </tr>
   <tr>
     <td><code>max_staleness_prefix</code></td>
     <td>integer</td>
-    <td>When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 10 – 2147483647. Defaults to 100. Required when consistency_level is set to BoundedStaleness.</td>
+    <td>
+      When used with the Bounded Staleness consistency level, this value represents
+      the number of stale requests tolerated.
+      Accepted range for this value is 10 – 2147483647. Defaults to 100.
+      Required when consistency_level is set to BoundedStaleness.
+    </td>
     <td><code>100</code></td>
   </tr>
   <tr>
     <td><code>enable_multiple_write_locations</code></td>
     <td>boolean</td>
-    <td>Enable multiple write locations for this Cosmos DB account</td>
+    <td>Set to <code>true</code> to enable multiple write locations for this Cosmos DB account.</td>
     <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>enable_automatic_failover</code></td>
     <td>boolean</td>
-    <td>Enable automatic fail over for this Cosmos DB account</td>
+    <td>Set to <code>true</code> to enable automatic failover for this Cosmos DB account</td>
     <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
     <td>string</td>
-    <td>The ID of the Azure tenant for the service instance.</td>
-    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>The ID of the Azure tenant for the instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_subscription_id</code></td>
     <td>string</td>
-    <td>The ID of the Azure subscription for the service instance.</td>
-    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>The ID of the Azure subscription for the instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_client_id</code></td>
     <td>string</td>
     <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_client_secret</code></td>
@@ -1797,14 +1823,16 @@ provisioning a csb-azure-cosmosdb-sql service:
   <tr>
     <td><code>skip_provider_registration</code></td>
     <td>boolean</td>
-    <td>Set to <code>true</code> to skip automatic Azure provider registration.
-    Set if the service principal being used does not have the rights to register providers.</td>
+    <td>
+      Set to <code>true</code> to skip automatic Azure provider registration.
+      Set if the service principal being used does not have the rights to register providers.
+    </td>
     <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>authorized_networks</code></td>
     <td>list (string)</td>
-    <td>A list of resource IDs for subnets of the authorized Azure Vnet.</td>
+    <td>A list of resource IDs for subnets of the authorized Azure Virtual Network (VNet).</td>
     <td><code>[]</code></td>
   </tr>
 </table>
@@ -2406,6 +2434,7 @@ The format for binding credentials for Azure Storage Account is as follows:
 }
 ```
 
+
 ## <a id="azure-resource-group"></a> Azure Resource Group
 
 This section applies to csb-azure-resource-group.
@@ -2415,14 +2444,17 @@ This section details the plans and configuration parameters available for Azure 
 
 The only plan available by default when the tile is installed is `standard`.
 
-When configuring the <%= vars.product_short %> you can add additional new plans.
-The table below lists the plan parameters that you can configure:
+### <a id="azure-resource-group-plans-config"></a> Plan Configuration Parameters
+
+When configuring the <%= vars.product_short %> you can add additional plans.
+
+The following table lists the plan parameters that you can configure:
 
 | Parameter Name    | Values                          | Default   |
 |-------------------|---------------------------------|-----------|
-| name              | The plan name.                  | _n/a_     |
-| id                | A unique GUID.                  | _n/a_     |
-| description       | Description of the new plan.    | _n/a_     |
+| `name`            | The plan name.                  | _n/a_     |
+| `id`              | A unique GUID.                  | _n/a_     |
+| `description`     | Description of the new plan.    | _n/a_     |
 
 ### <a id="azure-resource-group-parameters"></a> Configuration Parameters
 
@@ -2438,7 +2470,7 @@ You can update the configuration parameters for a service instance by running:
 cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
-The table below lists the parameters that you can configure, using the `-c` flag, when
+The following table lists the parameters that you can configure, using the `-c` flag, when
 provisioning a csb-azure-storage-account service:
 
 <table>
@@ -2453,10 +2485,8 @@ provisioning a csb-azure-storage-account service:
   <tr>
     <td><code>instance_name</code></td>
     <td>string</td>
-    <td>
-      The name of the Azure Resource Group
-    </td>
-    <td>N/A</td>
+    <td>The name of the Azure Resource Group.</td>
+    <td><em>n/a</em></td>
   </tr>
   <tr>
     <td><code>location</code></td>
@@ -2496,6 +2526,7 @@ provisioning a csb-azure-storage-account service:
     <td><code>false</code></td>
   </tr>
 </table>
+
 
 ## <a id="azure-eventhub"></a> Azure Event Hub
 
