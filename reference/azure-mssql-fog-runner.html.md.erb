@@ -1,0 +1,107 @@
+---
+title: Azure SQL Failover Group Failover Runner Reference
+owner: Cloud Service Broker
+---
+
+<strong><%= modified_date %></strong>
+
+This topic provides reference information about the csb-azure-mssql-fog-run-failover service.
+It details the plans and configuration parameters available.
+
+This service is a pseudo-service that upon provisioning causes a failover group
+secondary server to become the primary.
+Upon de-provisioning, the failover is undone and the original primary server
+once again becomes the primary.
+
+## <a id="plans"></a> Plans
+
+The only plan is `standard`.
+
+## <a id="parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-mssql-fog-run-failover standard SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-mssql-fog-run-failover service:
+
+<table>
+  <thead>
+    <tr>
+    <th width="20%">Parameter Name</th>
+    <th width="10%">Type</th>
+    <th width="50%">Description</th>
+    <th width="20%">Default</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>fog_instance_name</code></td>
+    <td>string</td>
+    <td>The name of the service instance for the failover group to target.</td>
+    <td><em>n/a</em></td>
+  </tr>
+  <tr>
+    <td><code>server_pair_name</code></td>
+    <td>string</td>
+    <td>
+      The server pair from <code>server_pairs</code> below.
+      This must match one of the <code>PAIR</code> parameters in <code>server_pairs</code>.
+      For example, <code>PAIR-1</code> in the code snippet in the <code>server_credentials_pairs</code> row below.
+    </td>
+    <td><em>n/a</em></td>
+  </tr>
+  <tr>
+    <td><code>server_pairs</code></td>
+    <td>JSON</td>
+    <td>
+      A list of failover group server pairs.
+      Format: <pre><code>{ "PAIR-1": { "primary":{"server_name":"...", "resource_group":..."}, "secondary":{"server_name":"...", "resource_group":..."}, "PAIR-2":...}</code></pre>
+      One of the values you use for <code>PAIR</code> must match the <code>server_pair_name</code> parameter above.
+    </td>
+    <td><em>n/a</em></td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+  </tr>
+</table>
+
+## <a id="binding-creds"></a> Binding Credentials
+
+There are no binding credentials for this service.
