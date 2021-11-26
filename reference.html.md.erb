@@ -1170,6 +1170,8 @@ The table below lists parameters which can only be added at the plan level.
 | `private_endpoint_subnet_id`   | The ID of the Subnet within which the Private Endpoint is created. For example, `"idofsubnet"`. | `""`   |
 | `private_dns_zone_ids`   | An array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints. For example, `["idOfSubnet", "anotherIdOfSubnet"] `. | `[]`   |
 
+For how to configure plans, see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+
 <p class="note">
   <strong>Note:</strong> When creating or updating a service instance, developers
   cannot change the configuration values set in the plan.
@@ -1622,40 +1624,43 @@ This section details the plans and configuration parameters available for Azure 
 
 ### <a id="azure-redis-plans"></a> Plans
 
-The table below lists the plans for Azure Redis:
+The following table lists the plans for Azure Redis:
 
-| Plan | Description |
-|------|-------------|
-| small | Basic plan with 1GB cache and no failover. High Availability is not provided, update WILL result in loss of data. |
-| medium | Basic plan with 6GB cache and no failover. High Availability is not provided, update WILL result in loss of data. |
-| large | Basic plan with 26GB cache and no failover. High Availability is not provided, update WILL result in loss of data. |
-| ha-small | Standard plan with 1GB cache with high availability and no failover. |
-| ha-medium | Standard plan with 6GB cache with high availability and no failover. |
-| ha-large | Standard plan with 26GB cache with high availability and no failover. |
-| ha-P1 | A High Availability plan with 1GB cache and no failover |
+| Plan      | Description |
+|-----------|-------------|
+| small     | Basic plan with 1&nbsp;GB cache and no failover. High Availability is not provided, and update results in loss of data.  |
+| medium    | Basic plan with 6&nbsp;GB cache and no failover. High Availability is not provided, and update results in loss of data.  |
+| large     | Basic plan with 26&nbsp;GB cache and no failover. High Availability is not provided, and update results in loss of data. |
+| ha-small  | Standard plan with 1&nbsp;GB cache with high availability and no failover.  |
+| ha-medium | Standard plan with 6&nbsp;GB cache with high availability and no failover.  |
+| ha-large  | Standard plan with 26&nbsp;GB cache with high availability and no failover. |
+| ha-P1     | A High Availability plan with 1&nbsp;GB cache and no failover. |
 
 ### <a id="azure-redis-plans-config"></a> Plan Configuration Parameters
 
 When configuring <%= vars.product_short %> you can add additional new plans.
-The table below lists parameters which can only be added at the plan level. Further [configuration properties](#azure-cosmosdb-redis-parameters) can also be supplied as parameters in plan creation.
+Further [configuration properties](#azure-cosmosdb-redis-parameters) can also be supplied as parameters in plan creation.
 
-| Parameter Name    | Description                     | Default   | Example Value |
-|-------------------|---------------------------------|-----------|---------------|
-| name              | The plan name.                  | _n/a_     | "plan_1"      |
-| id                | A unique GUID.                  | _n/a_     | "guid"        |
-| description       | Description of the new plan.    | _n/a_     | "This is a plan" |
-| sku_name | The SKU of Redis to use.  | _n/a_ | "Basic" |
-| family |The SKU family/pricing group to use.  | _n/a_ |  'C' (Basic/Standard)  or  'P' (Premium)|
-| capacity |The size of the Redis cache to deploy. Must be between 1-6 | 1 |  6  |
-| tls_min_version | Minimum enforced TLS version. Possible values are 1.0, 1.1, 1.2 | "1.2" | "1.2" |
-| firewall_rules | Array of firewall rule start/end IP pairs. | []| [["1.2.3.4", "2.3.4.5"], ["5.6.7.8", "6.7.8.9"]] |
-| private_endpoint_subnet_id | The ID of the Subnet within which Private Endpoint for the Redis cache will be created. | ""| "someID" |
-| private_dns_zone_ids | Array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints | [] | ["someID", "anotherID"] |
+The following table lists the parameters which can only be added at the plan level.
 
-Further information on plan curation is available in <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+| Parameter Name        | Description                     | Default |
+|-----------------------|---------------------------------|---------|
+| `name`                | The plan name.                  | _n/a_   |
+| `id`                  | A unique GUID.                  | _n/a_   |
+| `description`         | Description of the new plan.    | _n/a_   |
+| `sku_name`            | The Redis SKU to use, for example, ` "Basic"`. | _n/a_ |
+| `family`              | The SKU family/pricing group to use, for example, `C` (Basic/Standard)  or  `P` (Premium)| _n/a_ |
+| `capacity`            | The size of the Redis cache to deploy. Must be between 1 and 6 | `1` |
+| `tls_min_version`     | The minimum enforced TLS version. Possible values are `"1.0"`, `"1.1"`, `"1.2"` | `"1.2"` |
+| `firewall_rules`      | An array of firewall rule start/end IP pairs. For example, `[["1.2.3.4", "2.3.4.5"], ["5.6.7.8", "6.7.8.9"]]` | `[]`|
+| `private_endpoint_subnet_id` | The ID of the subnet within which Private Endpoint for the Redis cache is created. | `""` |
+| `private_dns_zone_ids`| An array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints. For example, `["someID", "anotherID"]` | `[]` |
+
+For how to configure plans, see <a href="installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
 <p class="note">
-  <strong>Note:</strong> These configuration values set in the plan cannot be changed by the developers during provision or update operations.
+  <strong>Note:</strong> When creating or updating a service instance, developers
+  cannot change the configuration values set in the plan.
 </p>
 
 ### <a id="azure-redis-parameters"></a> Configuration Parameters
@@ -1672,7 +1677,7 @@ You can update the configuration parameters for a service instance by running:
 cf update-service SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
 ```
 
-The table below lists the parameters that you can configure, using the `-c` flag, when
+The following table lists the parameters that you can configure, using the `-c` flag, when
 provisioning a csb-azure-redis service:
 
 <table>
@@ -1682,90 +1687,88 @@ provisioning a csb-azure-redis service:
       <th width="10%">Type</th>
       <th width="40%">Description</th>
       <th width="10%">Default</th>
-      <th width="20%">Constraints</th>
     </tr>
   </thead>
   <tr>
     <td><code>instance_name</code></td>
     <td>string</td>
-    <td>Name for your mysql instance</td>
-    <td><code>csb-redis-INSTANCE-ID</code></td>
     <td>
-      maxLength: 98
-      minLength: 6
-      pattern: ^[a-z][a-z0-9-]+$
-      **Can not be updated**
+      The name of your MySQL instance. After being set, this cannot be updated. <br>
+      This parameter has the following constraints:
+      <ul>
+        <li>maxLength: 98</li>
+        <li>minLength: 6</li>
+        <li>pattern: ^[a-z][a-z0-9-]+$</li>
+      </ul>
     </td>
+    <td><code>csb-redis-INSTANCE-ID</code></td>
   </tr>
   <tr>
     <td><code>resource_group</code></td>
     <td>string</td>
-    <td>Name for the resource group for this instance</td>
-    <td><code>''</code></td>
     <td>
-      maxLength: 64
-      minLength: 0
-      pattern: ^[a-z][a-z0-9-]+$|^$
+      The name of the resource group for the instance. This parameter has the following constraints:
+      <ul>
+        <li>maxLength: 64</li>
+        <li>minLength: 0</li>
+        <li>pattern: ^[a-z][a-z0-9-]+$|^$</li>
+      </ul>
     </td>
+    <td><code>''</code></td>
   </tr>
   <tr>
     <td><code>subnet_id</code></td>
     <td>string</td>
-    <td>The ID of the Subnet within which the Redis Cache should be deployed, valid only for Premium SKU </td>
+    <td>The ID of the Subnet within which the Redis Cache should be deployed. Valid only for Premium SKU. After being set, this cannot be updated.</td>
     <td><code>''</code></td>
-    <td>
-    **Can not be updated**
-    </td>
   </tr>
   <tr>
     <td><code>location</code></td>
     <td>string</td>
-    <td>The location of the Redis instance.</td>
-    <td><code>westus</code></td>
-    <td>See locations [here](https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography)
+    <td>
+      The location of the Redis instance. For available locations, see the
+      <a href="https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography">Microsoft documentation</a>.
     </td>
+    <td><code>westus</code></td>
   </tr>
- <tr>
+  <tr>
     <td><code>azure_tenant_id</code></td>
     <td>string</td>
-    <td>Azure Tenant to create resource in</td>
-    <td>Value set in `Azure Config` tab</td>
-    <td>n/a</td>
+    <td>The ID of the Azure tenant for the instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_subscription_id</code></td>
     <td>string</td>
-    <td>Azure Subscription to create resource in</td>
-    <td>Value set in `Azure Config` tab</td>
-    <td>n/a</td>
+    <td>The ID of the Azure subscription for the instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_client_id</code></td>
     <td>string</td>
-    <td> Client ID of Azure principal</td>
-    <td>Value set in `Azure Config` tab</td>
-    <td>n/a</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %></td>
   </tr>
   <tr>
     <td><code>azure_client_secret</code></td>
     <td>string</td>
-    <td>Client secret for Azure principal</td>
-    <td>Value set in `Azure Config` tab</td>
-    <td>n/a</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
     <td>boolean</td>
-    <td>Skip automatic Azure provider registration, set to true if service principal being used does not have rights to register providers</td>
-    <td>false</td>
-    <td>n/a</td>
+    <td>
+      Set to <code>true</code> to skip automatic Azure provider registration.
+      Set if the service principal being used does not have the rights to register providers.
+    </td>
+    <td><code>false</code></td>
   </tr>
   <tr>
     <td><code>maxmemory_policy</code></td>
     <td>string</td>
-    <td>Max memory eviction policy.</td>
+    <td>Max memory eviction policy. Possible values are <code>volatile-lru</code>, <code>allkeys-lru</code>, <code>volatile-random</code>, <code>allkeys-random</code>, <code>volatile-ttl</code>, <code>noeviction</code>.</td>
     <td><code>volatile-lru</code></td>
-    <td>Possible values are <code>volatile-lru</code>, <code>allkeys-lru</code>, <code>volatile-random</code>, <code>allkeys-random</code>, <code>volatile-ttl</code>, <code>noeviction</code></td>
   </tr>
 </table>
 
@@ -1775,12 +1778,19 @@ The format for binding credentials for Azure Redis is as follows:
 
 ```json
 {
-    "name" : "The name of the redis.",
-    "host" : "Hostname or IP address of the exposed redis endpoint used by clients to connect to the service.",
-    "tls_port" : "The tls_port number of the exposed redis instance.",
-    "password" : "The password to authenticate to the redis instance."
+    "name" : "REDIS-INSTANCE-NAME",
+    "host" : "REDIS-HOSTNAME",
+    "tls_port" : "REDIS-TLS-PORT",
+    "password" : "AUTHENTICATION-PASSWORD"
 }
 ```
+
+Where:
+
+- `REDIS-INSTANCE-NAME` is the name of the Redis instance.
+- `REDIS-HOSTNAME` is the hostname or IP address of the exposed Redis endpoint used by clients to connect to the service.
+- `REDIS-TLS-PORT` is the TLS port number of the exposed Redis instance.
+- `AUTHENTICATION-PASSWORD` is the password to authenticate to the Redis instance.
 
 ## <a id="azure-storage-account"></a> Azure Storage Account
 
