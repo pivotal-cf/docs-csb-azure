@@ -319,3 +319,23 @@ To remove encryption from the state database:
 1. Click **Apply changes** to install the <%= vars.product_short %> tile.
 
 1. (Recommended) After the apply changes process completes, delete all label and password pairs and apply changes again.
+
+
+### <a id="updates"></a> Updating Services with <%= vars.product_short %>
+
+When updating a service instance, all parameters from previous updates must also be supplied. If only incremental parameters are supplied in a subsequent update, the initially updated
+parameters will revert to the plan defaults.
+
+For example:
+
+<pre>
+# Create a storage bucket:
+cf create-service csb-google-storage-bucket private mybucket2
+
+# Bucket name updated
+cf update-service mybucket2 -c '{"name":"myBucketName"}'
+
+# Region updated, but need to also provide the previously updated name as well:
+cf update-service mybucket2 -c '{"name":"myBucketName","region":"europe-north1"}'
+
+</pre>
