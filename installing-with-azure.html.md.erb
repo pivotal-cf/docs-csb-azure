@@ -330,7 +330,6 @@ parameters revert to the plan defaults.
 For example:
 
     ```
-
     # Create a storage bucket:
     cf create-service csb-google-storage-bucket private mybucket2
 
@@ -339,5 +338,4 @@ For example:
 
     # Region updated, but must also provide the previously updated name as well:
     cf update-service mybucket2 -c '{"name":"myBucketName","region":"europe-north1"}'
-
     ```
