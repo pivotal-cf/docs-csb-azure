@@ -347,9 +347,9 @@ These might include:
 
 **Create a Storage Bucket:**
 
-    ```
-    cf create-service BUCKET-TYPE ACCESS-CONTROL BUCKET-NAME
-    ```
+```
+cf create-service BUCKET-TYPE ACCESS-CONTROL BUCKET-NAME
+```
 
     Where:
     * `BUCKET-TYPE` is the type of bucket you want to create.
@@ -363,9 +363,9 @@ These might include:
 
 **Update a Bucket Name:**
 
-    ```
-    cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME"}'
-    ```
+```
+cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME"}'
+```
 
     Where:
     * `BUCKET-NAME` is the name you want to give your bucket.
@@ -381,9 +381,9 @@ These might include:
   <strong>Note:</strong> When updating a region, you must also provide the previously updated name as well.
 </p>
 
-    ```
-    cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME","region":"REGION-ZONE"}'
-    ```
+```
+cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME","region":"REGION-ZONE"}'
+```
 
     Where:
     * `BUCKET-NAME` is the name you want to give your bucket.
