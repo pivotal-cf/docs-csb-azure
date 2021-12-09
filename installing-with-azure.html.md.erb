@@ -352,6 +352,7 @@ cf create-service BUCKET-TYPE ACCESS-CONTROL BUCKET-NAME
 ```
 
 Where:
+
 * `BUCKET-TYPE` is the type of bucket you want to create.
 * `ACCESS-CONTROL` is the permission level for your bucket.
 * `BUCKET-NAME` is the name you want to give your bucket.
@@ -367,30 +368,32 @@ For example:
 cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME"}'
 ```
 
-    Where:
-    * `BUCKET-NAME` is the name you want to give your bucket.
-    * `NEW-BUCKET-NAME` is the new name you want to give your bucket.
+Where:
 
-    For example:
-    <pre class="terminal">
-      $ cf update-service mybucket2 -c '{"name":"myBucketName"}'
-    </pre>
+* `BUCKET-NAME` is the name you want to give your bucket.
+* `NEW-BUCKET-NAME` is the new name you want to give your bucket.
+
+For example:
+<pre class="terminal">
+  $ cf update-service mybucket2 -c '{"name":"myBucketName"}'
+</pre>
 
 **Update a Region:**
 <p class="note">
   <strong>Note:</strong> When updating a region, you must also provide the previously updated name as well.
 </p>
 
-    <pre>
-    cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME","region":"REGION-ZONE"}'
-    </pre>
+```
+cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME","region":"REGION-ZONE"}'
+```
 
-    Where:
-    * `BUCKET-NAME` is the name you want to give your bucket.
-    * `NEW-BUCKET-NAME` is the new name you want to give your bucket.
-    * `REGION-ZONE` is the Region and Zone that your bucket lives in.
+Where:
 
-    For example:
-    <pre class="terminal">
-      $ cf update-service mybucket2 -c '{"name":"myBucketName","region":"europe-north1"}'
-    </pre>
+* `BUCKET-NAME` is the name you want to give your bucket.
+* `NEW-BUCKET-NAME` is the new name you want to give your bucket.
+* `REGION-ZONE` is the Region and Zone that your bucket lives in.
+
+For example:
+<pre class="terminal">
+  $ cf update-service mybucket2 -c '{"name":"myBucketName","region":"europe-north1"}'
+</pre>
