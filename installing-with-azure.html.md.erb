@@ -342,10 +342,13 @@ For example:
 
 <hr style="height:1px;border:none;color:#333;background-color:#333;" />
 <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+<br><br>
 
 These might include:
 
 **Create a Storage Bucket:**
+
+When creating a storage bucket, enter the command using this format:
 
 ```
 cf create-service BUCKET-TYPE ACCESS-CONTROL BUCKET-NAME
@@ -363,6 +366,8 @@ For example:
 </pre>
 
 **Update a Bucket Name:**
+
+When updating a bucket name, enter the command using this format:
 
 ```
 cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME"}'
@@ -382,6 +387,8 @@ For example:
 <p class="note">
   <strong>Note:</strong> When updating a region, you must also provide the previously updated name as well.
 </p>
+
+When updating a bucket region, enter the command using this format:
 
 ```
 cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME","region":"REGION-ZONE"}'
