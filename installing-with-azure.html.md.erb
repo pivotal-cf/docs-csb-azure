@@ -327,15 +327,63 @@ When updating a service instance, all parameters from previous updates must also
 If only incremental parameters are supplied in a subsequent update, the initially updated
 parameters revert to the plan defaults.
 
+These might include:
+
+**Create a Storage Bucket:**
+
+When creating a storage bucket, enter the command using this format:
+
+```
+cf create-service BUCKET-TYPE ACCESS-CONTROL BUCKET-NAME
+```
+
+Where:
+
+* `BUCKET-TYPE` is the type of bucket you want to create.
+* `ACCESS-CONTROL` is the permission level for your bucket.
+* `BUCKET-NAME` is the name you want to give your bucket.
+
 For example:
+<pre class="terminal">
+  $ cf create-service csb-google-storage-bucket private mybucket2
+</pre>
 
-    ```
-    # Create a storage bucket:
-    cf create-service csb-google-storage-bucket private mybucket2
+**Update a Bucket Name:**
 
-    # Bucket name updated
-    cf update-service mybucket2 -c '{"name":"myBucketName"}'
+When updating a bucket name, enter the command using this format:
 
-    # Region updated, but must also provide the previously updated name as well:
-    cf update-service mybucket2 -c '{"name":"myBucketName","region":"europe-north1"}'
-    ```
+```
+cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME"}'
+```
+
+Where:
+
+* `BUCKET-NAME` is the name you want to give your bucket.
+* `NEW-BUCKET-NAME` is the new name you want to give your bucket.
+
+For example:
+<pre class="terminal">
+  $ cf update-service mybucket2 -c '{"name":"myBucketName"}'
+</pre>
+
+**Update a Region:**
+<p class="note">
+  <strong>Note:</strong> When updating a property, you must also provide the previously updated name as well.
+</p>
+
+When updating a bucket region, enter the command using this format:
+
+```
+cf update-service BUCKET-NAME -c '{"name":"NEW-BUCKET-NAME","region":"REGION-ZONE"}'
+```
+
+Where:
+
+* `BUCKET-NAME` is the name you want to give your bucket.
+* `NEW-BUCKET-NAME` is the new name you want to give your bucket.
+* `REGION-ZONE` is the Region and Zone that your bucket lives in.
+
+For example:
+<pre class="terminal">
+  $ cf update-service mybucket2 -c '{"name":"myBucketName","region":"europe-north1"}'
+</pre>
