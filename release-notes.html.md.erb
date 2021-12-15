@@ -7,6 +7,28 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_full %>.
 
+
+## <a id="1-2-2"></a> v1.2.2
+
+**Release Date:** December 16, 2021
+
+### Resolved Issues
+
+This release has the following fixes:
+
+* **For `csb-azure-postgresql` users have `all_access` role for the database:** The user created when binding to the database can create a schema that is accessible by other users.
+
+* **For `csb-azure-resource-group` and `csb-azure-mssql-server` plan configuration exposed:** The user can now create additional custom plans.
+
+* **For `csb-azure-mongodb` plan updates fixed**: The user can now switch between plans, where Azure allows.
+
+### Known Issues
+
+This release has the following issue:
+
+<%= partial vars.path_to_partials + '/csb-azure/cf-update-ki' %>
+
+
 ## <a id="1-2-1"></a> v1.2.1
 
 **Release Date:** November 11, 2021
