@@ -275,16 +275,23 @@ The format for binding credentials made available to the app is as follows:
 
 ```json
 {
-    "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
+    "name" : "DATABASE-NAME",
+    "hostname" : "DATABASE-SERVER-HOST",
+    "port" : "DATABASE-SERVER-PORT",
     "username" : "AUTHENTICATION-USERNAME",
     "password" : "AUTHENTICATION-PASSWORD",
-    "uri" : "DATABASE-CONNECTION-URI"
+    "uri" : "DATABASE-CONNECTION-URI",
+    "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
+    "use_tls": true
 }
 ```
 
 Where:
 
-- `JDBC-FORMAT-CONNECTION-URI` is the Java Database Connectivity (JDBC) URL to connect to the database instance and database.
+- `DATABASE-NAME` is the database name.
+- `DATABASE-SERVER-HOST` is the database server host name.
+- `PORT` is the database server port.
 - `AUTHENTICATION-USERNAME` is the username to authenticate to the database instance.
 - `AUTHENTICATION-PASSWORD` is the password to authenticate to the database instance.
 - `DATABASE-CONNECTION-URI` is the URI to connect to the database instance and database.
+- `JDBC-FORMAT-CONNECTION-URI` is the Java Database Connectivity (JDBC) URL to connect to the database instance and database.
