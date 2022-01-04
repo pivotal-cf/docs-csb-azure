@@ -72,8 +72,9 @@ provisioning a csb-azure-redis service:
     <tr>
       <th width="20%">Parameter Name</th>
       <th width="10%">Type</th>
-      <th width="50%">Description</th>
+      <th width="40%">Description</th>
       <th width="20%">Default</th>
+      <th width="10%">Operation</th>
     </tr>
   </thead>
   <tr>
@@ -89,6 +90,7 @@ provisioning a csb-azure-redis service:
       </ul>
     </td>
     <td><code>csb-redis-INSTANCE-ID</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>resource_group</code></td>
@@ -101,13 +103,15 @@ provisioning a csb-azure-redis service:
         <li>Allowed characters: lowercase letters and numbers.</li>
       </ul>
     </td>
-    <td><code>''</code></td>
+    <td><code>rg-INSTANCE-NAME</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>subnet_id</code></td>
     <td>string</td>
     <td>The ID of the Subnet within which the Redis Cache should be deployed. Valid only for Premium SKU. After being set, this cannot be updated.</td>
     <td><code>''</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>location</code></td>
@@ -117,30 +121,35 @@ provisioning a csb-azure-redis service:
       <a href="https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography">Microsoft documentation</a>.
     </td>
     <td><code>westus</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
     <td>string</td>
     <td>The ID of the Azure tenant for the instance.</td>
     <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_subscription_id</code></td>
     <td>string</td>
     <td>The ID of the Azure subscription for the instance.</td>
     <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_id</code></td>
     <td>string</td>
     <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_secret</code></td>
     <td>string</td>
     <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -150,12 +159,14 @@ provisioning a csb-azure-redis service:
       Set if the service principal being used does not have the rights to register providers.
     </td>
     <td><code>false</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>maxmemory_policy</code></td>
     <td>string</td>
     <td>Max memory eviction policy. Possible values are <code>volatile-lru</code>, <code>allkeys-lru</code>, <code>volatile-random</code>, <code>allkeys-random</code>, <code>volatile-ttl</code>, <code>noeviction</code>.</td>
     <td><code>volatile-lru</code></td>
+    <td>provision and update</td>
   </tr>
 </table>
 
