@@ -108,8 +108,9 @@ provisioning or updating a csb-azure-mssql-db service:
     <tr>
       <th width="20%">Parameter Name</th>
       <th width="10%">Type</th>
-      <th width="50%">Description</th>
+      <th width="40%">Description</th>
       <th width="20%">Default</th>
+      <th width="10%">Operation</th>
     </tr>
   </thead>
   <tr>
@@ -117,6 +118,7 @@ provisioning or updating a csb-azure-mssql-db service:
     <td>string</td>
     <td>The name of the database.</td>
     <td><code>csb-db-INSTANCE-ID</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>server</code></td>
@@ -126,30 +128,49 @@ provisioning or updating a csb-azure-mssql-db service:
       This must match one of the <code>SERVER</code> parameters in one of the servers configured when configuring the service.
     </td>
     <td><em>n/a</em></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
     <td>string</td>
     <td>The ID of the Azure tenant for the service instance.</td>
     <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_subscription_id</code></td>
     <td>string</td>
     <td>The ID of the Azure subscription for the service instance.</td>
     <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_id</code></td>
     <td>string</td>
     <td>The ID of the Azure service principal to authenticate for service instance creation. <%# Clarification needed %></td>
     <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_secret</code></td>
     <td>string</td>
     <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>cores</code></td>
+    <td>number</td>
+    <td>Number vCores for the instance (upto the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
+    <td> 2 </td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>max_storage_gb</code></td>
+    <td>number</td>
+    <td>Maximum storage allocated to the database instance in GB.</td>
+    <td> 5 </td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>sku_name</code></td>
@@ -159,6 +180,7 @@ provisioning or updating a csb-azure-mssql-db service:
       For more information about configuring this parameter, see <a href="#skus">SKUs</a> above.
     </td>
     <td><em>n/a</em></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -166,6 +188,7 @@ provisioning or updating a csb-azure-mssql-db service:
     <td>Set to <code>true</code> to skip automatic Azure provider registration.
     Set if the service principal being used does not have the rights to register providers.</td>
     <td><code>false</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>short_term_retention_days</code></td>
@@ -173,6 +196,7 @@ provisioning or updating a csb-azure-mssql-db service:
     <td>Retention period in days for short-term retention (Point in Time Restore) policy.
     The maximum period is 35 days.</td>
     <td><code>7</code></td>
+    <td>provision and update</td>
   </tr>
 </table>
 

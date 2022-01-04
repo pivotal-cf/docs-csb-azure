@@ -62,10 +62,11 @@ provisioning a csb-azure-postgresql service:
 <table>
   <thead>
     <tr>
-    <th width="20%">Parameter Name</th>
-    <th width="10%">Type</th>
-    <th width="50%">Description</th>
-    <th width="20%">Default</th>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="40%">Description</th>
+      <th width="20%">Default</th>
+      <th width="10%">Operation</th>
     </tr>
   </thead>
   <tr>
@@ -73,6 +74,7 @@ provisioning a csb-azure-postgresql service:
     <td>string</td>
     <td>The name of the Azure instance to create.</td>
     <td><code>csb-mysql-INSTANCE-ID</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>location</code></td>
@@ -85,36 +87,42 @@ provisioning a csb-azure-postgresql service:
       </p>
     </td>
     <td><code>westus</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>resource_group</code></td>
     <td>string</td>
     <td>The Azure resource group in which to create the instance.</td>
     <td><code>rg-INSTANCE-NAME</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
     <td>string</td>
     <td>The ID of the Azure tenant for the service instance.</td>
     <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_subscription_id</code></td>
     <td>string</td>
     <td>The ID of the Azure subscription for the service instance.</td>
     <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_id</code></td>
     <td>string</td>
     <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_secret</code></td>
     <td>string</td>
     <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>authorized_network</code></td>
@@ -125,6 +133,21 @@ provisioning a csb-azure-postgresql service:
       By default no VNets are allowed access.
     </td>
     <td><em>n/a</em></td>
+    <td>provision and update</td>
+  </tr>
+    <tr>
+    <td><code>cores</code></td>
+    <td>number</td>
+    <td>Number vCores for the instance (upto the maximum allowed for the service tier). 1&ndash;64, multiples of 2 </td>
+    <td> 2 </td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>storage_gb</code></td>
+    <td>number</td>
+    <td>Maximum storage allocated to the database instance in GB. 5&ndash;4096</td>
+    <td> 5 </td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>sku_name</code></td>
@@ -134,12 +157,28 @@ provisioning a csb-azure-postgresql service:
       For more information about configuring this parameter, see <a href="#skus">SKUs</a> above.
     </td>
     <td><em>n/a</em></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>postgres_version</code></td>
+    <td>string</td>
+    <td>The version for the PostgreSQL instance. Allowed values are 9.5, 9.6, 10, 11.</td>
+    <td><code>11</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>db_name</code></td>
+    <td>string</td>
+    <td>Name for your database.</td>
+    <td><code>vsbdb</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>use_tls</code></td>
     <td>boolean</td>
     <td>Use TLS for database connections.</td>
     <td><code>true</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -147,6 +186,7 @@ provisioning a csb-azure-postgresql service:
     <td>Set to <code>true</code> to skip automatic Azure provider registration.
     Set if the service principal being used does not have the rights to register providers.</td>
     <td><code>false</code></td>
+    <td>provision and update</td>
   </tr>
 </table>
 

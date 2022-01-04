@@ -62,8 +62,9 @@ provisioning a csb-azure-eventhubs service:
     <tr>
       <th width="20%">Parameter Name</th>
       <th width="10%">Type</th>
-      <th width="50%">Description</th>
+      <th width="40%">Description</th>
       <th width="20%">Default</th>
+      <th width="10%">Operation</th>
     </tr>
   </thead>
   <tr>
@@ -78,6 +79,7 @@ provisioning a csb-azure-eventhubs service:
       </ul>
     </td>
     <td><code>csb-eventhubs-INSTANCE-ID</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>resource_group</code></td>
@@ -91,7 +93,8 @@ provisioning a csb-azure-eventhubs service:
         <li>Allowed characters: lowercase letters and numbers</li>
       </ul>
     </td>
-    <td><code>""</code></td>
+    <td><code>rg-INSTANCE-NAME</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>location</code></td>
@@ -101,30 +104,35 @@ provisioning a csb-azure-eventhubs service:
       <a href="https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography">Microsoft documentation</a>.
     </td>
     <td><code>westus</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
     <td>string</td>
     <td>The ID of the Azure tenant for the instance.</td>
     <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_subscription_id</code></td>
     <td>string</td>
     <td>The ID of the Azure subscription for the instance.</td>
     <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_id</code></td>
     <td>string</td>
     <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_secret</code></td>
     <td>string</td>
     <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -134,18 +142,21 @@ provisioning a csb-azure-eventhubs service:
       Set if the service principal being used does not have the rights to register providers.
     </td>
     <td><code>false</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>sku</code></td>
     <td>boolean</td>
     <td>Defines which tier to use. Options are <code>Basic</code> or <code>Standard</code>.</td>
     <td><code>Basic</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>auto_inflate_enabled</code></td>
     <td>boolean</td>
     <td>Auto Inflate enabled for the EventHub Namespace. Options are <code>true</code> or <code>false</code>.</td>
     <td><code>false</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>partition_count</code></td>
@@ -155,6 +166,7 @@ provisioning a csb-azure-eventhubs service:
       Changing this forces a new resource to be created.
     </td>
     <td><code>2</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>message_retention</code></td>
@@ -164,6 +176,7 @@ provisioning a csb-azure-eventhubs service:
       Must be between <code>1</code> and <code>7</code> days; or <code>1</code> day when using a Basic SKU for the parent Event Hub.
     </td>
     <td><code>1</code></td>
+    <td>provision and update</td>
   </tr>
 </table>
 

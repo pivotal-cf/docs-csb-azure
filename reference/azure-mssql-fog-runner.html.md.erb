@@ -49,26 +49,26 @@ provisioning a csb-azure-mssql-fog-run-failover service:
     </tr>
   </thead>
   <tr>
-    <td><code>fog_instance_name</code></td>
+    <td><code>fog_instance_name</code>*</td>
     <td>string</td>
-    <td>The name of the service instance for the failover group to target.</td>
+    <td>(Required) The name of the service instance for the failover group to target.</td>
     <td><em>n/a</em></td>
   </tr>
   <tr>
-    <td><code>server_pair_name</code></td>
+    <td><code>server_pair_name</code>*</td>
     <td>string</td>
     <td>
-      The server pair from <code>server_pairs</code> below.
+      (Required) The server pair from <code>server_pairs</code> below.
       This must match one of the <code>PAIR</code> parameters in <code>server_pairs</code>.
       For example, <code>PAIR-1</code> in the code snippet in the <code>server_credentials_pairs</code> row below.
     </td>
     <td><em>n/a</em></td>
   </tr>
   <tr>
-    <td><code>server_pairs</code></td>
+    <td><code>server_pairs</code>*</td>
     <td>JSON</td>
     <td>
-      A list of failover group server pairs.
+      (Required) A list of failover group server pairs.
       Format: <pre><code>{ "PAIR-1": { "primary":{"server_name":"...", "resource_group":..."}, "secondary":{"server_name":"...", "resource_group":..."}, "PAIR-2":...}</code></pre>
       One of the values you use for <code>PAIR</code> must match the <code>server_pair_name</code> parameter above.
     </td>
@@ -106,6 +106,8 @@ provisioning a csb-azure-mssql-fog-run-failover service:
     <td><code>false</code></td>
   </tr>
 </table>
+
+<sup>*</sup> Required
 
 ## <a id="binding-creds"></a> Binding Credentials
 
