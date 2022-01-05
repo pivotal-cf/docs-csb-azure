@@ -303,11 +303,12 @@ The format for binding credentials for Azure Cosmos DB Mongo API is as follows:
 
 ```json
 {
-    "uri" : "PRIMARY-MASTER-MONGODB-URI"
+    "uri" : "PRIMARY-MASTER-MONGODB-URI",  
+    "status" : "STATUS-DESCRIPTION"
 }
 ```
 
 Where:
 
 - `PRIMARY-MASTER-MONGODB-URI` is the primary master Mongo DB URI of the Cosmos DB Mongo Collection.
-- `DATABASE-STATUS` is the status of the database.
+- `STATUS-DESCRIPTION` is the status of the operation.
