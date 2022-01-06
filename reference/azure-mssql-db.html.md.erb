@@ -63,17 +63,19 @@ For how to configure plans, see <a href="../installing-with-azure.html#services"
 
 The following table lists parameters which can only be configured for additional plans:
 
-| Parameter Name        | Values                          | Default   | 
+| Parameter Name        | Values                          | Default   |
 |-----------------------|---------------------------------|-----------|
-| `name`*               | The plan name.                  | _n/a_     |
-| `id`*                 | A unique GUID.                  | _n/a_     |
-| `description`*        | Description of the new plan.    | _n/a_     |
-| `display_name`        | Name to use when displaying plan in marketplace.    | _n/a_     |
+| `name`*               | The plan name                  | _n/a_     |
+| `id`*                 | A unique GUID                  | _n/a_     |
+| `description`*        | Description of the new plan    | _n/a_     |
+| `display_name`        | Name to use when displaying plan in marketplace    | _n/a_     |
 
 <sup>*</sup> Required
 
-You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan.
-To create plans with certain size limits we recommend setting `sku_name` or `cores` and `max_storage_gb` properties.
+You can also add any of the configuration parameters listed in the [parameters](#parameters) section
+to your plan.
+To create plans with specific size limits we recommend setting `sku_name` or `cores` and
+`max_storage_gb` properties.
 
 <p class="note">
   <strong>Note:</strong> If you set a parameter at plan level, developers cannot
@@ -161,7 +163,7 @@ provisioning or updating a csb-azure-mssql-db service:
   <tr>
     <td><code>cores</code></td>
     <td>number</td>
-    <td>Number vCores for the instance (upto the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
+    <td>Number vCores for the instance (up to the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
     <td> 2 </td>
     <td>provision and update</td>
   </tr>
@@ -177,7 +179,7 @@ provisioning or updating a csb-azure-mssql-db service:
     <td>string</td>
     <td>
       The Azure stock-keeping unit (SKU).
-      For more information about configuring this parameter, see [skus](#skus) section.
+      For more information about configuring this parameter, see the <a href="#skus">SKUs</a> section.
     </td>
     <td><em>n/a</em></td>
     <td>provision and update</td>
@@ -214,7 +216,7 @@ If you do not define a SKU using the <code>sku_name</code> parameter, the SKU is
 computed from the number of cores in your plan.
 See [Plans](#plans) above.
 
-The table below shows the mapping of number of cores to the corresponding Azure SKU:
+The table below shows the mapping of the number of cores to the corresponding Azure SKU:
 
 | Cores | SKU |
 |-------|-----|
