@@ -35,15 +35,17 @@ The following table lists parameters which can only be configured for additional
 
 | Parameter Name       | Values                          | Default   |
 |----------------------|---------------------------------|-----------|
-| `name`*              | The plan name.                  | _n/a_     |
-| `id`*                | A unique GUID.                  | _n/a_     |
-| `description`*       | Description of the new plan.    | _n/a_     |
-| `display_name`       | Name to use when displaying plan in marketplace.    | _n/a_     |
+| `name`*              | The plan name                  | _n/a_     |
+| `id`*                | A unique GUID                  | _n/a_     |
+| `description`*       | Description of the new plan    | _n/a_     |
+| `display_name`       | Name to use when displaying plan in marketplace    | _n/a_     |
 
 <sup>*</sup> Required
 
-You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan. 
-To create plans with certain size limits we recommend setting `sku_name` or `cores` and `max_storage_gb` properties.
+You can also add any of the configuration parameters listed in the [parameters](#parameters) section
+to your plan.
+To create plans with specific size limits we recommend setting `sku_name` or `cores` and
+`max_storage_gb` properties.
 
 <p class="note">
   <strong>Note:</strong> If you set a parameter at plan level, developers cannot
@@ -145,7 +147,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
   <tr>
     <td><code>cores</code></td>
     <td>number</td>
-    <td>Number vCores for the instance (upto the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
+    <td>Number of vCores for the instance (up to the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
     <td> 2 </td>
     <td>provision and update</td>
   </tr>
@@ -161,7 +163,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
     <td>string</td>
     <td>
       The Azure stock-keeping unit (SKU).
-      For more information about configuring this parameter, see [skus](#skus) section.
+      For more information about configuring this parameter, see <a href="#skus">SKUs</a> section.
     </td>
     <td><em>n/a</em></td>
     <td>provision and update</td>
@@ -179,7 +181,8 @@ provisioning a csb-azure-mssql-db-failover-group service:
 
 ### <a id="skus"></a> SKUs
 
-SKUs are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>. Where:
+SKUs are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>.
+Where:
 <ul>
   <li>Examples of <code>TIER</code> are <code>GP\_S</code>, <code>GP</code>, and <code>HS</code></li>
   <li>Examples of <code>FAMILY</code> are <code>Gen4</code> and <code>Gen5</code></li>

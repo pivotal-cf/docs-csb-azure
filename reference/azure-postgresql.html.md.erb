@@ -12,7 +12,7 @@ It details the plans, configuration parameters, and binding credentials.
 
 The table below lists the plans available for the csb-azure-postgresql service:
 
-| Plan | Version | CPUs | Memory Size | Disk Size | Sku       |
+| Plan | Version | CPUs | Memory Size | Disk Size | SKU       |
 |------|---------|------|-------------|-----------|-----------|
 |small | 11      | 2    | minimum 4&nbsp;GB    | 5&nbsp;GB       | GP_Gen5_2 |
 |medium| 11      | 4    | minimum 8&nbsp;GB    | 10&nbsp;GB      | GP_Gen5_4 |
@@ -25,17 +25,18 @@ For how to configure plans, see <a href="../installing-with-azure.html#services"
 
 The following table lists parameters which can only be configured for additional plans:
 
-| Parameter Name       | Values                          | Default   |
-|----------------------|---------------------------------|-----------|
-| `name`*              | The plan name.                  | _n/a_     |
-| `id`*                | A unique GUID.                  | _n/a_     |
-| `description`*       | Description of the new plan.    | _n/a_     |
-| `display_name`       | Name to use when displaying plan in marketplace.    | _n/a_     |
+| Parameter Name       | Values                         | Default   |
+|----------------------|--------------------------------|-----------|
+| `name`*              | The plan name                  | _n/a_     |
+| `id`*                | A unique GUID                  | _n/a_     |
+| `description`*       | Description of the new plan    | _n/a_     |
+| `display_name`       | Name to use when displaying plan in marketplace    | _n/a_     |
 
 <sup>*</sup> Required
 
-You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan.
-The following properties would be useful to set in a plan:  `postgres_version`, `storage_gb`, `cores`, `sku`.
+You can also add any of the configuration parameters listed in the [parameters](#parameters) section
+to your plan.
+The following properties are useful to set in a plan: `postgres_version`, `storage_gb`, `cores`, `sku`.
 
 <p class="note">
   <strong>Note:</strong> If you set a parameter at plan level, developers cannot
@@ -138,7 +139,7 @@ provisioning a csb-azure-postgresql service:
     <tr>
     <td><code>cores</code></td>
     <td>number</td>
-    <td>Number vCores for the instance (upto the maximum allowed for the service tier). 1&ndash;64, multiples of 2 </td>
+    <td>Number of vCores for the instance (up to the maximum allowed for the service tier). 1&ndash;64, multiples of 2 </td>
     <td> 2 </td>
     <td>provision and update</td>
   </tr>
@@ -154,7 +155,7 @@ provisioning a csb-azure-postgresql service:
     <td>string</td>
     <td>
       The Azure stock-keeping unit (SKU).
-      For more information about configuring this parameter, see [skus](#skus) section.
+      For more information about configuring this parameter, see <a href="#skus">SKUs</a> section.
     </td>
     <td><em>n/a</em></td>
     <td>provision and update</td>
@@ -192,15 +193,16 @@ provisioning a csb-azure-postgresql service:
 
 ### <a id="storage"></a>Storage
 
-Storage auto grow is enabled on Azure.
-For more information about storage auto grow, see the
+Storage auto-grow is enabled on Azure.
+For more information about storage auto-grow, see the
 [Microsoft documentation](https://docs.microsoft.com/en-us/azure/postgresql/concepts-pricing-tiers#storage-auto-grow)
 Initial storage sizes are per plan.
 
 
 ### <a id="skus"></a> SKUs
 
-Stock-keeping units (SKU) are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>. Where:
+Stock-keeping units (SKU) are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF-CORES</code>.
+Where:
 <ul>
   <li>Examples of <code>TIER</code> are <code>GP\_S</code>, <code>GP</code>, and <code>HS</code></li>
   <li>Examples of <code>FAMILY</code> are <code>Gen4</code> and <code>Gen5</code></li>
@@ -211,7 +213,7 @@ If you do not define a SKU using the <code>sku_name</code> parameter, the SKU is
 computed from the number of cores in your plan.
 See [Plans](#plans) above.
 
-The table below shows the mapping of number of cores to the corresponding Azure SKU:
+The table below shows the mapping of the number of cores to the corresponding Azure SKU:
 
 | Cores | SKU |
 |-------|-----|
@@ -240,10 +242,10 @@ For information about the the DTU purchasing model, see the
 </p>
 
 <p class="note">
-  <strong>Note:</strong> When updating a service instance, it is recommended that the SKU for the updated
-  service instance should remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
-  If you wish to change to a different tier, check the Azure documentation to ensure that updating to the
-  new tier is supported.
+  <strong>Note:</strong> When updating a service instance, it is recommended that the SKU for the
+  updated service instance remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
+  If you want to change to a different tier, check the Azure documentation to ensure that updating
+  to the new tier is supported.
 </p>
 
 ## <a id="binding-creds"></a> Binding Credentials
@@ -261,10 +263,9 @@ The format for binding credentials for PostgreSQL is as follows:
     "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
     "use_tls" : true
 }
+```
 
 Where:
-
-```
 - `DATABASE-NAME` is the database name.
 - `DATABASE-SERVER-HOST` is the database server host name.
 - `PORT` is the database server port.

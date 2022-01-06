@@ -227,7 +227,7 @@ provisioning or updating a csb-azure-mysql service:
     <td>string</td>
     <td>
       The Azure stock-keeping unit (SKU). For more information about configuring this parameter, see
-      [skus](#skus) section. After being set, this cannot be updated.
+      <a href="#skus">SKUs</a> section. After being set, this cannot be updated.
     </td>
     <td><code>""</code></td>
     <td>provision</td>
@@ -250,7 +250,8 @@ Stock-keeping units (SKU) are usually formatted as <code>TIER\_FAMILY\_NUMBER-OF
 </ul>
 Example SKUs are <code>GP\_S\_Gen4\_1</code> and <code>GP\_Gen5\_8</code>.
 
-For more information see [Azure MySQL pricing tiers](https://docs.microsoft.com/en-us/azure/mysql/concepts-pricing-tiers).
+For information about the Azure MySQL pricing tiers, see the
+[Microsoft documentation](https://docs.microsoft.com/en-us/azure/mysql/concepts-pricing-tiers).
 
 If you do not define a SKU using the <code>sku_name</code> parameter, the SKU is
 computed from the number of cores in your plan.
