@@ -18,6 +18,30 @@ The following table lists the plans available for Azure Cosmos DB SQL API:
 | medium | SQL Cosmos DB Account, single read failover location, and 1,000 request units. |
 | large  | SQL Cosmos DB Account, single read/write failover location, and 10,000 request units. |
 
+
+## <a id="plans-config"></a> Plan Configuration Parameters
+
+When configuring <%= vars.product_short %> you can add additional plans.
+For how to configure plans, see <a href="../installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+
+The following table lists parameters which can only be configured for additional plans:
+
+| Parameter Name      | Values                          | Default   |
+|---------------------|---------------------------------|-----------|
+| `name`*              | The plan name.                  | _n/a_     |
+| `id`*                | A unique GUID.                  | _n/a_     |
+| `description`*       | Description of the new plan.    | _n/a_     |
+| `display_name`      | Name to use when displaying plan in marketplace.    | _n/a_     | no       |
+
+<sup>*</sup> Required
+
+You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan.
+
+<p class="note">
+  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
+  change the value when creating or updating service instances.
+</p>
+
 ## <a id="parameters"></a> Configuration Parameters
 
 You can provision a service by running:
@@ -40,55 +64,62 @@ provisioning a csb-azure-cosmosdb-sql service:
     <tr>
       <th width="20%">Parameter Name</th>
       <th width="10%">Type</th>
-      <th width="50%">Description</th>
+      <th width="40%">Description</th>
       <th width="20%">Default</th>
+      <th width="10%">Operation</th>
     </tr>
   </thead>
   <tr>
     <td><code>request_units</code></td>
     <td>integer</td>
     <td>
-      The throughput of the Cosmos DB collection (RU/s). This parameter has the following constraints:
+      (Required) The throughput of the Cosmos DB collection (RU/s). This parameter has the following constraints:
       <ul>
         <li>Minimum: 400</li>
         <li>Multiples of: 100</li>
       </ul>
     </td>
     <td><code>400</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>failover_locations</code></td>
     <td>array</td>
-  <td>
-    A list of locations for the Cosmos DB account. The first location is the default write location.
-    For available locations, see the
-    <a href="https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography">Microsoft documentation</a>.
-  </td>
-  <td><code>westus</code></td>
+    <td>
+      A list of locations for the Cosmos DB account. The first location is the default write location.
+      For available locations, see the
+      <a href="https://azure.microsoft.com/en-gb/global-infrastructure/data-residency/#select-geography">Microsoft documentation</a>.
+    </td>
+    <td><code>westus</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>instance_name</code></td>
     <td>string</td>
     <td>The instance name for your Cosmos DB.</td>
     <td><code>csb-INSTANCE-ID</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>resource_group</code></td>
     <td>string</td>
     <td>The Azure resource group in which to create the instance.</td>
     <td><code>rg-ACCOUNT-NAME</code> (<code>ACCOUNT-NAME</code> is always generated)</td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>db_name</code></td>
     <td>string</td>
     <td>The name for your Cosmos DB database.</td>
     <td><code>csb-db-INSTANCE-ID</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>location</code></td>
     <td>string</td>
     <td>The location of the CosmosDB account.</td>
     <td><code>westus</code></td>
+    <td>provision </td>
   </tr>
   <tr>
     <td><code>ip_range_filter</code></td>
@@ -102,6 +133,7 @@ provisioning a csb-azure-cosmosdb-sql service:
       An empty string <code>""</code> allows access from all public networks.
     </td>
     <td><code>0.0.0.0</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>consistency_level</code></td>
@@ -114,6 +146,7 @@ provisioning a csb-azure-cosmosdb-sql service:
       <code>max_interval_in_seconds</code> and <code>max_staleness_prefix</code>.
     </td>
     <td><code>Session</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>max_interval_in_seconds</code></td>
@@ -124,6 +157,7 @@ provisioning a csb-azure-cosmosdb-sql service:
       Accepted range for this value is <code>5</code> - <code>86400</code> (1 day).
     </td>
     <td><code>5</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>max_staleness_prefix</code></td>
@@ -134,42 +168,49 @@ provisioning a csb-azure-cosmosdb-sql service:
       Accepted range for this value is <code>10</code> to <code>2147483647</code>.
     </td>
     <td><code>100</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>enable_multiple_write_locations</code></td>
     <td>boolean</td>
     <td>Set to <code>true</code> to enable multiple write locations for this Cosmos DB account.</td>
     <td><code>false</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>enable_automatic_failover</code></td>
     <td>boolean</td>
     <td>Set to <code>true</code> to enable automatic failover for this Cosmos DB account</td>
     <td><code>false</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_tenant_id</code></td>
     <td>string</td>
     <td>The ID of the Azure tenant for the instance.</td>
     <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_subscription_id</code></td>
     <td>string</td>
     <td>The ID of the Azure subscription for the instance.</td>
     <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_id</code></td>
     <td>string</td>
     <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>azure_client_secret</code></td>
     <td>string</td>
     <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
     <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>skip_provider_registration</code></td>
@@ -179,12 +220,14 @@ provisioning a csb-azure-cosmosdb-sql service:
       Set if the service principal being used does not have the rights to register providers.
     </td>
     <td><code>false</code></td>
+    <td>provision and update</td>
   </tr>
   <tr>
     <td><code>authorized_networks</code></td>
     <td>list (string)</td>
     <td>A list of resource IDs for subnets of the authorized Azure Virtual Network (VNet).</td>
     <td><code>[]</code></td>
+    <td>provision and update</td>
   </tr>
 </table>
 
@@ -197,6 +240,7 @@ The format for binding credentials for Azure Cosmos DB SQL API is as follows:
     "cosmosdb_host_endpoint" : "COSMOS-DB-HOST-ENDPOINT",
     "cosmosdb_master_key" : "COSMOS-DB-READ-WRITE-KEY",
     "cosmosdb_readonly_master_key" : "COSMOS-DB-READ-ONLY-KEY",
-    "cosmosdb_database_id" : "COSMOS-DB-DATABASE-ID"
+    "cosmosdb_database_id" : "COSMOS-DB-DATABASE-ID",
+    "status" : "STATUS-DESCRIPTION"
 }
 ```

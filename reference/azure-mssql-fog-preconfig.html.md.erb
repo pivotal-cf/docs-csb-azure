@@ -28,18 +28,154 @@ typically in a second foundation, to bind to the database.
 
 ## <a id="plans-config"></a> Plan Configuration Parameters
 
-The table below lists the plan parameters that you can configure:
+When configuring <%= vars.product_short %> you can add additional plans.
+For how to configure plans, see <a href="../installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
-| Parameter Name   | Values                     | Default |
-|------------------|----------------------------|---------|
-| max\_storage\_gb |                            | 50      |
-| cores            | 1&ndash;64, multiples of 2 | 2       |
-| subsume*         | _n/a_                      | _n/a_   |
+The following table lists parameters which can only be configured for additional plans:
 
-<sup>*</sup> The subsume plan is used to import existing Azure MSSQL databases to bring them under
-the control of <%= vars.product_short %>.
-For more information, see
-[Subsuming a Microsoft Azure Service Broker MSSQL Failover Group Instance](../azure-mssql-fog-subsume.html).
+| Parameter Name       | Values                          | Default   |
+|----------------------|---------------------------------|-----------|
+| `name`*              | The plan name.                  | _n/a_     |
+| `id`*                | A unique GUID.                  | _n/a_     |
+| `description`*       | Description of the new plan.    | _n/a_     |
+| `display_name`       | Name to use when displaying plan in marketplace.    | _n/a_     |
+
+<sup>*</sup> Required
+
+You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan. 
+To create plans with certain size limits we recommend setting `sku_name` or `cores` and `max_storage_gb` properties.
+
+<p class="note">
+  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
+  change the value when creating or updating service instances.
+</p>
+
+## <a id="parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-mssql-db-failover-group PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the plan or configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-mssql-db-failover-group service:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="40%">Description</th>
+      <th width="20%">Default</th>
+      <th width="10%">Operation</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>The name of the failover group service instance.</td>
+    <td><code>csb-azsql-fog-INSTANCE-ID</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>db_name</code></td>
+    <td>string</td>
+    <td>The name of the database.</td>
+    <td><code>csb-fog-db-INSTANCE-ID</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>server_pair</code></td>
+    <td>string</td>
+    <td>
+      This must match one of the <code>server_credential_pairs</code> parameters in one of the servers configured when configuring the service.
+    </td>
+    <td><em>n/a</em></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>read_write_endpoint_failover_policy</code></td>
+    <td>string</td>
+    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>
+    <td><code>Automatic</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>failover_grace_minutes</code></td>
+    <td>number</td>
+    <td>The grace period in minutes before failover with data loss is attempted.</td>
+    <td><code>60</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>cores</code></td>
+    <td>number</td>
+    <td>Number vCores for the instance (upto the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
+    <td> 2 </td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>max_storage_gb</code></td>
+    <td>number</td>
+    <td>Maximum storage allocated to the database instance in GB.</td>
+    <td> 5 </td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>sku_name</code></td>
+    <td>string</td>
+    <td>
+      The Azure stock-keeping unit (SKU).
+      For more information about configuring this parameter, see [skus](#skus) section.
+    </td>
+    <td><em>n/a</em></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+    <td>provision and update</td>
+  </tr>
+</table>
+
 
 ### <a id="skus"></a> SKUs
 
@@ -83,106 +219,6 @@ For information about the the DTU purchasing model, see the
   <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
 </p>
 
-## <a id="parameters"></a> Configuration Parameters
-
-You can provision a service by running:
-
-```bash
-cf create-service csb-azure-mssql-db-failover-group PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
-```
-
-You can update the plan or configuration parameters for a service instance by running:
-
-```bash
-cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
-```
-
-The table below lists the parameters that you can configure, using the `-c` flag, when
-provisioning a csb-azure-mssql-db-failover-group service:
-
-<table>
-  <thead>
-    <tr>
-    <th width="20%">Parameter Name</th>
-    <th width="10%">Type</th>
-    <th width="50%">Description</th>
-    <th width="20%">Default</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>instance_name</code></td>
-    <td>string</td>
-    <td>The name of the failover group service instance.</td>
-    <td><code>csb-azsql-fog-INSTANCE-ID</code></td>
-  </tr>
-  <tr>
-    <td><code>db_name</code></td>
-    <td>string</td>
-    <td>The name of the database.</td>
-    <td><code>csb-fog-db-INSTANCE-ID</code></td>
-  </tr>
-  <tr>
-    <td><code>server_pair</code></td>
-    <td>string</td>
-    <td>
-      This must match one of the <code>server_credential_pairs</code> parameters in one of the servers configured when configuring the service.
-    </td>
-    <td><em>n/a</em></td>
-  </tr>
-  <tr>
-    <td><code>read_write_endpoint_failover_policy</code></td>
-    <td>string</td>
-    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>
-    <td><code>Automatic</code></td>
-  </tr>
-  <tr>
-    <td><code>failover_grace_minutes</code></td>
-    <td>number</td>
-    <td>The grace period in minutes before failover with data loss is attempted.</td>
-    <td><code>60</code></td>
-  </tr>
-  <tr>
-    <td><code>azure_tenant_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure tenant for the service instance.</td>
-    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_subscription_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure subscription for the service instance.</td>
-    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_secret</code></td>
-    <td>string</td>
-    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>sku_name</code></td>
-    <td>string</td>
-    <td>
-      The Azure stock-keeping unit (SKU).
-      For more information about configuring this parameter, see <a href="#skus">SKUs</a> above.
-    </td>
-    <td><em>n/a</em></td>
-  </tr>
-  <tr>
-    <td><code>skip_provider_registration</code></td>
-    <td>boolean</td>
-    <td>Set to <code>true</code> to skip automatic Azure provider registration.
-    Set if the service principal being used does not have the rights to register providers.</td>
-    <td><code>false</code></td>
-  </tr>
-</table>
-
 ## <a id="binding-creds"></a> Binding Credentials
 
 The format for binding credentials for Azure SQL Failover Group is as follows:
@@ -196,6 +232,7 @@ The format for binding credentials for Azure SQL Failover Group is as follows:
     "password" : "AUTHENTICATION-PASSWORD",
     "uri" : "DATABASE-CONNECTION-URI",
     "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
+    "server_pair" : "SERVER-PAIR-USED",
     "sqldbName" : "DATABASE-NAME",
     "sqlServerName" : "SERVER-NAME",
     "sqlServerFullyQualifiedDomainName" : "SERVER-FQDN",

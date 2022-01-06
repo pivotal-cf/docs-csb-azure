@@ -21,17 +21,181 @@ The table below lists the plans available for the csb-azure-mssql-failover-group
 | medium      | 8    | 200&nbsp;GB       |
 | large       | 32   | 500&nbsp;GB       |
 
-## <a id="config-options"></a> Configuration Options
+## <a id="config-options"></a> Plan Configuration Parameters
 
-<%# Any reason this section is called Configuration Options and not Plan Configuration parameters
-like in the other services? Which is the better name? See also PostgreSQL section below. %>
+When configuring <%= vars.product_short %> you can add additional plans.
+For how to configure plans, see <a href="../installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
-The table below lists the options you can configure:
+The following table lists parameters which can only be configured for additional plans:
 
-| Option Name | Values              | Default |
-|-------------|---------------------|---------|
-| max\_storage\_gb  |             | 50      |
-| cores       | 1&ndash;64, multiples of 2 | 2       |
+| Parameter Name       | Values                          | Default   |
+|----------------------|---------------------------------|-----------|
+| `name`*              | The plan name.                  | _n/a_     |
+| `id`*                | A unique GUID.                  | _n/a_     |
+| `description`*       | Description of the new plan.    | _n/a_     |
+| `display_name`       | Name to use when displaying plan in marketplace.    | _n/a_     |
+
+<sup>*</sup> Required
+
+You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan.
+
+<p class="note">
+  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
+  change the value when creating or updating service instances.
+</p>
+
+## <a id="parameters"></a> Configuration Parameters
+
+Except as noted below, the configuration is generally the same as for [Azure SQL](azure-mssql.html).
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning a csb-azure-mssql-failover-group service:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="40%">Description</th>
+      <th width="20%">Default</th>
+      <th width="10%">Operation</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>The name of the service instance.</td>
+    <td><code>csb-azsql-INSTANCE-ID</code></td>
+    <td>provision</td>
+  </tr>
+  <tr>
+    <td><code>resource_group</code></td>
+    <td>string</td>
+    <td>The Azure resource group in which to create the instance.</td>
+    <td><code>rg-INSTANCE-NAME</code></td>
+    <td>provision</td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>
+      The Azure region in which to deploy the service instance.
+      <p class="note">
+        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
+        If you configure a region that is unavailable, <%= vars.product_short %> fails.
+      </p>
+    </td>
+    <td><code>westus</code></td>
+    <td>provision</td>
+  </tr>
+  <tr>
+    <td><code>failover_location</code></td>
+    <td>string</td>
+    <td>The Azure region for the failover instance.</td>
+    <td><code>DEFAULT-REGIONAL-PAIR</code>. For information about regional pairs, see the <a href="https://docs.microsoft.com/en-us/azure/best-practices-availability-paired-regions#azure-regional-pairs">Microsoft Documentation</a></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>read_write_endpoint_failover_policy</code></td>
+    <td>string</td>
+    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>.
+    <td><code>Automatic</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>failover_grace_minutes</code></td>
+    <td>number</td>
+    <td>The grace period in minutes before failover with data loss is attempted.</td>
+    <td><code>60</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>min_capacity</code></td>
+    <td>number</td>
+    <td>The minimum capacity in GB that the database has allocated, if not paused.
+      You can only set this property for General Purpose Serverless databases.</td>
+    <td><code>1</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>auto_pause_delay</code></td>
+    <td>number</td>
+    <td>The time in minutes after which the database is automatically paused.
+      A value of <code>-1</code> means that automatic pause is deactivated.
+      You can only set this property for General Purpose Serverless databases.</td>
+    <td><code>-1</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>cores</code></td>
+    <td>number</td>
+    <td>Number vCores for the instance (upto the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
+    <td> 2 </td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>max_storage_gb</code></td>
+    <td>number</td>
+    <td>Maximum storage allocated to the database instance in GB.</td>
+    <td> 5 </td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>sku_name</code></td>
+    <td>string</td>
+    <td>
+      The Azure stock-keeping unit (SKU).
+      For more information about configuring this parameter, see [skus](#skus) section.
+    </td>
+    <td><em>n/a</em></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>authorized_network</code></td>
+    <td>string</td>
+    <td>The Azure subnet ID, in long form, that the instance is connected to through a service endpoint.
+    The subnet must have the <code>Microsoft.sql</code> service enabled.</td>
+    <td><em>n/a</em></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+    <td>provision and update</td>
+  </tr>
+</table>
+
 
 ### <a id="skus"></a> SKUs
 
@@ -80,128 +244,6 @@ For information about the the DTU purchasing model, see the
   If you update to a different tier, Azure refuses the update request.
 </p>
 
-## <a id="parameters"></a> Configuration Parameters
-
-Except as noted below, the configuration is generally the same as for [Azure SQL](azure-mssql.html).
-
-The table below lists the parameters that you can configure, using the `-c` flag, when
-provisioning a csb-azure-mssql-failover-group service:
-
-<table>
-  <thead>
-    <tr>
-      <th width="20%">Parameter Name</th>
-      <th width="10%">Type</th>
-      <th width="50%">Description</th>
-      <th width="20%">Default</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>instance_name</code></td>
-    <td>string</td>
-    <td>The name of the service instance.</td>
-    <td><code>csb-azsql-INSTANCE-ID</code></td>
-  </tr>
-  <tr>
-    <td><code>resource_group</code></td>
-    <td>string</td>
-    <td>The Azure resource group in which to create the instance.</td>
-    <td><code>rg-INSTANCE-NAME</code></td>
-  </tr>
-  <tr>
-    <td><code>location</code></td>
-    <td>string</td>
-    <td>
-      The Azure region in which to deploy the service instance.
-      <p class="note">
-        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
-        If you configure a region that is unavailable, <%= vars.product_short %> fails.
-      </p>
-    </td>
-    <td><code>westus</code></td>
-  </tr>
-  <tr>
-    <td><code>failover_location</code></td>
-    <td>string</td>
-    <td>The Azure region for the failover instance.</td>
-    <td><code>DEFAULT-REGIONAL-PAIR</code>. For information about regional pairs, see the <a href="https://docs.microsoft.com/en-us/azure/best-practices-availability-paired-regions#azure-regional-pairs">Microsoft Documentation</a></td>
-  </tr>
-  <tr>
-    <td><code>read_write_endpoint_failover_policy</code></td>
-    <td>string</td>
-    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>.
-    <td><code>Automatic</code></td>
-  </tr>
-  <tr>
-    <td><code>failover_grace_minutes</code></td>
-    <td>number</td>
-    <td>The grace period in minutes before failover with data loss is attempted.</td>
-    <td><code>60</code></td>
-  </tr>
-  <tr>
-    <td><code>min_capacity</code></td>
-    <td>number</td>
-    <td>The minimum capacity in GB that the database has allocated, if not paused.
-      You can only set this property for General Purpose Serverless databases.</td>
-    <td><code>1</code></td>
-  </tr>
-  <tr>
-    <td><code>auto_pause_delay</code></td>
-    <td>number</td>
-    <td>The time in minutes after which the database is automatically paused.
-      A value of <code>-1</code> means that automatic pause is deactivated.
-      You can only set this property for General Purpose Serverless databases.</td>
-    <td><code>-1</code></td>
-  </tr>
-  <tr>
-    <td><code>azure_tenant_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure tenant for the service instance.</td>
-    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_subscription_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure subscription for the service instance.</td>
-    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_secret</code></td>
-    <td>string</td>
-    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>sku_name</code></td>
-    <td>string</td>
-    <td>
-      The Azure stock-keeping unit (SKU).
-      For more information about configuring this parameter, see <a href="#skus">SKUs</a> above.
-    </td>
-    <td><em>n/a</em></td>
-  </tr>
-  <tr>
-    <td><code>authorized_network</code></td>
-    <td>string</td>
-    <td>The Azure subnet ID, in long form, that the instance is connected to through a service endpoint.
-    The subnet must have the <code>Microsoft.sql</code> service enabled.</td>
-    <td><em>n/a</em></td>
-  </tr>
-  <tr>
-    <td><code>skip_provider_registration</code></td>
-    <td>boolean</td>
-    <td>Set to <code>true</code> to skip automatic Azure provider registration.
-    Set if the service principal being used does not have the rights to register providers.</td>
-    <td><code>false</code></td>
-  </tr>
-</table>
-
 ## <a id="binding-creds"></a> Binding Credentials
 
 The format for binding credentials for Azure SQL Failover Group is as follows:
@@ -215,6 +257,7 @@ The format for binding credentials for Azure SQL Failover Group is as follows:
     "password" : "AUTHENTICATION-PASSWORD",
     "uri" : "DATABASE-CONNECTION-URI",
     "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI",
+    "jdbcUrlForAuditingEnabled" : "JDBC-FORMAT-CONNECTION-URI",
     "sqldbName" : "DATABASE-NAME",
     "sqlServerName" : "SERVER-NAME",
     "sqlServerFullyQualifiedDomainName" : "SERVER-FQDN",

@@ -60,21 +60,145 @@ the control of <%= vars.product_short %>. For more information, see
 
 When configuring <%= vars.product_short %> you can add additional plans.
 For how to configure plans, see <a href="../installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+
+The following table lists parameters which can only be configured for additional plans:
+
+| Parameter Name        | Values                          | Default   | 
+|-----------------------|---------------------------------|-----------|
+| `name`*               | The plan name.                  | _n/a_     |
+| `id`*                 | A unique GUID.                  | _n/a_     |
+| `description`*        | Description of the new plan.    | _n/a_     |
+| `display_name`        | Name to use when displaying plan in marketplace.    | _n/a_     |
+
+<sup>*</sup> Required
+
+You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan.
+To create plans with certain size limits we recommend setting `sku_name` or `cores` and `max_storage_gb` properties.
+
 <p class="note">
   <strong>Note:</strong> If you set a parameter at plan level, developers cannot
   change the value when creating or updating service instances.
 </p>
 
-The table below lists the plan parameters that you can configure:
+## <a id="parameters"></a> Configuration Parameters
 
-| Parameter Name    | Values                          | Default   |
-|-------------------|---------------------------------|-----------|
-| name              | The plan name.                  | _n/a_     |
-| id                | A unique GUID.                  | _n/a_     |
-| description       | Description of the new plan.    | _n/a_     |
-| max\_storage\_gb  |                                 | 5         |
-| cores             | 1&ndash;64, multiples of 2      | 2         |
-| sku_name          | See [sku](#skus) below | _n/a_     |
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-mssql-db PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+For example:
+
+<pre class="terminal">
+$ cf create-service csb-azure-mssql-db small mssql-dev -c '{"server":"server1"}'
+</pre>
+
+You can update the plan or configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The table below lists the parameters that you can configure, using the `-c` flag, when
+provisioning or updating a csb-azure-mssql-db service:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="40%">Description</th>
+      <th width="20%">Default</th>
+      <th width="10%">Operation</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>db_name</code></td>
+    <td>string</td>
+    <td>The name of the database.</td>
+    <td><code>csb-db-INSTANCE-ID</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>server</code></td>
+    <td>string</td>
+    <td>
+      (Required) The name of the server on which to create the database.
+      This must match one of the <code>SERVER</code> parameters in one of the servers configured when configuring the service.
+    </td>
+    <td><em>n/a</em></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation. <%# Clarification needed %></td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>cores</code></td>
+    <td>number</td>
+    <td>Number vCores for the instance (upto the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
+    <td> 2 </td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>max_storage_gb</code></td>
+    <td>number</td>
+    <td>Maximum storage allocated to the database instance in GB.</td>
+    <td> 5 </td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>sku_name</code></td>
+    <td>string</td>
+    <td>
+      The Azure stock-keeping unit (SKU).
+      For more information about configuring this parameter, see [skus](#skus) section.
+    </td>
+    <td><em>n/a</em></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>skip_provider_registration</code></td>
+    <td>boolean</td>
+    <td>Set to <code>true</code> to skip automatic Azure provider registration.
+    Set if the service principal being used does not have the rights to register providers.</td>
+    <td><code>false</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>short_term_retention_days</code></td>
+    <td>number</td>
+    <td>Retention period in days for short-term retention (Point in Time Restore) policy.
+    The maximum period is 35 days.</td>
+    <td><code>7</code></td>
+    <td>provision and update</td>
+  </tr>
+</table>
 
 ### <a id="skus"></a> SKUs
 
@@ -125,102 +249,6 @@ For information about the the DTU purchasing model, see the
   service instance must remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
   If you update to a different tier, Azure refuses the update request.
 </p>
-
-## <a id="parameters"></a> Configuration Parameters
-
-You can provision a service by running:
-
-```bash
-cf create-service csb-azure-mssql-db PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
-```
-
-For example:
-
-<pre class="terminal">
-$ cf create-service csb-azure-mssql-db small mssql-dev -c '{"server":"server1"}'
-</pre>
-
-You can update the plan or configuration parameters for a service instance by running:
-
-```bash
-cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
-```
-
-The table below lists the parameters that you can configure, using the `-c` flag, when
-provisioning or updating a csb-azure-mssql-db service:
-
-<table>
-  <thead>
-    <tr>
-      <th width="20%">Parameter Name</th>
-      <th width="10%">Type</th>
-      <th width="50%">Description</th>
-      <th width="20%">Default</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>db_name</code></td>
-    <td>string</td>
-    <td>The name of the database.</td>
-    <td><code>csb-db-INSTANCE-ID</code></td>
-  </tr>
-  <tr>
-    <td><code>server</code></td>
-    <td>string</td>
-    <td>
-      (Required) The name of the server on which to create the database.
-      This must match one of the <code>SERVER</code> parameters in one of the servers configured when configuring the service.
-    </td>
-    <td><em>n/a</em></td>
-  </tr>
-  <tr>
-    <td><code>azure_tenant_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure tenant for the service instance.</td>
-    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_subscription_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure subscription for the service instance.</td>
-    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_id</code></td>
-    <td>string</td>
-    <td>The ID of the Azure service principal to authenticate for service instance creation. <%# Clarification needed %></td>
-    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>azure_client_secret</code></td>
-    <td>string</td>
-    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
-    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
-  </tr>
-  <tr>
-    <td><code>sku_name</code></td>
-    <td>string</td>
-    <td>
-      The Azure stock-keeping unit (SKU).
-      For more information about configuring this parameter, see <a href="#skus">SKUs</a> above.
-    </td>
-    <td><em>n/a</em></td>
-  </tr>
-  <tr>
-    <td><code>skip_provider_registration</code></td>
-    <td>boolean</td>
-    <td>Set to <code>true</code> to skip automatic Azure provider registration.
-    Set if the service principal being used does not have the rights to register providers.</td>
-    <td><code>false</code></td>
-  </tr>
-  <tr>
-    <td><code>short_term_retention_days</code></td>
-    <td>number</td>
-    <td>Retention period in days for short-term retention (Point in Time Restore) policy.
-    The maximum period is 35 days.</td>
-    <td><code>7</code></td>
-  </tr>
-</table>
 
 ## <a id="binding-creds"></a> Binding Credentials
 
