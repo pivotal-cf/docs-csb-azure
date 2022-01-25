@@ -154,7 +154,7 @@ the <%= vars.product_short %>:
 
     ```
     cf create-service csb-azure-mssql-db subsume NEW-SERVICE-INSTANCE \
-    -c '{"azure_db_id", "AZURE-RESOURCE-ID", "server": "SERVER-LABEL", "server-name": "SERVER-NAME"}'
+    -c '{"azure_db_id", "AZURE-RESOURCE-ID", "server": "SERVER-LABEL"}'
     ```
 
     Where:
@@ -162,7 +162,6 @@ the <%= vars.product_short %>:
        that <%= vars.product_short %> creates to replace the MSAB service instance.
     * `AZURE-RESOURCE-ID` is the output of the `az sql db show` command in the previous step.
     * `SERVER-LABEL` is the same as the previous step.
-    * `SERVER-NAME` is the same as the previous step.
 
     For example:
 
