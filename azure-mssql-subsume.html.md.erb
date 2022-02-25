@@ -170,10 +170,10 @@ the <%= vars.product_short %>:
 
         For example:
 
-        <pre class="terminal">
-        $ cf create-service csb-azure-mssql-db subsume secondary-db \
-          -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
-        </pre>
+    ```
+    $ cf create-service csb-azure-mssql-db subsume secondary-db \
+      -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
+    ```
 
 5. Disconnect the app from the MASB service binding by running:
 
@@ -186,11 +186,11 @@ the <%= vars.product_short %>:
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
 
-        For example:
+    For example:
 
-        <pre class="terminal">
-        $ cf unbind-service my-app masb-instance
-        </pre>
+    ```
+    $ cf unbind-service my-app masb-instance
+    ```
 
 6. Bind the app to the new service instance by running:
 
@@ -203,9 +203,9 @@ the <%= vars.product_short %>:
 
     For example:
 
-    <pre class="terminal">
+    ```
     $ cf bind-service my-app secondary-db
-    </pre>
+    ```
 
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
