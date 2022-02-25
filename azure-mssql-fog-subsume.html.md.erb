@@ -149,13 +149,13 @@ the <%= vars.product_short %>:
       in _Installing and Configuring Microsoft Azure Service Broker_.
     * `FOG-NAME` is the logical name in the `message` line of the output from running `cf service MASB-FOG-INSTANCE` in the step above.
 
-    For example:
+        For example:
 
-    <pre class="terminal">
-    $ az sql failover-group show --name masb-fog-db-80124 --server server-name \
-      --resource-group azure-service-broker --query id -o tsv
-    /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/server-name/databases/database-name
-    </pre>
+        ```
+        $ az sql failover-group show --name masb-fog-db-80124 --server server-name \
+          --resource-group azure-service-broker --query id -o tsv
+        /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/server-name/databases/database-name
+        ```
 
     The entire output of each of the three commands replaces the `-AZURE-DB-ID` variables in step 5 below.
 
