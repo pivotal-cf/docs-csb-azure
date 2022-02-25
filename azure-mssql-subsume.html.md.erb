@@ -92,6 +92,7 @@ the <%= vars.product_short %>:
     ```
 
     Where:
+
     * `DATABASE-NAME` and `SERVER-NAME` are the logical names in the `message` line of the output in the step above.
     * `SERVER-RESOURCE-GROUP` is the **Default Resource Group** in the Default Parameters Config pane
       of the Azure Service Broker tile.
@@ -132,14 +133,17 @@ the <%= vars.product_short %>:
     ```
 
     Where:
+
     * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
     * `MSSQL_DB_SERVER_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_PROVISION_DEFAULTS` are literal environment variable names, that should be typed as written.
-    * `SERVER-LABEL` is a label to use to refer to the server, which might be the same as the logical server name.
-    If there is more than one server, combine the credentials into the same JSON object, for example:
-
-        <pre>
+    * `SERVER-LABEL` is a label to use to refer to the server, which might be the same as the logical server name. If there is more than one server, combine the credentials into the same JSON object.
+    
+        For example:
+        
+        ```
         {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
-        </pre>
+        ```
+
     * `SERVER-ADMIN-PASSWORD` is the administrative password for the server.
     * `SERVER-ADMIN-USERNAME` is the administrative username for the server.
     * `SERVER-NAME` is the same as the previous step.
@@ -154,6 +158,7 @@ the <%= vars.product_short %>:
     ```
 
     Where:
+
     * `NEW-SERVICE-INSTANCE` is a name you choose for the new service instance
        that <%= vars.product_short %> creates to replace the MSAB service instance.
     * `AZURE-RESOURCE-ID` is the output of the `az sql db show` command in the previous step.
@@ -161,10 +166,10 @@ the <%= vars.product_short %>:
 
     For example:
 
-    <pre class="terminal">
-$ cf create-service csb-azure-mssql-db subsume secondary-db \
-  -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
-    </pre>
+    ```
+    $ cf create-service csb-azure-mssql-db subsume secondary-db \
+      -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
+    ```
 
 5. Disconnect the app from the MASB service binding by running:
 
@@ -173,13 +178,15 @@ $ cf create-service csb-azure-mssql-db subsume secondary-db \
     ```
 
     Where:
+
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
 
     For example:
-    <pre class="terminal">
-$ cf unbind-service my-app masb-instance
-    </pre>
+
+    ```
+    $ cf unbind-service my-app masb-instance
+    ```
 
 6. Bind the app to the new service instance by running:
 
@@ -189,10 +196,12 @@ $ cf unbind-service my-app masb-instance
 
     Where `NEW-SERVICE-INSTANCE` is the name of the <%= vars.product_short %> service instance
     that you created in step 4 above.
-    <br><br>
+
     For example:
 
-    <pre class="terminal">$ cf bind-service my-app secondary-db </pre>
+    ```
+    $ cf bind-service my-app secondary-db
+    ```
 
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
