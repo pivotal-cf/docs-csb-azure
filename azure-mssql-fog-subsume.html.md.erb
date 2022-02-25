@@ -222,9 +222,11 @@ the <%= vars.product_short %>:
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
 
-        For example:
+    For example:
 
-        <pre class="terminal">$ cf unbind-service my-app masb-instance</pre>
+    ```
+    $ cf unbind-service my-app masb-instance
+    ```
 
 6. Bind the app to the new service instance by running:
 
