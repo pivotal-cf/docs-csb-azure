@@ -112,12 +112,12 @@ the <%= vars.product_short %>:
 
         For example:
 
-        <pre class="terminal">
+        ```
         $ az sql db show --name my-database --server my-server \
           --resource-group azure-service-broker --query id -o tsv
 
         /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database
-        </pre>
+        ```
 
 3. Configure <%= vars.product_short %> with credentials of the Azure database server by running these commands:
 
@@ -170,10 +170,10 @@ the <%= vars.product_short %>:
 
         For example:
 
-    ```
-    $ cf create-service csb-azure-mssql-db subsume secondary-db \
-      -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
-    ```
+        ```
+        $ cf create-service csb-azure-mssql-db subsume secondary-db \
+          -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
+        ```
 
 5. Disconnect the app from the MASB service binding by running:
 
@@ -186,11 +186,11 @@ the <%= vars.product_short %>:
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
 
-    For example:
+        For example:
 
-    ```
-    $ cf unbind-service my-app masb-instance
-    ```
+        ```
+        $ cf unbind-service my-app masb-instance
+        ```
 
 6. Bind the app to the new service instance by running:
 
