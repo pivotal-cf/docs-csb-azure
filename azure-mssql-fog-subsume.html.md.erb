@@ -190,11 +190,14 @@ the <%= vars.product_short %>:
   * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
   * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` and `GSB_SERVICE_CSB_AZURE_MSSQL_DB_FAILOVER_GROUP_PROVISION_DEFAULTS` are
      literal environment variable name that should be typed as written.
-  * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server.
-  If there is more than one server pair, combine the credentials into the same JSON object, for example:
-      <pre>
-      {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
-      </pre>
+  * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server. If there is more than one server pair, combine the credentials into the same JSON object.
+
+  For example:
+
+  ```
+  {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
+  ```
+
   * `SERVER-ADMIN-PASSWORD` is the administrative password for the primary server.
   * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server.
   * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
