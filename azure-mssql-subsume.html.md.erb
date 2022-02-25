@@ -99,14 +99,14 @@ the <%= vars.product_short %>:
       See [Default Parameters Config](https://docs.pivotal.io/partners/azure-sb/installing.html#defaultparameters-config)
       in _Installing and Configuring Microsoft Azure Service Broker_.
 
-    For example:
+        For example:
 
-    <pre class="terminal">
-    $ az sql db show --name my-database --server my-server \
-      --resource-group azure-service-broker --query id -o tsv
+        ```
+        $ az sql db show --name my-database --server my-server \
+          --resource-group azure-service-broker --query id -o tsv
 
-    /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database
-    </pre>
+        /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database
+        ```
 
 3. (If you added the credentials for the MASB-brokered pre-configured servers when you configured <%= vars.product_short %>,
    in [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services), then skip this step.)
@@ -138,11 +138,11 @@ the <%= vars.product_short %>:
     * `MSSQL_DB_SERVER_CREDS` is a literal environment variable name that should be typed as written.
     * `SERVER-LABEL` is a label to use to refer to the server, which might be the same as the logical server name. If there is more than one server, combine the credentials into the same JSON object.
 
-    For example:
+        For example:
 
-    ```
-    {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
-    ```
+        ```
+        {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
+        ```
 
     * `SERVER-ADMIN-PASSWORD` is the administrative password for the server.
     * `SERVER-ADMIN-USERNAME` is the administrative username for the server.
@@ -164,12 +164,12 @@ the <%= vars.product_short %>:
     * `AZURE-RESOURCE-ID` is the output of the `az sql db show` command in the previous step.
     * `SERVER-LABEL` is the same as the previous step.
 
-    For example:
+        For example:
 
-    ```
-    $ cf create-service csb-azure-mssql-db subsume secondary-db \
-      -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
-    ```
+        ```
+        $ cf create-service csb-azure-mssql-db subsume secondary-db \
+          -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
+        ```
 
 5. Disconnect the app from the MASB service binding by running:
 
@@ -182,11 +182,11 @@ the <%= vars.product_short %>:
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
 
-    For example:
+        For example:
 
-    ```
-    $ cf unbind-service my-app masb-instance
-    ```
+        ```
+        $ cf unbind-service my-app masb-instance
+        ```
 
 6. Bind the app to the new service instance by running:
 
