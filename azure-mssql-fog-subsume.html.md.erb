@@ -139,6 +139,7 @@ the <%= vars.product_short %>:
     --resource-group FOG-RESOURCE-GROUP --query id -o tsv
     ```
     Where:
+
     * `DATABASE-NAME` is the logical database name in the `message` line of the output from running `cf service MASB-DATABASE-INSTANCE` in the step above.
     * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the server names joined to the FoG.
     * `FOG-RESOURCE-GROUP` is the **Default Resource Group** in the Default Parameters Config pane
@@ -182,6 +183,7 @@ the <%= vars.product_short %>:
     ```
 
       Where:
+
   * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
   * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` is literal environment variable name, that should be typed as written.
   * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server.
@@ -208,6 +210,7 @@ the <%= vars.product_short %>:
      ```
 
     Where:
+
     * `NEW-SERVICE-INSTANCE` is a name you choose for the new service instance
        to replace the MSAB service instance.
     * `PRIMARY-AZURE-DB-ID` , `SECONDARY-AZURE-DB-ID` and `FOG-AZURE-ID` are found in the outputs of step 3 above.
@@ -220,6 +223,7 @@ the <%= vars.product_short %>:
     ```
 
     Where:
+
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
 
