@@ -73,17 +73,17 @@ To configure Azure credentials:
 
 1. Click **Save**.
 
-<div class="note">
-  <strong>Note:</strong> You can use different Azure credentials for each service plan by setting
-  <code>azure_tenant_id</code>, <code>azure_subscription_id</code>,
-  <code>azure_client_secret</code>, and <code>azure_client_id</code> in one of the following ways:
-  <ul>
-    <li>In the <%= vars.product_short %> tile, set the credentials when configuring a service plan.
-      See <a href="installing-with-azure.html#services">Configure Services with <%= vars.product_short %></a>.</li>
-    <li>In the cf CLI, set the credentials as parameters when creating a service. For example:
-    <pre>cf create-service ... -c '{ "azure_subscription_id":"...", ... "'</pre></li>
-  </ul>
-</div>
+    <div class="note">
+      <strong>Note:</strong> You can use different Azure credentials for each service plan by setting
+      <code>azure_tenant_id</code>, <code>azure_subscription_id</code>,
+      <code>azure_client_secret</code>, and <code>azure_client_id</code> in one of the following ways:
+      <ul>
+        <li>In the <%= vars.product_short %> tile, set the credentials when configuring a service plan.
+          See <a href="installing-with-azure.html#services">Configure Services with <%= vars.product_short %></a>.</li>
+        <li>In the cf CLI, set the credentials as parameters when creating a service. For example:
+        <pre>cf create-service ... -c '{ "azure_subscription_id":"...", ... "'</pre></li>
+      </ul>
+    </div>
 
 ### <a id="state-db"></a>Configure a State Database
 
@@ -239,10 +239,11 @@ the **Settings** tab.
 1. Enter additional plans as additional JSON objects within the provided field.
 For details about properties for each service configuration, see
 <a href="reference/index.html">Service Plan Reference</a>.
-<p class="note">
-  <strong>Note:</strong> When developers create or update a service instance, they cannot override
-  any plan-level properties that have been set in this field.
-</p>
+
+    <p class="note">
+      <strong>Note:</strong> When developers create or update a service instance, they cannot override
+      any plan-level properties that have been set in this field.
+    </p>
 
 1. (Optional) If you want to use different credentials to the ones specified in the **Azure Config** tab,
 supply the credentials as properties to a plan instance in the additional plans box:
