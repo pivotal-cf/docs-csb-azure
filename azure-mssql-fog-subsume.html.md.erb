@@ -151,11 +151,11 @@ the <%= vars.product_short %>:
 
         For example:
 
-        ```
+        <pre class="terminal">
         $ az sql failover-group show --name masb-fog-db-80124 --server server-name \
           --resource-group azure-service-broker --query id -o tsv
         /subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/server-name/databases/database-name
-        ```
+        </pre>
 
     The entire output of each of the three commands replaces the `-AZURE-DB-ID` variables in step 5 below.
 
@@ -227,9 +227,7 @@ the <%= vars.product_short %>:
 
         For example:
 
-        ```
-        $ cf unbind-service my-app masb-instance
-        ```
+        <pre class="terminal">$ cf unbind-service my-app masb-instance</pre>
 
 6. Bind the app to the new service instance by running:
 
