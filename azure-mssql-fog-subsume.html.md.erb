@@ -138,7 +138,7 @@ the <%= vars.product_short %>:
     az sql failover-group show --name FOG-NAME --server PRIMARY-SERVER-NAME \
     --resource-group FOG-RESOURCE-GROUP --query id -o tsv
     ```
-    Where:
+    Where:  
 
     * `DATABASE-NAME` is the logical database name in the `message` line of the output from running `cf service MASB-DATABASE-INSTANCE` in the step above.
     * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the server names joined to the FoG.
@@ -182,22 +182,22 @@ the <%= vars.product_short %>:
     cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
-      Where:
+    Where:  
 
-  * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
-  * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` is literal environment variable name, that should be typed as written.
-  * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server. If there is more than one server pair, combine the credentials into the same JSON object. 
-  
-      For example:
-      
-      ```
-      {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
-      ```
-      
-  * `SERVER-ADMIN-PASSWORD` is the administrative password for the primary server.
-  * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server.
-  * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
-  * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
+    * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
+    * `MSSQL_DB_FOG_SERVER_PAIR_CREDS` is literal environment variable name, that should be typed as written.
+    * `SERVER-PAIR-LABEL` is a label to use to refer to the pairing of the primary and secondary server. If there is more than one server pair, combine the credentials into the same JSON object. 
+
+    For example:
+    
+    ```
+    {"SERVER-PAIR-LABEL-1":{"admin_password": ... }, "SERVER-PAIR-LABEL-2":{"admin_password": ... }}
+    ```
+    
+    * `SERVER-ADMIN-PASSWORD` is the administrative password for the primary server.
+    * `SERVER-ADMIN-USERNAME` is the administrative username for the primary server.
+    * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
+    * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
 
 4. Create a new MSSQL service instance using <%= vars.product_short %> and
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
@@ -212,7 +212,7 @@ the <%= vars.product_short %>:
      }'
      ```
 
-    Where:
+    Where:  
 
     * `NEW-SERVICE-INSTANCE` is a name you choose for the new service instance
        to replace the MSAB service instance.
@@ -225,7 +225,7 @@ the <%= vars.product_short %>:
     cf unbind-service APP-NAME MASB-SERVICE-INSTANCE
     ```
 
-    Where:
+    Where:  
 
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
