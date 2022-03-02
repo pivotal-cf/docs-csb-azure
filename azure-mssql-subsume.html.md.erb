@@ -170,10 +170,10 @@ the <%= vars.product_short %>:
 
         For example:
 
-        ```
+        <pre class="terminal">
         $ cf create-service csb-azure-mssql-db subsume secondary-db \
           -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
-        ```
+        </pre>
 
 5. Disconnect the app from the MASB service binding by running:
 
