@@ -276,3 +276,8 @@ Where:
 - `AUTHENTICATION-PASSWORD` is the password to authenticate to the database instance.
 - `DATABASE-CONNECTION-URI` is the URI to connect to the database instance and database.
 - `JDBC-FORMAT-CONNECTION-URI` is the Java Database Connectivity (JDBC) URL to connect to the database instance and database.
+
+<p class="note">
+<strong>Note:</strong> when a binding or service key is deleted, the underlying PosgreSQL user will still exists in the
+database. To remove the user completley, use the GCP console in conjection with the PostgreSQL documentation.
+</p>
