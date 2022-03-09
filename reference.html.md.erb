@@ -360,7 +360,7 @@ provisioning a csb-azure-mssql-db service:
     <td>JSON</td>
     <td>
       A list of server credentials on which databases can be created.
-      Format: <pre><code>{ "SERVER-1": { "server_name":"...", "server_resource_group":"...", "admin_username":"...", "admin_password":"..."}, "SERVER-2":{"server_name":..., ...}...}</code></pre>
+      Format: <code>{ "SERVER-1": { "server_name":"...", "server_resource_group":"...", "admin_username":"...", "admin_password":"..."}, "SERVER-2":{"server_name":..., ...}...}</code>
       One of the values you use for <code>SERVER</code> must match the <code>server</code> parameter above.
     </td>
     <td></td>
@@ -687,7 +687,7 @@ provisioning a csb-azure-mssql-failover-group service:
   <tr>
     <td><code>read_write_endpoint_failover_policy</code></td>
     <td>string</td>
-    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>.
+    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>
     <td><code>Automatic</code></td>
   </tr>
   <tr>
@@ -894,7 +894,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
     <td>JSON</td>
     <td>
       A list of server pairs on which failover databases can be created.
-      Format: <pre><code>{ "PAIR-1": { "admin_username":"...", "admin_password":"...", "primary":{"server_name":"...", "resource_group":"..."}, "secondary":{"server_name":"...", "resource_group":"..."}, "PAIR-2":...}</code></pre>
+      Format: <code>{ "PAIR-1": { "admin_username":"...", "admin_password":"...", "primary":{"server_name":"...", "resource_group":"..."}, "secondary":{"server_name":"...", "resource_group":"..."}, "PAIR-2":...}</code>
       One of the values you use for <code>PAIR</code> must match the <code>server_pair</code> parameter above.
     </td>
     <td></td>
@@ -902,7 +902,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
   <tr>
     <td><code>read_write_endpoint_failover_policy</code></td>
     <td>string</td>
-    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>.
+    <td>The Read/Write failover policy. The options are <code>Automatic</code> or <code>Manual</code></td>
     <td><code>Automatic</code></td>
   </tr>
   <tr>
@@ -1036,7 +1036,7 @@ provisioning a csb-azure-mssql-fog-run-failover service:
     <td>JSON</td>
     <td>
       A list of failover group server pairs.
-      Format: <pre><code>{ "PAIR-1": { "primary":{"server_name":"...", "resource_group":..."}, "secondary":{"server_name":"...", "resource_group":..."}, "PAIR-2":...}</code></pre>
+      Format: <code>{ "PAIR-1": { "primary":{"server_name":"...", "resource_group":..."}, "secondary":{"server_name":"...", "resource_group":..."}, "PAIR-2":...}</code>
       One of the values you use for <code>PAIR</code> must match the <code>server_pair_name</code> parameter above.
     </td>
     <td></td>
