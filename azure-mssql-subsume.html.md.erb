@@ -102,7 +102,7 @@ the <%= vars.product_short %>:
       See [Default Parameters Config](https://docs.pivotal.io/partners/azure-sb/installing.html#defaultparameters-config)
       in _Installing and Configuring Microsoft Azure Service Broker_.
 
-        For example:
+    For example:
 
         ```
         $ az sql db show  --name database-name --server server-name \
@@ -125,7 +125,7 @@ the <%= vars.product_short %>:
     * `AZURE-RESOURCE-ID` is found in the output of step 2 above.
 
 
-        For example:
+    For example:
 
         ```
         $ cf create-service csb-masb-mssql-db-subsume current secondary-db -c \
@@ -145,11 +145,11 @@ the <%= vars.product_short %>:
     * `MASB-SERVICE-INSTANCE` is the name of the service instance,
     the MAS-brokered database instance.
 
-        For example:
+    For example:
 
-        <pre class="terminal">
-        $ cf unbind-service my-app masb-instance
-        </pre>
+    <pre class="terminal">
+    $ cf unbind-service my-app masb-instance
+    </pre>
 
 5. Bind the app to the new service instance by running:
 
