@@ -94,7 +94,7 @@ the <%= vars.product_short %>:
     --resource-group SERVER-RESOURCE-GROUP --query id -o tsv
     ```
 
-    Where:  
+    Where:
 
     * `DATABASE-NAME` and `SERVER-NAME` are the logical names in the `message` line of the output in the step above.
     * `SERVER-RESOURCE-GROUP` is the **Default Resource Group** in the Default Parameters Config pane
@@ -116,7 +116,7 @@ the <%= vars.product_short %>:
     cf create-service csb-masb-mssql-db-subsume current NEW-SERVICE-INSTANCE -c '{"admin_password":"SERVER-ADMIN-PASSWORD", "azure_db_id", "AZURE-RESOURCE-ID"}'
     ```
 
-    Where:  
+    Where:
 
     * `NEW-SERVICE-INSTANCE` is a name you choose for the new service instance
        that <%= vars.product_short %> creates to replace the MSAB service instance.
@@ -127,11 +127,10 @@ the <%= vars.product_short %>:
 
     For example:
 
-    ```
+    <pre class="terminal">
     $ cf create-service csb-masb-mssql-db-subsume current secondary-db -c \
      '{"admin_password":"PA55W0RD","azure_db_id":"/subscriptions/e7c0ac8a-0416-11eb-ae0e-3bbe060ffff9/resourceGroups/broker/providers/Microsoft.Sql/servers/masb-test-server/databases/test-db"}'
-    ```
-
+    </pre>
 
 4. Disconnect the app from the MASB service binding by running:
 
@@ -139,7 +138,7 @@ the <%= vars.product_short %>:
     cf unbind-service APP-NAME MASB-SERVICE-INSTANCE
     ```
 
-    Where:  
+    Where:
 
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the service instance,
