@@ -91,7 +91,7 @@ the <%= vars.product_short %>:
     --resource-group SERVER-RESOURCE-GROUP --query id -o tsv
     ```
 
-    Where:  
+    Where:
 
     * `DATABASE-NAME` and `SERVER-NAME` are the logical names in the `message` line of the output in the step above.
     * `SERVER-RESOURCE-GROUP` is the **Default Resource Group** in the Default Parameters Config pane
@@ -132,15 +132,14 @@ the <%= vars.product_short %>:
     cf restage CLOUD-SERVICE-BROKER-APP
     ```
 
-    Where:  
+    Where:
 
     * `CLOUD-SERVICE-BROKER-APP` is the name of the <%= vars.product_short %> app.
     * `MSSQL_DB_SERVER_CREDS` is a literal environment variable name that should be typed as written.
     * `SERVER-LABEL` is a label to use to refer to the server, which might be the same as the logical server name. If there is more than one server, combine the credentials into the same JSON object. For example:
-
-        ```
+        <pre class="terminal">
         {"SERVER-LABEL-1":{"admin_password": ... }, "SERVER-LABEL-2":{"admin_password": ... }}
-        ```
+        </pre>
 
     * `SERVER-ADMIN-PASSWORD` is the administrative password for the server.
     * `SERVER-ADMIN-USERNAME` is the administrative username for the server.
@@ -155,7 +154,7 @@ the <%= vars.product_short %>:
     -c '{"azure_db_id", "AZURE-RESOURCE-ID", "server": "SERVER-LABEL"}'
     ```
 
-    Where:  
+    Where:
 
     * `NEW-SERVICE-INSTANCE` is a name you choose for the new service instance
        that <%= vars.product_short %> creates to replace the MSAB service instance.
@@ -175,7 +174,7 @@ the <%= vars.product_short %>:
     cf unbind-service APP-NAME MASB-SERVICE-INSTANCE
     ```
 
-    Where:  
+    Where:
 
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
