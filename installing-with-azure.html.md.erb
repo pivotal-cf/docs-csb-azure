@@ -107,7 +107,8 @@ You must have a small MySQL database to use as the state database.
 
 <p class="note">
   <strong>Note:</strong> VMware recommends enabling backup and restore capabilities in the MySQL
-  database before attempting encryption.
+  database before attempting encryption. This is because if something goes wrong, and your database
+  is only partially encrypted, it is safest to revert to the most recent database backup.
 </p>
 
 #### Procedure: Configure a State Database
