@@ -1,5 +1,5 @@
 ---
-title: Installing and Configuring Cloud Service Broker on Azure
+title: Installing and Configuring Cloud Service Broker for Azure
 owner: Cloud Service Broker
 ---
 
@@ -13,8 +13,6 @@ To install the <%= vars.product_short %> using <%= vars.ops_manager %> Installat
 
 1. Download the product file from
 [<%= vars.product_network %>](https://network.tanzu.vmware.com/products/cloud-service-broker-azure/).
-Azure services are provided in the `Azure` release, demarcated as `VERSION-azure`, for example,
-`v1.0.0-azure`.
 
 1. Navigate to the <%= vars.ops_manager %> Installation Dashboard and click **Import a Product** to
 upload the product file.
@@ -106,6 +104,11 @@ encryption password.
 #### Prerequisite
 
 You must have a small MySQL database to use as the state database.
+
+<p class="note">
+<strong>Note:</strong>
+We recommend that backup and restore capabilities are enabled in the MySQL database before attemping encryption.
+</p>
 
 #### Procedure: Configure a State Database
 
