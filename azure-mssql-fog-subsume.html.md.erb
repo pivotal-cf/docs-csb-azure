@@ -199,13 +199,13 @@ the <%= vars.product_short %>:
 4. Create a new MSSQL service instance using <%= vars.product_short %> and
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
 
-      ```
-      cf create-service csb-azure-mssql-db-failover-group subsume NEW-SERVICE-INSTANCE -c
-          '{
-        "azure_primary_db_id": "PRIMARY-AZURE-DB-ID",
-        "azure_secondary_db_id": "SECONDARY-AZURE-DB-ID",
-        "auzure_fog_id": "FOG-AZURE-ID",
-        "server_pair": "SERVER-PAIR-LABEL"
+    ```
+    cf create-service csb-azure-mssql-db-failover-group subsume NEW-SERVICE-INSTANCE -c
+    '{
+      "azure_primary_db_id": "PRIMARY-AZURE-DB-ID",
+      "azure_secondary_db_id": "SECONDARY-AZURE-DB-ID",
+      "auzure_fog_id": "FOG-AZURE-ID",
+      "server_pair": "SERVER-PAIR-LABEL"
      }'
      ```
 
@@ -227,9 +227,9 @@ the <%= vars.product_short %>:
     * `APP-NAME` is the app using the database.
     * `MASB-SERVICE-INSTANCE` is the name of the MAS-brokered database instance.
 
-        For example:
+    For example:
 
-        <pre class="terminal">$ cf unbind-service my-app masb-instance</pre>
+    <pre class="terminal">$ cf unbind-service my-app masb-instance</pre>
 
 6. Bind the app to the new service instance by running:
 
