@@ -2,5 +2,4 @@
 *   [Release Notes](release-notes.html)
 *   [Installing and Configuring](installing-with-azure.html)
 *   [Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](azure-mssql-subsume.html)
-*   [Azure PostgreSQL Reference](azure-postgresql.html)
 *   [Service Plan Reference](reference.html)
