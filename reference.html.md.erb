@@ -1302,6 +1302,12 @@ The format for binding credentials for PostgreSQL is as follows:
 }
 ```<%# Define any non-obvious placeholders present in the code snippet in the style of |Where PLACEHOLDER is...| %>
 
+<p class="note">
+  <strong>Note:</strong> When a binding or service key is deleted, the underlying PostgreSQL user
+  still exists in the database. To remove the user completely, use the Azure console.
+  For more information, see the
+  <a href="https://www.postgresql.org/docs/current/sql-dropuser.html">PostgreSQL documentation</a>.
+</p>
 
 
 ## <a id="azure-storage-account"></a> Azure Storage Account
