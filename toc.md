@@ -4,5 +4,4 @@
 *   [Updating from v1.1.8 and Earlier](upgrading.html)
 *   [Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](azure-mssql-subsume.html)
 *   [Subsuming a Microsoft Azure Service Broker MSSQL Failover Group Instance](azure-mssql-fog-subsume.html)
-*   [Azure PostgreSQL Reference](azure-postgresql.html)
 *   [Service Plan Reference](reference.html)
