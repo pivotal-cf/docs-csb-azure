@@ -1,0 +1,7 @@
+*   [Cloud Service Broker for Azure](../index.html)
+*   [Release Notes](../release-notes.html)
+*   [Installing and Configuring](../installing-with-azure.html)
+*   [Updating from v1.1.8 and Earlier](../upgrading.html)
+*   [Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](../azure-mssql-subsume.html)
+*   [Subsuming a Microsoft Azure Service Broker MSSQL Failover Group Instance](../azure-mssql-fog-subsume.html)
+*   [Service Plan Reference](../reference.html)
