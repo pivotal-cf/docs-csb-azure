@@ -266,6 +266,15 @@ the <%= vars.product_short %>:
       resource, that is, the database.
     </p>
 
+1. Change the service instance to another plan by running:
+    ```
+    cf update-service NEW-SERVICE-INSTANCE -p PLAN-NAME
+    ```
+
+    Where `PLAN-NAME` is the name of a plan that closely matches the current
+    configuration of the service instance. It can be one of the default plans
+    or a custom plan. Changing the plan will update the service instance to
+    adopt the characteristics (for example, CPU and Storage Size) of that plan.
 
 ## <a id="next-steps"></a> Next Steps
 
