@@ -87,7 +87,7 @@ the <%= vars.product_short %>:
     updated:   2020-08-20T21:08:04Z
     </pre>
 
-2. Get the MASB-brokered FoG instance details by running:
+1. Get the MASB-brokered FoG instance details by running:
 
     ```
     cf service MASB-FOG-INSTANCE
@@ -118,7 +118,7 @@ the <%= vars.product_short %>:
     There are no bound apps for this service.
     </pre>
 
-3. Get the Azure resource IDs for the FoG and its databases by running the following on the Azure CLI:
+1. Get the Azure resource IDs for the FoG and its databases by running the following on the Azure CLI:
 <br><br>
     Primary database ID:
 
@@ -158,7 +158,7 @@ the <%= vars.product_short %>:
 
     The entire output of each of the three commands replaces the `-AZURE-DB-ID` variables in step 5 below.
 
-4. (If you added the credentials for the pre-configured servers when you configured <%= vars.product_short %>,
+1. (If you added the credentials for the pre-configured servers when you configured <%= vars.product_short %>,
    in [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services), then skip this step.)
    <br><br>
     Add credentials for the MASB-brokered pre-existing servers by following step 3 in
@@ -196,7 +196,7 @@ the <%= vars.product_short %>:
     * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
     * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
 
-4. Create a new MSSQL service instance using <%= vars.product_short %> and
+1. Create a new MSSQL service instance using <%= vars.product_short %> and
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
 
     ```
@@ -216,7 +216,7 @@ the <%= vars.product_short %>:
     * `PRIMARY-AZURE-DB-ID` , `SECONDARY-AZURE-DB-ID` and `FOG-AZURE-ID` are found in the outputs of step 3 above.
     * `SERVER-PAIR-LABEL` is the same as in the previous step.
 
-5. Disconnect the app from the MASB service binding by running:
+1. Disconnect the app from the MASB service binding by running:
 
     ```
     cf unbind-service APP-NAME MASB-SERVICE-INSTANCE
@@ -231,7 +231,7 @@ the <%= vars.product_short %>:
 
     <pre class="terminal">$ cf unbind-service my-app masb-instance</pre>
 
-6. Bind the app to the new service instance by running:
+1. Bind the app to the new service instance by running:
 
     ```
     cf bind-service APP-NAME NEW-SERVICE-INSTANCE
@@ -243,7 +243,7 @@ the <%= vars.product_short %>:
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
 
-7. Restage the app:
+1. Restage the app:
 
     ```
     cf restage APP-NAME
@@ -266,15 +266,20 @@ the <%= vars.product_short %>:
       resource, that is, the database.
     </p>
 
-1. Change the service instance to another plan by running:
+1. Update the service instance to use a plan that closely matches the
+configuration of the plan that the MAS-brokered instance used by running:
+
     ```
     cf update-service NEW-SERVICE-INSTANCE -p PLAN-NAME
     ```
 
-    Where `PLAN-NAME` is the name of a plan that closely matches the current
-    configuration of the service instance. It can be one of the default plans
-    or a custom plan. Changing the plan will update the service instance to
-    adopt the characteristics (for example, CPU and Storage Size) of that plan.
+    Where `PLAN-NAME` is the name of the plan. You can use one of the default plans or a custom plan.
+
+    <p class="note">
+      <strong> Note:</strong> Changing the plan updates the service instance to
+      adopt the characteristics of that plan, such as CPU and storage size.
+    </p>
+
 
 ## <a id="next-steps"></a> Next Steps
 
