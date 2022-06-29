@@ -273,7 +273,8 @@ configuration of the plan that the MAS-brokered instance used by running:
     cf update-service NEW-SERVICE-INSTANCE -p PLAN-NAME
     ```
 
-    Where `PLAN-NAME` is the name of the plan. You can use one of the default plans or a custom plan. Instances must be updated to a plan other than `subsume` in order to be managable by the <%= vars.product_short %>.
+    Where `PLAN-NAME` is the name of the plan. You can use one of the default plans or a custom plan.
+    Update instances to a plan other than `subsume` so that <%= vars.product_short %> can manage them.
 
     <p class="note">
       <strong> Note:</strong> Changing the plan updates the service instance to
