@@ -29,9 +29,10 @@ Operators can choose how the upgrade process is performed:
    This can be used in combination with `cf upgrade-service`. See
    [Upgrade All Service Plugin](#upgrade-all-services-plugin).
 
-## <a id="upgrade-all-services-plugin"></a> Known Issues with Upgrading
+## <a id="upgrade-all-services-plugin"></a> Upgrade All Services Plugin
 
-This is a Cloud Foundry Community Plugin for upgrading more than one service
+This is a Cloud Foundry Community Plugin for the Cloud Foundry Command Line
+Interface. It enables upgrading more than one service
 instance at the same time. It determines which service instances have an
 upgrade pending, and attempts to upgrade them all. If a service instance
 has already been upgraded, then it will not attempt
@@ -75,14 +76,14 @@ installed.
 
 ## <a id="csb-azure-mssql-failover-group"></a> Azure SQL Database (csb-azure-mssql-failover-group)
 
-If a csb-azure-mssql-db service was created with v1.1.0 or earlier, then the upgrade process
+If a csb-azure-mssql-failover-group service was created with v1.1.0 or earlier, then the upgrade process
 will fail. Note that it matters which version created the csb-azure-mssql-failover-group instance, and it
 does not matter if a more recent version of <%= vars.product_short %> is currently
 installed.
 
 ## <a id="csb-azure-mssql-db-failover-group"></a> Azure SQL Database (csb-azure-mssql-db-failover-group)
 
-If a csb-azure-mssql-db service was created with v1.1.6 or earlier, then the upgrade process
+If a csb-azure-mssql-db-failover-group service was created with v1.1.6 or earlier, then the upgrade process
 will fail. Note that it matters which version created the csb-azure-mssql-db-failover-group instance, and it
 does not matter if a more recent version of <%= vars.product_short %> is currently
 installed.
