@@ -120,7 +120,6 @@ To configure <%= vars.product_short %> with a state database:
     <%= image_tag("images/service-broker-config-pane.png", :alt => "Fields for configuring the service broker.
   See the following steps for detailed descriptions of the configurable fields.", :width => "400") %>
 
-
 1. Configure the fields as follows:
 
     | Field | Instructions |
@@ -137,10 +136,10 @@ To configure <%= vars.product_short %> with a state database:
 
 1. Click **Save**.
 
-1. If upgrading from a previous tile version, service instances will need upgrading.
+1. If upgrading from a previous tile version, service instances must be upgraded.
    By default, the tile upgrades all instances during installation.
    To configure the upgrade task, see [Upgrade All Service Instances Config](#upgrade-all-config).
-   Alternatively, operators can control when service instances are upgraded. See
+   Alternatively, operators can control when service instances are upgraded. For more information, see
    [Upgrading Cloud Service Broker for Azure](upgrading.html).
 
 1. Return to the <%= vars.ops_manager %> Installation Dashboard.
@@ -327,21 +326,22 @@ To remove encryption from the state database:
 
 ## <a id="upgrade-all-config"></a> Upgrade All Services Instances Config
 
-If upgrading from a previous tile version, service instances will need upgrading.
+If upgrading from a previous tile version, service instances must be upgraded.
 By default, the tile upgrades all instances during installation.
 This section is about the general configuration of upgrades.
-See [Upgrading Cloud Service Broker for Azure](upgrading.html) for alternatives
-and details of the upgrade.
+See [Upgrading Cloud Service Broker for Azure](upgrading.html) for alternatives and details of the
+upgrade.
 
-If <strong>Upgrade all services</strong> is unchecked, service instances are not upgraded during
-installation. The broker might not be able to manage these service instances anymore.
-In that case, any operations on that instance (update/bind/unbind/delete) are blocked until the
+If **Upgrade all services** is unchecked, service instances are not upgraded during
+installation. The broker might be unable to manage these service instances anymore.
+In that case, any operations on that instance (update, bind, unbind, or delete) are blocked until the
 upgrade is performed. You can run the upgrade task any time.
 
 Deleting custom plans before upgrading all instances might cause some instances to become unmanageable
 by the broker.
 Delete plans at a later step or see [Release Notes for Cloud Service Broker for Azure](release-notes.html)
-and [Upgrading Cloud Service Broker for Azure](upgrading.html) to ensure there are no conflicting upgrades.
+and [Upgrading Cloud Service Broker for Azure](upgrading.html) to ensure there are no conflicting
+upgrades.
 
 Instances that the broker has subsumed must be changed to a suitable plan, other than the `subsume`
 plan, before performing any upgrades.
@@ -349,10 +349,9 @@ Failure to do so causes the broker to become unable to manage those instances an
 
 To perform the upgrade task:
 
-1. Go to the **Upgrade All Service Instances Config** tab
+1. Go to the **Upgrade All Service Instances Config** tab.
 
- <%= image_tag("images/upgrade-all-services-config-pane.png", :alt => "Fields for configuring Upgrade All Service Instances task.
-  See the following steps for detailed descriptions of the configurable fields.", :width => "400") %>
+ <%= image_tag("images/upgrade-all-services-config-pane.png", :alt => "Fields for configuring Upgrade All Service Instances task. See the following steps for detailed descriptions of the configurable fields.", :width => "400") %>
 
 1. Configure the fields as follows:
 
@@ -361,7 +360,7 @@ To perform the upgrade task:
     | **Upgrade all services** | Checked by default. Indicates if service instances are upgraded during product installation.|
     | **The number of upgrades to run in parallel** | Indicates the number of instances that can be in the `upgrading` status at any given time. |
 
-1. Click **Save**
+1. Click **Save**.
 
 1. Return to the <%= vars.ops_manager %> Installation Dashboard.
 

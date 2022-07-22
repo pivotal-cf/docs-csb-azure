@@ -5,85 +5,83 @@ owner: Cloud Service Broker
 
 This topic describes how to upgrade <%= vars.product_full %>.
 
-## <a id="upgrade-to-1-3"></a> Upgrading to 1.3
-<%= vars.product_short %> uses Terraform internally to manage the deployment of
-service instances. The version of Terraform has been updated from 0.12 to 1.1.
+## <a id="upgrade-to-1-3"></a> Upgrading to v1.3
+
+<%= vars.product_short %> uses Terraform internally to manage the deployment of service instances.
+Terraform was updated from v0.12 to v1.1.
 As a result, there is an upgrade process that must be performed on every
 service instance so that <%= vars.product_short %> can continue to manage it.
 
-VMware recommends that service instances should be backed up before the
-upgrade process.
+VMware recommends that you back up service instances before upgrading.
 
 VMware recommends that you review the known issues before upgrading to v1.3.
-See [Known Issues](#known-issues).
+For more information, see [Known Issues](#known-issues).
 
-Operators can choose how the upgrade process is performed:
+Operators can choose how the upgrade is performed:
 
-1. By default, the Tile installation will upgrade all service instances.
+- By default, the Tile installation upgrades all service instances.
    This can be disabled to give more control of the upgrade process.
 
-1. The command `cf upgrade-service` (or `cf update-service --upgrade` in v7 and earlier)
+- The command `cf upgrade-service`, or `cf update-service --upgrade` in v7 and earlier,
    can be used to upgrade service individually.
 
-1. The CF CLI plugin `UpgradeAllServices` can be used to upgrade all the services.
-   This can be used in combination with `cf upgrade-service`. See
+- The cf CLI plug-in `UpgradeAllServices` can be used to upgrade all the services.
+   This can be used in combination with `cf upgrade-service`. For more information, see
    [Upgrade All Service Plugin](#upgrade-all-services-plugin).
 
-## <a id="upgrade-all-services-plugin"></a> Upgrade All Services Plugin
+## <a id="upgrade-all-services-plugin"></a> Upgrade All Services Plug-in
 
-This is a Cloud Foundry Community Plugin for the Cloud Foundry Command Line
-Interface. It enables upgrading more than one service
-instance at the same time. It determines which service instances have an
-upgrade pending, and attempts to upgrade them all. If a service instance
-has already been upgraded, then it will not attempt
-to upgrade it again.
+This is a Cloud Foundry Community plug-in for the Cloud Foundry CLI.
+It enables upgrading more than one service instance at the same time.
+It detects which service instances have an upgrade pending, and attempts to upgrade them all.
+If a service instance has already been upgraded, it does not attempt to upgrade it again.
 
-To install the plugin, run:
-```
+To install the plug-in, run:
+
+```console
 cf install-plugin UpgradeAllServices
 ```
 
 To see which instances still need to be upgraded, run:
-```
+
+```console
 cf upgrade-all-services BROKER-NAME -dry-run
 ```
-Where `BROKER-NAME` is the name of the <%= vars.product_short %> broker that can
-be determined by running `cf service-brokers`.
+
+Where `BROKER-NAME` is the name of the <%= vars.product_short %> broker you can detect by running
+`cf service-brokers`.
 
 To upgrade all the instances that have an upgrade pending, run:
-```
+
+```console
 cf upgrade-all-services BROKER-NAME
 ```
 
 ## <a id="known-issues"></a> Known Issues with Upgrading to v1.3
 
-In some previous versions of <%= vars.product_short %> incompatible changes were made
-that mean it is not possible to upgrade certain service instances to v1.3.
+In some previous versions of <%= vars.product_short %>, incompatible changes were made that prevent
+upgrading certain service instances to v1.3.
 
-## <a id="csb-azure-mongodb"></a> Azure Cosmos DB's API for MongoDB (csb-azure-mongodb)
+## <a id="csb-azure-mongodb"></a> Azure Cosmos DB API for MongoDB (csb-azure-mongodb)
 
-If a csb-azure-mongodb service was created with v1.1.0 or earlier, then the upgrade process
-will fail. Note that it matters which version created the csb-azure-mongodb instance, and it
-does not matter if a more recent version of <%= vars.product_short %> is currently
-installed.
+If a `csb-azure-mongodb` service was created with v1.1.0 or earlier, upgrading
+fails. The specific version that created the `csb-azure-mongodb` instance matters, and it does not
+matter if a more recent version of <%= vars.product_short %> is currently installed.
 
 ## <a id="csb-azure-mssql-db"></a> Azure SQL Database (csb-azure-mssql-db)
 
-If a csb-azure-mssql-db service was created with v1.1.6 or earlier, then the upgrade process
-will fail. Note that it matters which version created the csb-azure-mssql-db instance, and it
-does not matter if a more recent version of <%= vars.product_short %> is currently
-installed.
+If a `csb-azure-mssql-db` service was created with v1.1.6 or earlier, upgrading fails.
+The specific version that created the `csb-azure-mssql-db` instance matters, and it does not matter
+if a more recent version of <%= vars.product_short %> is currently installed.
 
 ## <a id="csb-azure-mssql-failover-group"></a> Azure SQL Failover Group (csb-azure-mssql-failover-group)
 
-If a csb-azure-mssql-failover-group service was created with v1.1.0 or earlier, then the upgrade process
-will fail. Note that it matters which version created the csb-azure-mssql-failover-group instance, and it
-does not matter if a more recent version of <%= vars.product_short %> is currently
-installed.
+If a `csb-azure-mssql-failover-group` service was created with v1.1.0 or earlier, upgrading fails.
+The specific version that created the `csb-azure-mssql-failover-group` instance matters, and it
+does not matter if a more recent version of <%= vars.product_short %> is currently installed.
 
 ## <a id="csb-azure-mssql-db-failover-group"></a> Azure SQL Failover Group on Existing Server Pairs (csb-azure-mssql-db-failover-group)
 
-If a csb-azure-mssql-db-failover-group service was created with v1.1.6 or earlier, then the upgrade process
-will fail. Note that it matters which version created the csb-azure-mssql-db-failover-group instance, and it
-does not matter if a more recent version of <%= vars.product_short %> is currently
-installed.
+If a `csb-azure-mssql-db-failover-group` service was created with v1.1.6 or earlier, upgrading fails.
+The specific version that created the `csb-azure-mssql-db-failover-group` instance matters, and it
+does not matter if a more recent version of <%= vars.product_short %> is currently installed.
