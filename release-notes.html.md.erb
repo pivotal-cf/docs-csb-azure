@@ -7,6 +7,40 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_full %>.
 
+## <a id="1-3-0"></a> v1.3.1
+
+**Release Date:** November 14, 2022
+
+### Fixes
+* **Service Offering logos now show up in Apps Manager**: Previously when provisioning
+services through Apps Manager the logo would not be displayed in apps manager making it
+difficult to identify the offering from similar ones installed in the platform.
+Service Offerings will now display a generic Tanzu logo.
+
+* **Fix issue with limits to environment variables length when installing the tile**:
+In previous versions the broker deployed by the tile is configured through environment variables.
+This causes environments with several plans or other lenghy configurations to hit a limitation to
+the size of environment variables in the platform. From this version configuration is done
+with a configuration file written during the deployment process hence overcoming such limitations.
+
+Some cf env var values may get too long for cloud-controller to handle.
+
+The env vars are set via the add_env_vars() function.
+The tile generator creates one long bash script that pushes the app.
+
+We can just override the contents of the add_env_vars() function by defining our own in the pre_deploy hook. The pre_deploy hook is rendered just before the rest of deploy steps from the tile generator template.
+
+Once we made sure we won't set env vars values that are too long for cloud-controller, we can write the actual desired config file for the broker via heredoc syntax.
+
+This works simply by adding the config_path key to a property definition. The config_path property defines the yaml path where the config item needs to be available to be picked up by the broker. refer to the brokerpak config docs for the expected path.
+
+* fix: values containing single ticks break broker config
+
+if the tile provided value contains `'` the generated broker congfig
+cannot be parsed by the cloud-service-broker. to avoid running into this
+issue remove the wrapping `'` and replace them as yaml multiline
+notation.
+
 ## <a id="1-3-0"></a> v1.3.0
 
 **Release Date:** August 5, 2022
@@ -25,6 +59,12 @@ This release has the following issues:
 
 * **Incompatible changes upgrading some services from some versions:** Some services cannot be upgraded
    from previous versions. For more information, see [Issues with Upgrading Service Instances to v1.3](upgrading.html#known-issues).
+
+* **Limits to environment variables length when installing the tile**:
+The broker deployed by the tile is configured through environment variables.
+This causes installations with several plans or other lenghy configurations to hit a limitation to
+the size of environment variables in the platform which will prevent the broker app
+from starting causing the deploy to fail.
 
 ## <a id="view"></a> View Release Notes for Another Version
 
