@@ -1,0 +1,88 @@
+---
+title: Release Notes for Cloud Service Broker for Azure
+owner: Cloud Service Broker
+---
+
+<strong><%= modified_date %></strong>
+
+These are release notes for <%= vars.product_full %>.
+
+{{#unless vars.hide_content}}
+## <a id="1-3-1"></a> v1.3.1
+
+**Release Date:** November 14, 2022
+
+### Known issues
+
+This release has the following known issues.
+
+* **Values containing single ticks break broker configuration:**
+  If the tile provided value contains `'`, cloud-service-broker cannot parse the generated broker
+  configuration.
+  To prevent this issue, replace the wrapping `'` with YAML multiline notation.
+
+### Resolved issues
+
+This release has the following fixes.
+
+* **Service Offering logos now show up in Apps Manager:**
+  Previously when provisioning services through Apps Manager, the logo did not appear in
+  Apps Manager. This made it difficult to identify the offering from similar ones installed on the
+  platform. Service Offerings now display a generic Tanzu logo.
+
+* **Fix issue with limits to environment variables length when installing the tile:**
+  In previous versions, the broker deployed by the tile is configured through environment variables.
+  This causes environments with several plans or other lengthy configurations to hit a limit on
+  the size of environment variables in the platform.
+  From this version, you use a configuration file written during the deployment process that
+  overcomes such limits. For more information, see LINK. <!-- Add link -->
+
+  You set environment variables by using the `add_env_vars()` function.
+  The tile generator creates one long bash script that pushes the app.
+
+  You can override the contents of the `add_env_vars()` function by defining your own contents in the
+  `pre_deploy` hook.
+  The `pre_deploy` hook is rendered just before the rest of deployment steps from the tile generator
+  template.
+
+  Some `cf` environment variable values can get too long for cloud-controller to handle.
+  After ensuring that you won't set environment variable values that are too long for cloud-controller, <!-- How? -->
+  you can write the actual desired configuration file for the broker by using heredoc syntax.
+
+  This works by adding the `config_path` key to a property definition.
+  The `config_path` property defines the YAML path where the configuration item needs to be available
+  for the broker to pick up. For the expected path, see the brokerpak config documentation. <!-- Add link -->
+{{/unless}}
+
+## <a id="1-3-0"></a> v1.3.0
+
+**Release Date:** August 5, 2022
+
+### Features
+
+New features and changes in this release:
+
+* **The internal Terraform was upgraded to v1.1:**
+  Terraform v1.1 enables the product to make use of new features in Azure.
+  All service instances must be upgraded. For more information, see
+  [Upgrading Cloud Service Broker for Azure](upgrading.html) and
+  [Issues with Upgrading Service Instances to v1.3](upgrading.html#known-issues)
+
+### Known Issues
+
+This release has the following issues:
+
+* **Incompatible changes upgrading some services from some versions:**
+  Some services cannot be upgraded from previous versions.
+  For more information, see [Issues with Upgrading Service Instances to v1.3](upgrading.html#known-issues).
+
+* **Limits to environment variables length when installing the tile:**
+  The broker deployed by the tile is configured through environment variables.
+  This causes installations with several plans or other lengthy configurations to hit a limit on the
+  size of environment variables in the platform.
+  This limit prevents the broker app from starting, which causes the deployment to fail.
+
+## <a id="view"></a> View Release Notes for Another Version
+
+To view the release notes for another product version, select the version from drop-down menu at the
+top of this page.
