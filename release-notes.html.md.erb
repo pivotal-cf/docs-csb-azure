@@ -33,24 +33,8 @@ This release has the following fixes.
   In previous versions, the broker deployed by the tile is configured through environment variables.
   This causes environments with several plans or other lengthy configurations to hit a limit on
   the size of environment variables in the platform.
-  From this version, you use a configuration file written during the deployment process that
-  overcomes such limits. For more information, see LINK. <!-- Add link -->
-
-  You set environment variables by using the `add_env_vars()` function.
-  The tile generator creates one long bash script that pushes the app.
-
-  You can override the contents of the `add_env_vars()` function by defining your own contents in the
-  `pre_deploy` hook.
-  The `pre_deploy` hook is rendered just before the rest of deployment steps from the tile generator
-  template.
-
-  Some `cf` environment variable values can get too long for cloud-controller to handle.
-  After ensuring that you won't set environment variable values that are too long for cloud-controller, <!-- How? -->
-  you can write the actual desired configuration file for the broker by using heredoc syntax.
-
-  This works by adding the `config_path` key to a property definition.
-  The `config_path` property defines the YAML path where the configuration item needs to be available
-  for the broker to pick up. For the expected path, see the brokerpak config documentation. <!-- Add link -->
+  From this version, the tile uses a configuration file written during the deployment process that
+  overcomes such limits. No action is needed.
 
 ## <a id="1-3-0"></a> v1.3.0
 
