@@ -9,32 +9,31 @@ These are release notes for <%= vars.product_full %>.
 
 ## <a id="1-3-1"></a> v1.3.1
 
-**Release Date:** November 14, 2022
+**Release Date:** November 8, 2022
+
+### Resolved issues
+
+This release has the following fixes:
+
+* **Service offering logos now show up in Apps Manager:**
+  Previously when provisioning services through Apps Manager, service logos did not appear.
+  This made it difficult to identify the offering from similar ones installed on the platform.
+  Service offerings now display a generic Tanzu logo.
+
+* **Fix issue with limits to environment variables length when installing the tile:**
+  In previous versions, the broker deployed by the tile was configured through environment variables.
+  This caused environments with lengthy configurations to hit a limit on the size of environment variables.
+  From this version, the tile uses a configuration file written during the deployment process that
+  overcomes such limits. No action is needed.
 
 ### Known issues
 
-This release has the following known issues.
+This release has the following issue:
 
 * **Values containing single ticks break broker configuration:**
   If the tile provided value contains `'`, cloud-service-broker cannot parse the generated broker
   configuration.
   To prevent this issue, replace the wrapping `'` with YAML multiline notation.
-
-### Resolved issues
-
-This release has the following fixes.
-
-* **Service Offering logos now show up in Apps Manager:**
-  Previously when provisioning services through Apps Manager, the logo did not appear in
-  Apps Manager. This made it difficult to identify the offering from similar ones installed on the
-  platform. Service Offerings now display a generic Tanzu logo.
-
-* **Fix issue with limits to environment variables length when installing the tile:**
-  In previous versions, the broker deployed by the tile is configured through environment variables.
-  This causes environments with several plans or other lengthy configurations to hit a limit on
-  the size of environment variables in the platform.
-  From this version, the tile uses a configuration file written during the deployment process that
-  overcomes such limits. No action is needed.
 
 ## <a id="1-3-0"></a> v1.3.0
 
