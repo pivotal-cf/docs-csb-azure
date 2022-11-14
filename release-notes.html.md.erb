@@ -26,17 +26,19 @@ This release has the following fixes:
   From this version, the tile uses a configuration file written during the deployment process that
   overcomes such limits. No action is needed.
 
-* **Fix issue with upgrading Azure SQL Failover DB Group instances that had `existing` property set to true:**
-  When an Azure SQL Failover DB Group instance is created with the property `existing` set to true the upgrade process would fail 
-  because it attempted to import values that were never set. The upgrade now will succeed and there will be no attempts 
-  to import values.
+* **Fix issue with upgrading Azure SQL Failover DB Group instances that had `existing` property set to `true`:**
+  When an Azure SQL Failover DB Group instance was created with the property `existing` set to `true`
+  the upgrade process failed because it attempted to import values that were never set.
+  The upgrade now succeeds and there are no attempts to import values.
 
-* **MSSQL Run Failover (csb-azure-mssql-fog-run-failover) service client secret parameter is no longer exposed on error:**
-  The value of the Client Secret is considered a sensible field. We avoid logging its value in plain text.
+* **MSSQL Run Failover (`csb-azure-mssql-fog-run-failover`) service client secret parameter is no longer exposed on error:**
+  The value of the client secret is considered a sensible field. Its value is not logged in plain text.
 
-* ***MSSQL Run Failover (csb-azure-mssql-fog-run-failover) service parameters validation is more flexible:**
-  Previously, the validation of the parameters was carried out in a more restrictive way adding rigidity to the admitted values. 
-  With this change, the main validation is on the supplier side, and we only check if the field is empty.
+* ***MSSQL Run Failover (`csb-azure-mssql-fog-run-failover`) service parameters validation is more flexible:**
+  Previously, the validation of the parameters was carried out in a more restrictive way, demanding
+  rigidity of the admitted values.
+  With this change, the main validation is on the supplier side, and there is only a check if the
+  field is empty.
 
 ### Known issues
 
@@ -69,14 +71,14 @@ This release has the following issues:
   Some services cannot be upgraded from previous versions.
   For more information, see [Issues with Upgrading Service Instances to v1.3](upgrading.html#known-issues).
 
-* **Upgrading Azure SQL Failover DB Group instances that have `existing` property set to true will fail:**
-The upgrade process will attempt to import values for resources that don't exist.
+* **Failure to upgrade Azure SQL Failover DB Group instances that have `existing` property set to `true`:**
+  The upgrade process attempts to import values for resources that don't exist.
 
 * **Limits to environment variables length when installing the tile:**
-The broker deployed by the tile is configured through environment variables.
-This causes installations with several plans or other lengthy configurations to hit a limit on the
-size of environment variables in the platform.
-This limit prevents the broker app from starting, which causes the deployment to fail.
+  The broker deployed by the tile is configured through environment variables.
+  This causes installations with several plans or other lengthy configurations to hit a limit on the
+  size of environment variables in the platform.
+  This limit prevents the broker app from starting, which causes the deployment to fail.
 
 ## <a id="view"></a> View Release Notes for Another Version
 
