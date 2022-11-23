@@ -5,83 +5,112 @@ owner: Cloud Service Broker
 
 This topic describes how to upgrade <%= vars.product_full %>.
 
-## <a id="upgrade-to-1-3"></a> Upgrading to v1.3
+## <a id="upgrade-to-1-4"></a> Upgrading to v1.4
 
-<%= vars.product_short %> uses Terraform internally to manage the deployment of service instances.
-Terraform was updated from v0.12 to v1.1.
-As a result, there is an upgrade process that must be performed on every
-service instance so that <%= vars.product_short %> can continue to manage it.
+### <a id="redis"></a> Upgrading to Azure Cache for Redis v6
 
-VMware recommends that you back up service instances before upgrading.
+New Redis version v6 is now available through  <%= vars.product_short %>.
 
-VMware recommends that you review the known issues before upgrading to v1.3.
-For more information, see [Known Issues](#known-issues).
+   <p class="note">
+      <strong>Note:</strong> All brokerpak-provided plans set the Redis version to v4 to maintain compatibility with the instances already created. 
+      These plans will be removed from the brokerpak in future releases in favor of custom-defined plans in the Tile.
+      VMware recommends you update all instances to use custom-defined plans instead.
+   </p>
 
-Operators can choose how the upgrade is performed:
+Steps to update to Redis v6:
 
-- By default, the Tile installation upgrades all service instances.
-   This can be deactivated to give more control of the upgrade process.
+1. Before updating the Redis version, make sure to read the <a href="https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-upgrade">
+   Microsoft Azure upgrade recommendations</a> and understand any possible consequences to the service.
+1. Identify the instance that need to be updated to use Redis v6.
+1. Identify the plan used to create the instance. You can do this running: 
 
-- The command `cf upgrade-service`, or `cf update-service --upgrade` in v7 and earlier,
-   can be used to upgrade service individually.
+   ```console
+   cf service <INSTANCE_NAME>
+   ```
 
-- The cf CLI plug-in `UpgradeAllServices` can be used to upgrade all the services.
-   This can be used in combination with `cf upgrade-service`. For more information, see
-   [Upgrade All Service Plugin](#upgrade-all-services-plugin).
+   Where the <INSTANCE_NAME> is the name of the service to be updated.
 
-## <a id="upgrade-all-services-plugin"></a> Upgrade All Services Plug-in
+1. Find the plan definition of that plan.
+   If the plan is a custom one, you can find its definiton in the Tile configuration.
+   If the plan is a brokerpak-provided one, you can find the corresponding properties
+   <a href="https://github.com/cloudfoundry/csb-brokerpak-azure/blob/6f4a2879ea330fdedbbed896259f9f1942f2ff4b/azure-redis.yml#L26-L102">in the brokerpak definition</a>.
 
-This is a Cloud Foundry Community plug-in for the Cloud Foundry CLI.
-It enables upgrading more than one service instance at the same time.
-It detects which service instances have an upgrade pending, and attempts to upgrade them all.
-If a service instance has already been upgraded, it does not attempt to upgrade it again.
+1. If the plan is a custom one, you can update the instance to use version 6 by running:
 
-To install the plug-in, run:
+   ```console
+   cf update-service <INSTANCE_NAME> -c '{"redis_version": "6"}'
+   ```
 
-```console
-cf install-plugin UpgradeAllServices
-```
+   Where the <INSTANCE_NAME> is the name of the service to be updated.
 
-To see which instances still need to be upgraded, run:
+1. If the plan is a brokerpak-provided one, you can choose one of the options below:
 
-```console
-cf upgrade-all-services BROKER-NAME -dry-run
-```
+   Option 1: Define custom-created plan with a specified redis version
+      1. Define a custom plan that specifies the redis version. For example:
 
-Where `BROKER-NAME` is the name of the <%= vars.product_short %> broker you can detect by running
-`cf service-brokers`.
+         ```json
+         {
+            "name": "custom-plan-v6",
+            "id": "ba3d28f0-6b17-11ed-91ca-1f5af50ef86f",
+            "description": "Custom plan",
+            "sku_name": "Basic",
+            "family": "C",
+            "capacity": 1,
+            "tls_min_version": "1.2",
+            "firewall_rules": [],
+            "redis_version": "6"
+         }
+         ```
 
-To upgrade all the instances that have an upgrade pending, run:
+         <p class="note">
+         <strong>Note:</strong>All other service properties should match the plan the instance is already on.
+         </p>
 
-```console
-cf upgrade-all-services BROKER-NAME
-```
+         <p class="note">
+         <strong>Note:</strong>Setting the redis_version property in the plan means that the users cannot change 
+         that property during create or update instance operations.
+         </p>
 
-## <a id="known-issues"></a> Known Issues with Upgrading to v1.3
+      1. Update the instance to the new plan. You can do this by running
 
-In some previous versions of <%= vars.product_short %>, incompatible changes were made that prevent
-upgrading certain service instances to v1.3.
+         ```console
+         cf update-service <INSTANCE_NAME> -p <NEW_PLAN_NAME>
+         ```
 
-### <a id="csb-azure-mongodb"></a> Azure Cosmos DB API for MongoDB (csb-azure-mongodb)
+         Where the <NEW_PLAN_NAME> is the name of the plan created in previous step.
 
-If a `csb-azure-mongodb` service was created with v1.1.0 or earlier, upgrading
-fails. The specific version that created the `csb-azure-mongodb` instance matters, and it does not
-matter if a more recent version of <%= vars.product_short %> is currently installed.
+   Option 2: Define custom-created plan without a specified redis version
+      1. Define a custom plan that does not specify the redis version. For example:
 
-### <a id="csb-azure-mssql-db"></a> Azure SQL Database (csb-azure-mssql-db)
+      ```json
+      {
+         "name": "custom-plan-v6",
+         "id": "ba3d28f0-6b17-11ed-91ca-1f5af50ef86f",
+         "description": "Custom plan",
+         "sku_name": "Basic",
+         "family": "C",
+         "capacity": 1,
+         "tls_min_version": "1.2",
+         "firewall_rules": []
+      }
+      ```
 
-If a `csb-azure-mssql-db` service was created with v1.1.6 or earlier, upgrading fails.
-The specific version that created the `csb-azure-mssql-db` instance matters, and it does not matter
-if a more recent version of <%= vars.product_short %> is currently installed.
+      <p class="note">
+      <strong>Note:</strong>All service properties, other then name, id and description should match the plan the instance is already on.
+      </p>
 
-### <a id="csb-azure-mssql-failover-group"></a> Azure SQL Failover Group (csb-azure-mssql-failover-group)
+      1. Update the instance to the new plan. You can do this by running
 
-If a `csb-azure-mssql-failover-group` service was created with v1.1.0 or earlier, upgrading fails.
-The specific version that created the `csb-azure-mssql-failover-group` instance matters, and it
-does not matter if a more recent version of <%= vars.product_short %> is currently installed.
+         ```console
+         cf update-service <INSTANCE_NAME> -p <NEW_PLAN_NAME> -c -c '{"redis_version": "6"}'
+         ```
 
-### <a id="csb-azure-mssql-db-failover-group"></a> Azure SQL Failover Group on Existing Server Pairs (csb-azure-mssql-db-failover-group)
+## <a id="procedure"></a> Upgrade procedure
 
-If a `csb-azure-mssql-db-failover-group` service was created with v1.1.6 or earlier, upgrading fails.
-The specific version that created the `csb-azure-mssql-db-failover-group` instance matters, and it
-does not matter if a more recent version of <%= vars.product_short %> is currently installed.
+To upgrade the <%= vars.product_short %> to a later version:
+
+1. Download the new version of <%= vars.product_short %> from [<%= vars.product_network %>](https://network.pivotal.io/products/cloud-service-broker-azure/).
+1. Follow the procedure in [Installing with Azure](installing-with-azure.html.md.erb) to configure the tile.
+1. If you are upgrading to a version later than v1.0, service instances might need to be upgraded.
+Before installing the new version, see
+[Upgrade All Service Instances Config](installing-with-azure.html#upgrade-all-config).
