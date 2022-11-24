@@ -17,8 +17,12 @@ These are release notes for <%= vars.product_full %>.
 New features and changes in this release:
 
 * **Redis- Expose redis_version:** Redis version can now be defined as part of a plan definition or create/update operations.
-  All broker provided plans set the Redis version to v4. 
   To update Redis instances to v6 see the [Upgrading page](upgrading.html#redis)
+
+* **Redis- Brokerpak-provided plans are deprecated:** All brokerpak-provided plans are now deprecated and VMware recommends 
+  you create your custom plans in the tile. All deprecated plans set the Redis version to v4 to keep backwards compatibility. 
+  These plans will be removed from the brokerpak in future releases in favor of custom-defined plans in the Tile.
+  To update Redis instances to other plans see the [Upgrading page](upgrading.html#redis)
 
 
 ### Resolved Issues
