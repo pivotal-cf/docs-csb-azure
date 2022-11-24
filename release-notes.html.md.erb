@@ -7,7 +7,7 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_full %>.
 
-##<a id="1-3-0"></a> v1.3.0
+##<a id="1-4-0"></a> v1.4.0
 
 **Release Date:** MMMM DD, YYYY
 
@@ -16,14 +16,17 @@ These are release notes for <%= vars.product_full %>.
 
 New features and changes in this release:
 
-* **Redis- Expose redis_version:** Redis version can now be defined as part of a plan definition or create/update operations.
-  To update Redis instances to v6 see the [Upgrading page](upgrading.html#redis)
+#### Azure Redis service
 
-* **Redis- Brokerpak-provided plans are deprecated:** All brokerpak-provided plans are now deprecated and VMware recommends 
-  you create your custom plans in the tile. All deprecated plans set the Redis version to v4 to keep backwards compatibility. 
-  These plans will be removed from the brokerpak in future releases in favor of custom-defined plans in the Tile.
-  To update Redis instances to other plans see the [Upgrading page](upgrading.html#redis)
+* **Redis version:** You can now define the Redis version using the `redis_version`
+property as part of a plan definition or during create or update operations.
+To update Redis instances to v6, see [Upgrading <%= vars.product_full %>](upgrading.html#redis).
 
+* **Brokerpak-provided plans are deprecated:** All brokerpak-provided plans for Redis are now deprecated.
+VMware recommends that you create your custom plans in the tile.
+All deprecated plans set the Redis version to v4 to keep backwards compatibility.
+These plans will be removed from the brokerpak in future releases in favor of custom-defined plans in the tile.
+To update Redis instances to other plans, see [Upgrading <%= vars.product_full %>](upgrading.html#redis).
 
 ### Resolved Issues
 
