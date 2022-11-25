@@ -97,20 +97,6 @@ provisioning a csb-azure-mongodb service:
     <td>provision and update</td>
   </tr>
   <tr>
-    <td><code>instance_name</code></td>
-    <td>string</td>
-    <td>
-      The name of your Cosmos DB with API for MongoDB instance. This parameter has the following constraints:
-      <ul>
-        <li>Maximum character length: 98</li>
-        <li>Minimum character length: 6</li>
-        <li>Allowed characters: lowercase letters and numbers</li>
-      </ul>
-    </td>
-    <td><code>csb-mongo-INSTANCE-ID</code></td>
-    <td>provision</td>
-  </tr>
-  <tr>
     <td><code>account_name</code></td>
     <td>string</td>
     <td>
@@ -123,21 +109,6 @@ provisioning a csb-azure-mongodb service:
       </ul>
     </td>
     <td><code>csbINSTANCE-ID</code></td>
-    <td>provision</td>
-  </tr>
-  <tr>
-    <td><code>resource_group</code></td>
-    <td>string</td>
-    <td>
-      Name for the resource group for this instance. After being set, this cannot be updated. <br>
-      This parameter has the following constraints:
-      <ul>
-        <li>Maximum character length: 64</li>
-        <li>Minimum character length: 0</li>
-        <li>Allowed characters: lowercase letters and numbers</li>
-      </ul>
-    </td>
-    <td><code>""</code></td>
     <td>provision</td>
   </tr>
   <tr>
@@ -160,6 +131,30 @@ provisioning a csb-azure-mongodb service:
     <td>Name for your collection. This parameter has the following constraints: maxLength: 255</td>
     <td><code>default_collection</code></td>
     <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>resource_group</code></td>
+    <td>string</td>
+    <td>
+      Name for the resource group for this instance. After being set, this cannot be updated. <br>
+      This parameter has the following constraints:
+      <ul>
+        <li>Maximum character length: 64</li>
+        <li>Minimum character length: 0</li>
+        <li>Allowed characters: lowercase letters and numbers</li>
+      </ul>
+    </td>
+    <td><code>""</code></td>
+    <td>provision</td>
+  </tr>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>
+      The name used to construct resource group name when <code>resource_group</code> not passed.
+    </td>
+    <td><code>csb-mongo-INSTANCE-ID</code></td>
+    <td>provision</td>
   </tr>
   <tr>
     <td><code>shard_key</code></td>
