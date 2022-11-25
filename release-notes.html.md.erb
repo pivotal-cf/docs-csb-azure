@@ -28,6 +28,9 @@ All deprecated plans set the Redis version to v4 to keep backwards compatibility
 These plans will be removed from the brokerpak in future releases in favor of custom-defined plans in the tile.
 To update Redis instances to other plans, see [Upgrading <%= vars.product_full %>](upgrading.html#redis).
 
+* **Cosmos DB SQL can now create private endpoints:** You can now define private endpoints for Cosmos DB SQL using the `private_endpoint_subnet_id`
+and 'private_dns_zone_ids' properties as part of a plan definition or during create or update operations.
+
 ### Resolved Issues
 
 This release has the following fixes:
