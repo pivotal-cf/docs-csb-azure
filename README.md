@@ -24,8 +24,9 @@ Then, if necessary, immediately cherry-pick/copy any changes that you want to pu
 
 | Branch Name| Use for… |
 |------------| ---------|
-| master     | 1.n Use for staging doc for the next release. (staged here: https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.4/csb-azure/GUID-index.html) |
-| 1.3     | 1.3 (staged: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) |
+| master     | 1.n Use for staging doc for the next release. (staged here: https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.5/csb-azure/GUID-index.html) |
+| 1.4     | 1.4 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.4/csb-azure/GUID-index.html) |
+| 1.3     | 1.3 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) |
 | 1.2     | 1.2 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.2/csb-azure/GUID-index.html) |
 | 1.1     | 1.1 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.1/csb-azure/GUID-index.html) |
 | 1.0     | 1.0 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.0/csb-azure/GUID-index.html) |
