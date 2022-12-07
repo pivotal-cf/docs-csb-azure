@@ -22,14 +22,14 @@ The master branch is the tree-trunk, so **always** make changes you want carried
 
 Then, if necessary, immediately cherry-pick/copy any changes that you want to push immediately to production into the appropriate branches listed below:
 
-| Branch Name| Use for… |
-|------------| ---------|
-| master     | 1.n Use for staging doc for the next release. (staged here: https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.5/csb-azure/GUID-index.html) |
-| 1.4     | 1.4 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.4/csb-azure/GUID-index.html) |
-| 1.3     | 1.3 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) |
-| 1.2     | 1.2 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.2/csb-azure/GUID-index.html) |
-| 1.1     | 1.1 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.1/csb-azure/GUID-index.html) |
-| 1.0     | 1.0 (live: https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.0/csb-azure/GUID-index.html) |
+| Branch Name| Staging  | Production |
+|------------| ---------|------------|
+| master     | [v1.5 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.5/csb-azure/GUID-index.html) | N/A |
+| 1.4        | [v1.4 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.4/csb-azure/GUID-index.html) | [v1.4 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.4/csb-azure/GUID-index.html) |
+| 1.3        | [v1.3 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) | [v1.4 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) |
+| 1.2        | [v1.2 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.2/csb-azure/GUID-index.html) | [v1.4 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.2/csb-azure/GUID-index.html) |
+| 1.1        | [v1.1 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.1/csb-azure/GUID-index.html) | [v1.4 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.1/csb-azure/GUID-index.html) |
+| 1.0        | [v1.0 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.0/csb-azure/GUID-index.html) | [v1.4 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.0/csb-azure/GUID-index.html) |
 
 ## Releasing a New Minor Version
 
