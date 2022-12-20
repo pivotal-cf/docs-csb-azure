@@ -62,14 +62,14 @@ To configure Azure credentials:
     | Field                                     | Instructions                                         |
     |-------------------------------------------|------------------------------------------------------|
     | Subscription ID                           | Enter the Azure subscription ID                      |
-    | Tenant ID                                 | Enter the Azure tenant ID                            |
-    | Client ID                                 | Enter the Azure client ID                            |
-    | Client Secret                             | Enter the Azure client secret                        |
+    | Tenant ID                                 | Enter the Azure tenant ID <sup>*</sup>               |
+    | Client ID                                 | Enter the Azure client ID <sup>*</sup>               |
+    | Client Secret                             | Enter the Azure client secret <sup>*</sup>           |
     | Default Resource Group                    | Enter the default resource group for Azure resources |
     | Location                                  | Enter the default Azure location for resources       |
     | Deactivate Automatic Service Registration | Select to deactivate automatic service registration  |
 
-    The <code>Tenant ID</code>, <code>Client ID</code> and <code>Client Secret</code> refer to
+    <sup>*</sup> The <code>Tenant ID</code>, <code>Client ID</code> and <code>Client Secret</code> refer to
     the Azure <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals#service-principal-object">service principal</a>
     credentials. To create these credentials, follow the steps in the
     <a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret">Terraform documentation</a>.
