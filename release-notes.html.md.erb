@@ -16,16 +16,14 @@ These are release notes for <%= vars.product_full %>.
 This release has the following fixes:
 
 * **Azure PostgreSQL & Azure MySQL binding credentials**: The URI and JDBC attributes
-in the binding credentials have now the URI-encoded username. This tackles potential issues
+in the binding credentials now have the username URI-encoded. This tackles potential issues
 when validating those attributes as Azure includes a `@` character in the username.
 
 * **Attempting to delete an already deleted binding is now successful**: When attempting
-to delete a binding that does not exist, CSB will return now a `410 GONE` code as required with
+to delete a binding that does not exist, CSB will now return a `410 GONE` code as required by
 the OSBAPI specification. This fixes issues when the platform might timeout waiting
 for the operation to be completed on the IaaS, resulting in the binding not being deleted from the platform
-but further attempts to remove it fail as it was eventually deleted from the broker database.
-
-</optgroup> CSB returns a HTTP 500 error which is not consistent with the OSBAPI spec which says it should be a HTTP 410 erro
+but further attempts to remove it failing as it was eventually deleted from the broker database.
 
 ##<a id="1-4-0"></a> v1.4.0
 
