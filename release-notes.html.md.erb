@@ -41,7 +41,16 @@ This release has the following fixes:
 
 ### Known Issues
 
-There are no known issues for this release.
+* **Azure PostgreSQL & Azure MySQL binding credentials contain invalid URIs**: The URI and JDBC attributes
+in the binding credentials include a `@` character in the username for these services. This can cause
+some parsing or client libraries to fail due to validations as `@` is a reserved character in the URI spec and
+needs to be URI-encoded.
+
+* **Attempting to delete an already deleted binding fails**: When attempting
+to delete a binding that does not exist, CSB returns a `HTTP 500` code instead of the
+`HTTP 410` required by the OSBAPI specification. This results in issues when the platform times out waiting
+for the operation to be completed on the IaaS, resulting in the binding not being deleted from the platform
+but further attempts to remove it failing as it was eventually deleted from the broker database.
 
 ## <a id="view"></a> View Release Notes for Another Version
 
