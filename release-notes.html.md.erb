@@ -9,21 +9,26 @@ These are release notes for <%= vars.product_full %>.
 
 ##<a id="1-4-1"></a> v1.4.1
 
-**Release Date:** January 24, 2023
+**Release Date:** January 12, 2023
 
 ### Resolved Issues
 
 This release has the following fixes:
 
-* **Azure PostgreSQL & Azure MySQL binding credentials**: The URI and JDBC attributes
-in the binding credentials now have the username URI-encoded. This tackles potential issues
-when validating those attributes as Azure includes a `@` character in the username.
+* **Azure PostgreSQL and Azure MySQL binding credentials**: The URI and JDBC attributes
+in the binding credentials now have a URI-encoded user name. This fixes potential issues
+when validating these attributes because Azure includes an `@` character in the user name.
 
 * **Attempting to delete an already deleted binding is now successful**: When attempting
-to delete a binding that does not exist, CSB will now return a `410 GONE` code as required by
-the OSBAPI specification. This fixes issues when the platform might timeout waiting
-for the operation to be completed on the IaaS, resulting in the binding not being deleted from the platform
-but further attempts to remove it failing as it was eventually deleted from the broker database.
+to delete a binding that does not exist, <%= vars.product_short %> now returns a `410 GONE` code as required by
+the Open Service Broker API (OSBAPI) specification.
+This fixes the issue where the platform might timeout waiting for the delete operation to be
+completed on the IaaS, resulting in the binding not being deleted from the platform,
+and further attempts to remove it fail because it is deleted from the broker database.
+
+### Known Issues
+
+There are no known issues in this release.
 
 ##<a id="1-4-0"></a> v1.4.0
 
