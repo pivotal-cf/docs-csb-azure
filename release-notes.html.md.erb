@@ -51,6 +51,18 @@ This release has the following issue:
   configuration.
   To prevent this issue, replace the wrapping `'` with YAML multiline notation.
 
+* **Azure PostgreSQL and Azure MySQL binding credentials contain invalid URIs**: The URI and JDBC attributes
+in the binding credentials include an `@` character in the user name for these services.
+This can cause parsing or client libraries to fail due to validations because `@`
+is a reserved character in the URI specification and must be URI-encoded.
+
+* **Attempting to delete an already deleted binding fails**: When attempting
+to delete a binding that does not exist, <%= vars.product_short %> returns an `HTTP 500` code instead of the
+`HTTP 410` required by the Open Service Broker API (OSBAPI) specification.
+This causes issues when the platform times out waiting for the delete operation to be
+completed on the IaaS, which results in the binding not being deleted from the platform.
+Further attempts to remove the binding fail because it is deleted from the broker database.
+
 ## <a id="1-3-0"></a> v1.3.0
 
 **Release Date:** 05 August 2022
@@ -81,6 +93,18 @@ This release has the following issues:
   This causes installations with several plans or other lengthy configurations to hit a limit on the
   size of environment variables in the platform.
   This limit prevents the broker app from starting, which causes the deployment to fail.
+
+* **Azure PostgreSQL and Azure MySQL binding credentials contain invalid URIs**: The URI and JDBC attributes
+in the binding credentials include an `@` character in the user name for these services.
+This can cause parsing or client libraries to fail due to validations because `@`
+is a reserved character in the URI specification and must be URI-encoded.
+
+* **Attempting to delete an already deleted binding fails**: When attempting
+to delete a binding that does not exist, <%= vars.product_short %> returns an `HTTP 500` code instead of the
+`HTTP 410` required by the Open Service Broker API (OSBAPI) specification.
+This causes issues when the platform times out waiting for the delete operation to be
+completed on the IaaS, which results in the binding not being deleted from the platform.
+Further attempts to remove the binding fail because it is deleted from the broker database.
 
 ## <a id="view"></a> View Release Notes for Another Version
 
