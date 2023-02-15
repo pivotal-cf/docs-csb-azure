@@ -7,7 +7,8 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_full %>.
 
-##<a id="1-4-2"></a> v1.4.2
+<% if hide_content = true %>
+## <a id="1-4-2"></a> v1.4.2
 
 **Release Date:** UNKNOWN
 
@@ -15,18 +16,21 @@ These are release notes for <%= vars.product_full %>.
 
 This release has the following fixes:
 
-* **Azure Redis upgrade from v1.3.1 and earlier**: Prior to v1.4.0, Redis service instances
-were created with the Azure default Redis version. New service instances are created as
-Redis v6. This resulted in an problem when upgrading to v1.4.0 and v1.4.1 because these
-versions have a `redis_version` property that was set to Redis v4 by default. As a result,
-on upgrade an attempt would be made to change a Redis instance from v6 to v4, which failed.
-In v1.4.2 the default Redis version is no longer set, so the upgrade can succeed.
+* **Fix for upgrading from Azure Redis v1.3.1 and earlier:**
+  Before v1.4.0, Redis service instances were created with the default Redis version for Azure, but
+  new service instances are created as Redis v6.
+
+  This caused an issue when upgrading to v1.4.0 and v1.4.1 because these versions have a
+  `redis_version` property that was set to Redis v4 by default.
+  It caused an attempt to change a Redis instance from v6 to v4, which failed.
+  In v1.4.2, the default Redis version is no longer set, so the upgrade can succeed.
 
 ### Known Issues
 
 There are no known issues in this release.
+<% end %>
 
-##<a id="1-4-1"></a> v1.4.1
+## <a id="1-4-1"></a> v1.4.1
 
 **Release Date:** January 12, 2023
 
@@ -34,23 +38,25 @@ There are no known issues in this release.
 
 This release has the following fixes:
 
-* **Azure PostgreSQL and Azure MySQL binding credentials**: The URI and JDBC attributes
-in the binding credentials now have a URI-encoded user name. This fixes potential issues
-when validating these attributes because Azure includes an `@` character in the user name.
+* **Azure PostgreSQL and Azure MySQL binding credentials:**
+  The URI and JDBC attributes in the binding credentials now have a URI-encoded user name.
+  This fixes potential issues when validating these attributes because Azure includes an `@` character
+  in the user name.
 
-* **Attempting to delete an already deleted binding is now successful**: When attempting
-to delete a binding that does not exist, <%= vars.product_short %> now returns a `410 GONE` code as required by
-the Open Service Broker API (OSBAPI) specification.
-This fixes the issue where the platform might timeout waiting for the delete operation to be
-completed on the IaaS, resulting in the binding not being deleted from the platform,
-and further attempts to remove it fail because it is deleted from the broker database.
+* **Attempting to delete an already deleted binding is now successful:**
+  When attempting to delete a binding that does not exist, <%= vars.product_short %> now returns a
+  `410 GONE` code as required by the Open Service Broker API (OSBAPI) specification.
+
+  This fixes the issue where the platform might timeout waiting for the delete operation to be
+  completed on the IaaS, resulting in the binding not being deleted from the platform, and further
+  attempts to remove it fail because it is deleted from the broker database.
 
 ### Known Issues
 
-* **A Redis v6 service instance created with v1.3.1 or earlier will fail to upgrade:** Upgrade to
-<%= vars.product_full %> for a fix.
+* **A Redis v6 service instance created with v1.3.1 or earlier fails to upgrade:**
+  A fix is planned for <%= vars.product_full %> v1.4.2.
 
-##<a id="1-4-0"></a> v1.4.0
+## <a id="1-4-0"></a> v1.4.0
 
 **Release Date:** December 8, 2022
 
@@ -60,21 +66,25 @@ New features and changes in this release:
 
 #### Azure Redis service
 
-* **Redis version:** You can now define the Redis version using the `redis_version`
-property as part of a plan definition or during create or update operations.
-To update Redis instances to v6, see [Upgrading <%= vars.product_full %>](upgrading.html#redis).
+* **Redis version:**
+  You can now define the Redis version using the `redis_version` property as part of a plan definition
+  or during create or update operations.
+  To update Redis instances to v6, see [Upgrading <%= vars.product_full %>](upgrading.html#redis).
 
-* **Brokerpak-provided plans are deprecated:** All brokerpak-provided plans for Redis are now deprecated.
-VMware recommends that you create your custom plans in the tile.
-All deprecated plans set the Redis version to v4 to keep backwards compatibility.
-These plans will be removed from the brokerpak in future releases in favor of custom-defined plans in the tile.
-To update Redis instances to other plans, see [Upgrading <%= vars.product_full %>](upgrading.html#redis).
+* **Brokerpak-provided plans are deprecated:**
+  All brokerpak-provided plans for Redis are now deprecated.
+  VMware recommends that you create your custom plans in the tile.
+  All deprecated plans set the Redis version to v4 to keep backwards compatibility.
+
+  These plans will be removed from the brokerpak in future releases in favor of custom-defined plans
+  in the tile. To update Redis instances to other plans, see
+  [Upgrading <%= vars.product_full %>](upgrading.html#redis).
 
 #### Azure Cosmos DB service
 
-* **Cosmos DB SQL can now create private endpoints:** You can now define private endpoints for
-  Cosmos DB SQL using the `private_endpoint_subnet_id` and `private_dns_zone_ids` properties as part
-  of a plan definition or during create or update operations.
+* **Cosmos DB SQL can now create private endpoints:**
+  You can now define private endpoints for Cosmos DB SQL using the `private_endpoint_subnet_id` and
+  `private_dns_zone_ids` properties as part of a plan definition or during create or update operations.
 
 ### Resolved Issues
 
@@ -86,20 +96,24 @@ This release has the following fixes:
 
 This release has the following issues:
 
-* **Azure PostgreSQL and Azure MySQL binding credentials contain invalid URIs**: The URI and JDBC attributes
-in the binding credentials include an `@` character in the user name for these services.
-This can cause parsing or client libraries to fail due to validations because `@`
-is a reserved character in the URI specification and must be URI-encoded.
+* **Azure PostgreSQL and Azure MySQL binding credentials contain invalid URIs:**
+  The URI and JDBC attributes in the binding credentials include an `@` character in the user name
+  for these services.
 
-* **Attempting to delete an already deleted binding fails**: When attempting
-to delete a binding that does not exist, <%= vars.product_short %> returns an `HTTP 500` code instead of the
-`HTTP 410` required by the Open Service Broker API (OSBAPI) specification.
-This causes issues when the platform times out waiting for the delete operation to be
-completed on the IaaS, which results in the binding not being deleted from the platform.
-Further attempts to remove the binding fail because it is deleted from the broker database.
+  This can cause parsing or client libraries to fail due to validations because `@` is a reserved
+  character in the URI specification and must be URI-encoded.
 
-* **A Redis v6 service instance created with v1.3.1 or earlier will fail to upgrade Upgrade to
-<%= vars.product_full %> for a fix.
+* **Attempting to delete an already deleted binding fails:**
+  When attempting to delete a binding that does not exist, <%= vars.product_short %> returns an
+  `HTTP 500` code instead of the`HTTP 410` required by the Open Service Broker API (OSBAPI)
+  specification.
+
+  This causes issues when the platform times out waiting for the delete operation to be completed on
+  the IaaS, which results in the binding not being deleted from the platform.
+  Further attempts to remove the binding fail because it is deleted from the broker database.
+
+* **A Redis v6 service instance created with v1.3.1 or earlier fails to upgrade:**
+  A fix is planned for <%= vars.product_full %> v1.4.2.
 
 ## <a id="view"></a> View Release Notes for Another Version
 
