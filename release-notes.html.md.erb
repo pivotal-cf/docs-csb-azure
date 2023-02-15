@@ -7,6 +7,25 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_full %>.
 
+##<a id="1-4-2"></a> v1.4.2
+
+**Release Date:** UNKNOWN
+
+### Resolved Issues
+
+This release has the following fixes:
+
+* **Azure Redis upgrade from v1.3.1 and earlier**: Prior to v1.4.0, Redis service instances
+were created with the Azure default Redis version. New service instances are created as
+Redis v6. This resulted in an problem when upgrading to v1.4.0 and v1.4.1 because these
+versions have a `redis_version` property that was set to Redis v4 by default. As a result,
+on upgrade an attempt would be made to change a Redis instance from v6 to v4, which failed.
+In v1.4.2 the default Redis version is no longer set, so the upgrade can succeed.
+
+### Known Issues
+
+There are no known issues in this release.
+
 ##<a id="1-4-1"></a> v1.4.1
 
 **Release Date:** January 12, 2023
@@ -28,7 +47,8 @@ and further attempts to remove it fail because it is deleted from the broker dat
 
 ### Known Issues
 
-There are no known issues in this release.
+* **A Redis v6 service instance created with v1.3.1 or earlier will fail to upgrade:** Upgrade to
+<%= vars.product_full %> for a fix.
 
 ##<a id="1-4-0"></a> v1.4.0
 
@@ -77,6 +97,9 @@ to delete a binding that does not exist, <%= vars.product_short %> returns an `H
 This causes issues when the platform times out waiting for the delete operation to be
 completed on the IaaS, which results in the binding not being deleted from the platform.
 Further attempts to remove the binding fail because it is deleted from the broker database.
+
+* **A Redis v6 service instance created with v1.3.1 or earlier will fail to upgrade Upgrade to
+<%= vars.product_full %> for a fix.
 
 ## <a id="view"></a> View Release Notes for Another Version
 
