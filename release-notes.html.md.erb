@@ -7,16 +7,15 @@ owner: Cloud Service Broker
 
 These are release notes for <%= vars.product_full %>.
 
-<% if vars.hide_content == true %>
 ## <a id="1-4-2"></a> v1.4.2
 
-**Release Date:** UNKNOWN
+**Release Date:** March 21, 2023
 
 ### Resolved Issues
 
 This release has the following fixes:
 
-* **Fix for upgrading from Azure Redis v1.3.1 and earlier:**
+* **You can now upgrade Azure Redis instances created with <%= vars.product_short %> v1.3.1 and earlier:**
   Before v1.4.0, Redis service instances were created with the default Redis version for Azure, but
   new service instances are created as Redis v6.
 
@@ -28,7 +27,6 @@ This release has the following fixes:
 ### Known Issues
 
 There are no known issues in this release.
-<% end %>
 
 ## <a id="1-4-1"></a> v1.4.1
 
@@ -53,7 +51,9 @@ This release has the following fixes:
 
 ### Known Issues
 
-* **A Redis v6 service instance created with v1.3.1 or earlier fails to upgrade:**
+This release has the following issue:
+
+* **Redis v6 service instances created with v1.3.1 or earlier fail to upgrade:**
   A fix is planned for <%= vars.product_full %> v1.4.2.
 
 ## <a id="1-4-0"></a> v1.4.0
@@ -112,7 +112,7 @@ This release has the following issues:
   the IaaS, which results in the binding not being deleted from the platform.
   Further attempts to remove the binding fail because it is deleted from the broker database.
 
-* **A Redis v6 service instance created with v1.3.1 or earlier fails to upgrade:**
+* **Redis v6 service instances created with v1.3.1 or earlier fail to upgrade:**
   A fix is planned for <%= vars.product_full %> v1.4.2.
 
 ## <a id="view"></a> View Release Notes for Another Version
