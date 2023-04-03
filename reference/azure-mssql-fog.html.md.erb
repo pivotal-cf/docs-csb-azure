@@ -65,7 +65,7 @@ provisioning a csb-azure-mssql-failover-group service:
     <td><code>instance_name</code></td>
     <td>string</td>
     <td>The name of the service instance.</td>
-    <td><code>csb-azsql-INSTANCE-ID</code></td>
+    <td><code>csb-azsql-fog-INSTANCE-ID</code></td>
     <td>provision</td>
   </tr>
   <tr>
@@ -99,7 +99,7 @@ provisioning a csb-azure-mssql-failover-group service:
     <td><code>failover_location</code></td>
     <td>string</td>
     <td>The Azure region for the failover instance.</td>
-    <td><code>DEFAULT-REGIONAL-PAIR</code>. For information about regional pairs, see the <a href="https://docs.microsoft.com/en-us/azure/best-practices-availability-paired-regions#azure-regional-pairs">Microsoft Documentation</a></td>
+    <td><code>default</code>. For information about regional pairs, see the <a href="https://docs.microsoft.com/en-us/azure/best-practices-availability-paired-regions#azure-regional-pairs">Microsoft Documentation</a></td>
     <td>provision and update</td>
   </tr>
   <tr>
@@ -165,14 +165,14 @@ provisioning a csb-azure-mssql-failover-group service:
     <td><code>cores</code></td>
     <td>number</td>
     <td>Number of vCores for the instance (up to the maximum allowed for the service tier). 1&ndash;80, multiples of 2 </td>
-    <td> 2 </td>
+    <td><code>2</code></td>
     <td>provision and update</td>
   </tr>
   <tr>
     <td><code>max_storage_gb</code></td>
     <td>number</td>
     <td>Maximum storage allocated to the database instance in GB.</td>
-    <td> 5 </td>
+    <td><code>5</code></td>
     <td>provision and update</td>
   </tr>
   <tr>
@@ -190,7 +190,7 @@ provisioning a csb-azure-mssql-failover-group service:
     <td>string</td>
     <td>The Azure subnet ID, in long form, that the instance is connected to through a service endpoint.
     The subnet must have the <code>Microsoft.sql</code> service enabled.</td>
-    <td><em>n/a</em></td>
+    <td><code>default</code></td>
     <td>provision and update</td>
   </tr>
   <tr>
