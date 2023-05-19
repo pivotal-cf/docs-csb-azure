@@ -14,7 +14,7 @@ In this README:
 
 ## Branches in this Content Repo
 
-The master branch is the tree-trunk, so **always** make changes you want carried forward in this branch. This includes:
+The main branch is the tree-trunk, so **always** make changes you want carried forward in this branch. This includes:
 
 * Unreleased features
 * Doc bug fixes
@@ -24,14 +24,14 @@ Then, if necessary, immediately cherry-pick/copy any changes that you want to pu
 
 | Branch Name| Use for… |
 |------------| ---------|
-| master     | 1.n Use for staging doc for the next release. (staged here: https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) |
+| main     | 1.n Use for staging doc for the next release. (staged here: https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) |
 
 ## Releasing a New Minor Version
 
-Because **master** is the latest and greatest documentation, the process would be to cut a **x.x** branch
-for the version that **master** was targeting during that time.
+Because **main** is the latest and greatest documentation, the process would be to cut a **x.x** branch
+for the version that **main** was targeting during that time.
 
-After this point, **master** will then be the target for the next version of the Cloud Service Broker product.
+After this point, **main** will then be the target for the next version of the Cloud Service Broker product.
 
 
 ## Partials
