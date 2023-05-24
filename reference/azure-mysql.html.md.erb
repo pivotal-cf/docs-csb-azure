@@ -14,11 +14,11 @@ For more information about Azure MySQL, see the [Microsoft documentation](https:
 
 The following table lists the default plans for the csb-azure-mysql service:
 
-| Plan        | CPUs | Storage Size      |
-|-------------|------|-------------------|
-| small       | 2    | 5&nbsp;GB         |
-| medium      | 4    | 10&nbsp;GB        |
-| large       | 8    | 20&nbsp;GB        |
+| Plan   | CPUs | Storage Size |
+|--------|------|--------------|
+| small  | 2    | 5&nbsp;GB    |
+| medium | 4    | 10&nbsp;GB   |
+| large  | 8    | 20&nbsp;GB   |
 
 ## <a id="plans-config"></a> Plan Configuration Parameters
 
@@ -27,22 +27,21 @@ For how to configure plans, see <a href="../installing-with-azure.html#services"
 
 The following table lists parameters which can only be added at the plan level.
 
-| Parameter Name       | Values                          | Default   |
-|----------------------|---------------------------------|-----------|
-| `name`*              | The plan name.                  | _n/a_     |
-| `id`*                | A unique GUID.                  | _n/a_     |
-| `description`*       | Description of the new plan.    | _n/a_     |
-| `display_name`       | Name to use when displaying plan in marketplace. | _n/a_     |
-| `use_tls`            | Use TLS for connection.         | `true`    |
-| `tls_min_version`    | Minimum enforced TLS version.  Possible values are `TLSEnforcementDisabled`, `TLS1_0`, `TLS1_1`, and `TLS1_2`.  | `TLS1_1`    |
-| `enable_threat_detection_policy`   | Set to `true` to enable the threat Detection Policy.   | `false`   |
-| `threat_detection_policy_emails`   | A list of email addresses which alerts should be sent to. For example, `["account1@example.com", "account2@example.com"]`.  | _n/a_   |
-| `email_account_admins`   | Account administrators emailed when threat alert triggered  | `false`   |
-| `firewall_rules`   | Array of firewall rule start/end IP pairs. | `[]`   |
-| `private_endpoint_subnet_id`   | The ID of the Subnet within which the Private Endpoint is created.  | `""`   |
-| `private_dns_zone_ids`   | An array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints. | `[]`   |
-
-<sup>*</sup> Required
+| Parameter Name                   | Values                                                                                                                     | Default  | Required |
+|----------------------------------|----------------------------------------------------------------------------------------------------------------------------|----------|----------|
+| `name`                           | The plan name.                                                                                                             | _n/a_    | Yes      |
+| `id`                             | A unique GUID.                                                                                                             | _n/a_    | Yes      |
+| `description`                    | Description of the new plan.                                                                                               | _n/a_    | Yes      |
+| `use_tls`                        | Use TLS for connection.                                                                                                    | `true`   | No       |
+| `tls_min_version`                | Minimum enforced TLS version.  Possible values are `TLSEnforcementDisabled`, `TLS1_0`, `TLS1_1`, and `TLS1_2`.             | `TLS1_1` | No       |
+| `enable_threat_detection_policy` | Set to `true` to enable the threat Detection Policy.                                                                       | `false`  | No       |
+| `threat_detection_policy_emails` | A list of email addresses which alerts should be sent to. For example, `["account1@example.com", "account2@example.com"]`. | _n/a_    | No       |
+| `email_account_admins`           | Account administrators emailed when threat alert triggered                                                                 | `false`  | No       |
+| `firewall_rules`                 | Array of firewall rule start/end IP pairs.                                                                                 | `[]`     | No       |
+| `private_endpoint_subnet_id`     | The ID of the Subnet within which the Private Endpoint is created.                                                         | `""`     | No       |
+| `private_dns_zone_ids`           | An array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints.                       | `[]`     | No       |
+| `metadata.displayName`           | Name to use when displaying the plan in the Marketplace.                                                                   | _n/a_    | No       |
+| `metadata.bullets`               | List of bullet points to display in Apps Manager.                                                                          | _n/a_    | No       |
 
 You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan.
 
