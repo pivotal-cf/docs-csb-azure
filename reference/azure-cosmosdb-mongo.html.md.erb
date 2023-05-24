@@ -30,9 +30,10 @@ The following table lists parameters which can only be configured for additional
 | `name`*                 | The plan name.                  | _n/a_     |
 | `id`*                   | A unique GUID.                  | _n/a_     |
 | `description`*          | Description of the new plan.    | _n/a_     |
-| `display_name`          | Name to use when displaying plan in marketplace.    | _n/a_     |
 | `private_endpoint_subnet_id` | ID of the subnet within which the Private Endpoint for the CosmosDB account is created. For example, `"exampleID"` | `""` |
 | `private_dns_zone_ids` | Array of Private DNS Zone IDs to create private DNS zone groups for when using Private Endpoints. For example, `["exampleID1", "exampleID2"]` | `[]` |
+| `metadata.displayName`    | Name to use when displaying the plan in the Marketplace.                                                                 | _n/a_   | No       |
+| `metadata.bullets`        | List of bullet points to display in Apps Manager.                                                                        | _n/a_   | No       |
 
 <sup>*</sup> Required
 
