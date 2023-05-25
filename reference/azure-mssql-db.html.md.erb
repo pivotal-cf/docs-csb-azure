@@ -203,17 +203,17 @@ provisioning or updating a csb-azure-mssql-db service:
     <td><code>ltr_weekly_retention</code></td>
     <td>string</td>
     <td>The weekly retention policy for an LTR backup in an ISO 8601 format.
-    A valid value is 1 to 520 weeks. E.g <code>P3W</code> indicates 3 weeks.
-    To unset this parameter, use <code>PT0S</code></td>
+    A valid value is 1 to 520 weeks. For example, <code>P3W</code> indicates 3 weeks.
+    To unset this parameter, use <code>PT0S</code>.</td>
     <td><code>PT0S</code></td>
     <td>provision and update</td>
   </tr>
   <tr>
     <td><code>ltr_monthly_retention</code></td>
-    <td>number</td>
+    <td>string</td>
     <td>The monthly retention policy for an LTR backup in an ISO 8601 format.
-    A valid value is 1 to 120 months.  E.g <code>P3M</code> indicates 3 months.
-    To unset this parameter, use <code>PT0S</code></td>
+    A valid value is 1 to 120 months. For example, <code>P3M</code> indicates 3 months.
+    To unset this parameter, use <code>PT0S</code>.</td>
     <td><code>PT0S</code></td>
     <td>provision and update</td>
   </tr>
@@ -221,15 +221,15 @@ provisioning or updating a csb-azure-mssql-db service:
     <td><code>ltr_yearly_retention</code></td>
     <td>string</td>
     <td>The yearly retention policy for an LTR backup in an ISO 8601 format.
-    A valid value is 1 to 10 years. E.g <code>P3Y</code> indicates 3 years.
-    To unset this parameter, use <code>PT0S</code></td>
+    A valid value is 1 to 10 years. For example, <code>P3Y</code> indicates 3 years.
+    To unset this parameter, use <code>PT0S</code>.</td>
     <td><code>PT0S</code></td>
     <td>provision and update</td>
   </tr>
   <tr>
     <td><code>ltr_week_of_year</code></td>
     <td>number</td>
-    <td>The week of year to take the yearly backup. The value must be 1 to 52.</td>
+    <td>The week of the year to make the yearly backup. The value must be 1 to 52.</td>
     <td><code>1</code></td>
     <td>provision and update</td>
   </tr>
