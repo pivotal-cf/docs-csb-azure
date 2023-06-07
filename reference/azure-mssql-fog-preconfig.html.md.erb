@@ -175,6 +175,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
     <td><code>false</code></td>
     <td>provision and update</td>
   </tr>
+  <% if vars.hide_content == true %>
   <tr>
     <td><code>short_term_retention_days</code></td>
     <td>number</td>
@@ -225,6 +226,7 @@ provisioning a csb-azure-mssql-db-failover-group service:
     <td><code>1</code></td>
     <td>provision and update</td>
   </tr>
+  <% end %>
   <tr>
     <td><code>existing</code></td>
     <td>boolean</td>
