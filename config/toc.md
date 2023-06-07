@@ -18,3 +18,4 @@
     *   [Azure Storage Account](../reference/azure-storage-account.html)
     *   [Azure Resource Group](../reference/azure-resource-group.html)
     *   [Azure Event Hub](../reference/azure-eventhub.html)
+*   [Back to Cloud Service Broker landing page](https://docs.vmware.com/en/Cloud-Service-Broker-for-VMware-Tanzu/index.html)
