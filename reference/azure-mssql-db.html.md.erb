@@ -15,27 +15,29 @@ For more information about Azure SQL, see the
 
 ## <a id="configuring"></a> Configuring the Service
 
-To configure the service, provide the pre-configured database servers in the following format when configuring <%= vars.product_short %>:
+To configure the service:
 
-```json
-{
-   "SERVER1":{
-      "server_name": "SERVER1-FQDN",
-      "server_resource_group": "SERVER1-RESOURCE-GROUP",
-      "admin_username": "SERVER1-ADMIN-USERNAME",
-      "admin_password": "SERVER1-ADMIN-PASSWORD"
-   },
-   "SERVER2":{
-      "server_name": "SERVER2-FQDN",
-      "server_resource_group": "SERVER2-RESOURCE-GROUP",
-      "admin_username": "SERVER2-ADMIN-USERNAME",
-      "admin_password": "SERVER2-ADMIN-PASSWORD"
-   }
-}
-```
+1. Provide the pre-configured database servers in the following format when configuring <%= vars.product_short %>:
 
-For more information about configuring services, see
-<a href="../installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+    ```json
+    {
+       "SERVER1":{
+          "server_name": "SERVER1_FQDN",
+          "server_resource_group": "SERVER1_RESOURCE_GROUP",
+          "admin_username": "SERVER1_ADMIN_USERNAME",
+          "admin_password": "SERVER1_ADMIN_PASSWORD"
+       },
+       "SERVER2":{
+          "server_name": "SERVER2_FQDN",
+          "server_resource_group": "SERVER2_RESOURCE_GROUP",
+          "admin_username": "SERVER2_ADMIN_USERNAME",
+          "admin_password": "SERVER2_ADMIN_PASSWORD"
+       }
+    }
+    ```
+
+    For more information about configuring services, see
+    <a href="../installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
 
 ## <a id="plans"></a> Plans
 
