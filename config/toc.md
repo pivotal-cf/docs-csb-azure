@@ -5,3 +5,4 @@
 *   [Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](../azure-mssql-subsume.html)
 *   [Subsuming a Microsoft Azure Service Broker MSSQL Failover Group Instance](../azure-mssql-fog-subsume.html)
 *   [Service Plan Reference](../reference.html)
+*   [Back to Cloud Service Broker landing page](https://docs.vmware.com/en/Cloud-Service-Broker-for-VMware-Tanzu/index.html)
