@@ -13,6 +13,16 @@ database servers on Azure SQL.
 For more information about Azure SQL, see the
 [Microsoft documentation](https://docs.microsoft.com/en-gb/azure/azure-sql/).
 
+<p class="note">
+  <strong>Note:</strong> <%= vars.product_full %> v1.5.0 removes the brokerpak pre-configured subsume
+  plan for Azure SQL MSSQL Database Instance.
+  If you have instances of Azure SQL (MSSQL) that were created in previous versions subsuming them, 
+  you must change the plan before upgrading.
+  For more information about upgrade steps, see
+  <a href="../upgrading.html.md.erb">Upgrading <%= vars.product_full %></a>.
+</p>
+
+
 ## <a id="configuring"></a> Configuring the Service
 
 To configure the service, provide the pre-configured database servers in the following format when configuring <%= vars.product_short %>:
@@ -41,18 +51,13 @@ For more information about configuring services, see
 
 The table below lists the plans available for the csb-azure-mssql-db service:
 
-| Plan       | CPUs | Maximum Storage Size |
-|------------|------|--------------|
-|mini        | 2    | 5&nbsp;GB    |
-|small       | 2    | 5&nbsp;GB    |
-|medium      | 8    | 200&nbsp;GB  |
-|large       | 32   | 500&nbsp;GB  |
-|extra-large | 80   | 1&nbsp;TB    |
-|subsume*    | _n/a_| _n/a_        |
-
-<sup>*</sup> The subsume plan is used to import existing Azure MSSQL databases to bring them under
-the control of <%= vars.product_short %>. For more information, see
-[Subsuming a Microsoft Azure Service Broker MSSQL Database Instance](../azure-mssql-subsume.html).
+| Plan        | CPUs | Maximum Storage Size |
+|-------------|------|----------------------|
+| mini        | 2    | 5&nbsp;GB            |
+| small       | 2    | 5&nbsp;GB            |
+| medium      | 8    | 200&nbsp;GB          |
+| large       | 32   | 500&nbsp;GB          |
+| extra-large | 80   | 1&nbsp;TB            |
 
 ## <a id="plans-config"></a> Plan Configuration Parameters
 
