@@ -340,8 +340,7 @@ upgrade.
 If **Upgrade all services** is unchecked, service instances are not upgraded during
 installation.
 The broker might be unable to manage these service instances that are not upgraded.
-In that case, any operations on that instance (update, bind, unbind, or delete) are blocked until the
-upgrade task is performed.
+In that case, any operations on that instance (update, bind, unbind, or delete) are blocked until you perform the upgrade task.
 You can run the upgrade task any time, and as many times as needed.
 
 <p class="note important">
@@ -359,7 +358,7 @@ upgrades.
 <p class="note important">
   <strong>Important:</strong>Instances that the broker has subsumed must be changed to a suitable plan, other than the `subsume`
   plan, before performing any upgrades.
-  Failure to do so causes the broker to become unable to manage those instances anymore.
+  Failure to do so makes the broker unable to manage those instances.
 </p>
 
 To perform the upgrade task:
