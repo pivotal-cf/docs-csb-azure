@@ -253,4 +253,18 @@ out which instances are pending upgrade.
 
 ## <a id="upgrading-specifics"></a> Upgrade to v1.5
 
-There are currently no notes for upgrading to v1.5.
+<p class="note">
+  <strong>Note:</strong> <%= vars.product_full %> v1.5.0 removes the brokerpak pre-configured subsume
+  plan for <strong>Azure SQL MSSQL Database Instance</strong> and for <strong>Azure SQL MSSQL Failover Group</strong>.
+  If you have instances that were created in previous versions subsuming them, you must change the plan
+  before upgrading.
+  See next steps to get an overview of the process to run.
+</p>
+
+### Steps needed to upgrade subsumed instances
+
+1. Update service instance to another plan
+   ```bash
+    cf update-service <SERVICE_INSTANCE_NAME> -p <NEW_PLAN>
+   ```
+2. Follow the [Upgrade procedure](#procedure) 
