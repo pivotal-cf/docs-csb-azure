@@ -338,9 +338,17 @@ See [Upgrading Cloud Service Broker for Azure](upgrading.html) for alternatives 
 upgrade.
 
 If **Upgrade all services** is unchecked, service instances are not upgraded during
-installation. The broker might be unable to manage these service instances anymore.
+installation.
+The broker might be unable to manage these service instances that are not upgraded.
 In that case, any operations on that instance (update, bind, unbind, or delete) are blocked until the
-upgrade is performed. You can run the upgrade task any time.
+upgrade task is performed.
+You can run the upgrade task any time, and as many times as needed.
+
+<p class="note important">
+  <strong>Important:</strong> Failure to upgrade one or more instance does not cause the tile
+  installation to fail.
+  Review the <code>deploy all</code> errand logs to ensure all instances have been upgraded successfully.
+</p>
 
 Deleting custom plans before upgrading all instances might cause some instances to become unmanageable
 by the broker.
@@ -348,9 +356,11 @@ Delete plans at a later step or see [Release Notes for Cloud Service Broker for 
 and [Upgrading Cloud Service Broker for Azure](upgrading.html) to ensure there are no conflicting
 upgrades.
 
-Instances that the broker has subsumed must be changed to a suitable plan, other than the `subsume`
-plan, before performing any upgrades.
-Failure to do so causes the broker to become unable to manage those instances anymore.
+<p class="note important">
+  <strong>Important:</strong>Instances that the broker has subsumed must be changed to a suitable plan, other than the `subsume`
+  plan, before performing any upgrades.
+  Failure to do so causes the broker to become unable to manage those instances anymore.
+</p>
 
 To perform the upgrade task:
 
