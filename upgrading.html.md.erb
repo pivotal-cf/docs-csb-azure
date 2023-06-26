@@ -157,7 +157,7 @@ upcoming versions.
 For this reason, verify that there are no instances pending upgrade before upgrading the tile to a
 later version.
 
-You can see if there are instances with a pending upgrade by reviewing the last `deploy-all` errand
+You can see whether there are instances with a pending upgrade by reviewing the last `deploy-all` errand
 log for <%= vars.product_short %>. Alternatively, you can
 [ensure all instances are up to date with the CLI plug-in](#checking-cli-plugin)
 and the `-dry-run` flag, which outputs the list of instances pending upgrade.
@@ -201,7 +201,7 @@ Before you start upgrading service instances, see the following notes:
 - **Only upgrade the tile after all service instances are up to date:**
 
   You can run the upgrade all instances task as many times as needed.
-  If preferred, you can run the upgrade all instances task by using the cf CLI instead of,
+  You can run the upgrade all instances task by using the cf CLI instead of,
   or in addition to, running it through the tile.
   Failure to upgrade one or more instances does not cause the tile installation to fail.
   Review the `deploy all` errand logs to ensure that all instances have upgraded.
@@ -254,7 +254,7 @@ out which instances are pending upgrade.
 ## <a id="upgrading-specifics"></a> Upgrade to v1.5
 
 <p class="note">
-  <strong>Note:</strong> <%= vars.product_full %> v1.5.0 removes the brokerpak pre-configured subsume
+  <strong>Note:</strong> <%= vars.product_full %> v1.5.0 removes the brokerpak preconfigured subsume
   plan for <strong>Azure SQL MSSQL Database Instance</strong> and for <strong>Azure SQL MSSQL Failover Group</strong>.
   If you have instances that were created in previous versions subsuming them, you must change the plan
   before upgrading.
