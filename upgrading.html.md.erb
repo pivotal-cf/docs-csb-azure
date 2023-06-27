@@ -117,7 +117,7 @@ Redis version. Choose one of the following options:
    <strong>Important:</strong> When upgrading <%= vars.product_short %>, service instances might need
    to be upgraded.
    Failure to upgrade one or more instance does not cause the tile installation to fail.<br><br>
-   Ensure that you review the <code>deploy-all</code> errand logs in the change log to verify that
+   Review the <code>deploy-all</code> errand logs in the change log to verify that
    no errors occurred when upgrading instances. For more information about the service instance
    upgrade procedure, see <a href="#upgrade-instances">Upgrading service instances</a> later in this
    topic.
@@ -140,7 +140,7 @@ To upgrade <%= vars.product_short %>:
    See [Upgrade All Service Instances configuration](installing-with-azure.html.md.erb#upgrade-all-config).
 
 6. Verify that your configuration complies with the
-   [important notes about upgrading service instances](#upgrade-notes), especially regarding plans
+   [Important notes about upgrading service instances](#upgrade-notes) section later in this topic, especially regarding plans
    and beta offerings.
 
 7. Go to the <%= vars.ops_manager %> Installation Dashboard.
@@ -167,7 +167,7 @@ current version of the broker before staging the new version of the tile. To rea
 upgrade:
 
 1. Ensure that you haven't staged the new version of the tile yet.
-2. Review the [important notes about upgrading service instances](#upgrade-notes).
+2. Review the [Important notes about upgrading service instances](#upgrade-notes).
 3. Follow the steps from either
     - [Upgrade instances through the tile](#upgrading-instances-task) or
     - [Upgrade instances through the CLI plug-in](#upgrading-cli-plugin) from the CLI.
@@ -210,7 +210,7 @@ Before you start upgrading service instances, see the following notes:
 
 To verify that no instances are pending upgrade:
 
-1. Install the [cf CLI UpgradeAllServices plugin](https://plugins.cloudfoundry.org/#UpgradeAllServices).
+1. Install the [cf CLI UpgradeAllServices plug-in on Cloud Foundry](https://plugins.cloudfoundry.org/#UpgradeAllServices).
 1. Follow the instructions in the **Usage** section of the `README` in the
    [upgrade-all-services-cli-plugin](https://github.com/cloudfoundry/upgrade-all-services-cli-plugin#usage)
    GitHub repository to perform a dry run.
@@ -237,7 +237,7 @@ To upgrade service instances through the tile:
 
 To run the cf CLI plug-in:
 
-1. Install the [cf CLI UpgradeAllServices plugin](https://plugins.cloudfoundry.org/#UpgradeAllServices).
+1. Install the [cf CLI UpgradeAllServices plug-in on Cloud Foundry](https://plugins.cloudfoundry.org/#UpgradeAllServices).
 1. To run the upgrade, follow the instructions in the **Usage** section of the `README` in the
    [upgrade-all-services-cli-plugin](https://github.com/cloudfoundry/upgrade-all-services-cli-plugin#usage)
    GitHub repository.
@@ -266,6 +266,11 @@ out which instances are pending upgrade.
 1. Update service instance to another plan:
 
    ```bash
-    cf update-service <SERVICE_INSTANCE_NAME> -p <NEW_PLAN>
+    cf update-service SERVICE-INSTANCE-NAME> -p NEW-PLAN
    ```
+   Where:
+
+   - SERVICE-INSTANCE-NAME is the name of the service instance.
+   - NEW-PLAN is the name of the new plan.
+
 2. Follow the [Upgrade procedure](#procedure).

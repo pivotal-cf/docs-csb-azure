@@ -309,7 +309,7 @@ To rotate the password on the state database:
 
 ## <a id="remove-encryption"></a> Remove Encryption from the State Database
 
-If the data in the state database was previously encrypted and you want to deactivate encryption, follow the instructions below.
+If the data in the state database was previously encrypted and you want to deactivate encryption, take the following steps.
 
 To remove encryption from the state database:
 
@@ -346,7 +346,7 @@ You can run the upgrade task any time, and as many times as needed.
 <p class="note important">
   <strong>Important:</strong> Failure to upgrade one or more instance does not cause the tile
   installation to fail.
-  Review the <code>deploy all</code> errand logs to ensure all instances have been upgraded successfully.
+  Review the <code>deploy all</code> errand logs to verify that all instances are upgraded.
 </p>
 
 Deleting custom plans before upgrading all instances might cause some instances to become unmanageable
@@ -356,7 +356,7 @@ and [Upgrading Cloud Service Broker for Azure](upgrading.html) to ensure there a
 upgrades.
 
 <p class="note important">
-  <strong>Important:</strong>Instances that the broker has subsumed must be changed to a suitable plan, other than the `subsume`
+  <strong>Important:</strong> Instances that the broker has subsumed must be changed to a suitable plan, other than the <code>subsume</code>
   plan, before performing any upgrades.
   Failure to do so makes the broker unable to manage those instances.
 </p>
