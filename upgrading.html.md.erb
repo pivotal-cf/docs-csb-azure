@@ -5,112 +5,6 @@ owner: Cloud Service Broker
 
 This topic tells you how to upgrade <%= vars.product_full %>.
 
-## <a id="upgrade-to-1-4"></a> Upgrading to v1.4
-
-### <a id="redis"></a> Upgrading to Azure Cache for Redis v6
-
-New Redis v6 is now available through  <%= vars.product_short %>.
-
-<p class="note">
-  <strong>Note:</strong> All brokerpak-provided plans set the Redis version to v4 to maintain compatibility with the instances already created.
-  These plans are deprecated and will be removed from the brokerpak in future releases in favor of custom-defined plans in the tile.
-  VMware recommends that you update all instances to use custom-defined plans instead.
-</p>
-
-To update to Redis v6:
-
-1. Before updating the Redis version, make sure you read the
-[Microsoft Azure upgrade recommendations](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-upgrade)
-and understand any possible consequences to the service.
-
-1. Identify the instance that you want to update to use Redis v6.
-
-1. Identify the plan used to create the instance by running:
-
-   ```console
-   cf service INSTANCE-NAME
-   ```
-
-   Where `INSTANCE-NAME` is the name of the service to be updated.
-
-1. Find the plan definition of the plan you identified.
-   If it is a custom plan, you can find its definition in the tile configuration.
-   If is is a brokerpak-provided plan, you can find the corresponding properties
-   [in the brokerpak definition](https://github.com/cloudfoundry/csb-brokerpak-azure/blob/6f4a2879ea330fdedbbed896259f9f1942f2ff4b/azure-redis.yml#L26-L102)</a>.
-
-1. If the plan is a custom plan, you can update the instance to use Redis v6 by running:
-
-   ```console
-   cf update-service INSTANCE-NAME -c '{"redis_version": "6"}'
-   ```
-
-   Where `INSTANCE-NAME` is the name of the service to be updated.
-
-1. If the plan is a brokerpak-provided one, you can either define a plan with or without a specified
-Redis version. Choose one of the following options:
-
-    * **Option 1:** Define the custom-created plan with a specified Redis version.
-
-        1. Define a custom plan that specifies the Redis version. For example:
-
-            ```json
-            {
-              "name": "custom-plan-v6",
-              "id": "ba3d28f0-6b17-11ed-91ca-1f5af50ef86f",
-              "description": "Custom plan",
-              "sku_name": "Basic",
-              "family": "C",
-              "capacity": 1,
-              "tls_min_version": "1.2",
-              "firewall_rules": [],
-              "redis_version": "6"
-            }
-            ```
-
-            <p class="note important">
-            <strong>Important:</strong> All other service properties must match the plan the instance is already on.
-
-            If you set the <code>redis_version</code> property in the plan, users cannot change
-            that property during create or update instance operations.
-            </p>
-
-        1. Update the instance to the new plan by running:
-
-           ```console
-           cf update-service INSTANCE-NAME -p NEW-PLAN-NAME
-           ```
-
-           Where `NEW-PLAN-NAME` is the name of the plan created in previous step.
-
-    * **Option 2:** Define a custom-created plan without a specified Redis version.
-
-        1. Define a custom plan that does not specify the Redis version. For example:
-
-            ```json
-            {
-               "name": "custom-plan-v6",
-               "id": "ba3d28f0-6b17-11ed-91ca-1f5af50ef86f",
-               "description": "Custom plan",
-               "sku_name": "Basic",
-               "family": "C",
-               "capacity": 1,
-               "tls_min_version": "1.2",
-               "firewall_rules": []
-            }
-            ```
-
-            <p class="note important">
-              <strong>Important:</strong> All service properties, other than <code>name</code>, <code>id</code> and <code>description</code> must match the plan the instance is already on.
-            </p>
-
-        1. Update the instance to the new plan by running:
-
-            ```console
-            cf update-service INSTANCE-NAME -p NEW-PLAN-NAME -c '{"redis_version": "6"}'
-            ```
-
-            Where `NEW-PLAN-NAME` is the name of the plan created in previous step.
-
 ## <a id="procedure"></a> Upgrade procedure
 
 <p class="note important">
@@ -149,7 +43,7 @@ To upgrade <%= vars.product_short %>:
 
 9. Review the `deploy-all` errand logs for any errors created because of the upgrade instances task.
 
-## <a id="upgrade-instances"></a> Ensure that service instances are up to date before upgrading the tile
+### <a id="upgrade-instances"></a> Ensure that service instances are up to date before upgrading the tile
 
 Service instance upgrades must be performed alongside the corresponding tile upgrade.
 Service instances that haven't been upgraded with one version might not be upgradable with
