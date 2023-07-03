@@ -1,5 +1,5 @@
 ---
-title: Installing and Configuring Cloud Service Broker for Azure
+title: Installing and configuring Cloud Service Broker for Azure
 owner: Cloud Service Broker
 ---
 
@@ -28,7 +28,7 @@ in the left sidebar. This adds the tile to your staging area.
 The following procedures describe configuring the panes on the <%= vars.product_short %> tile.
 
 
-### <a id="config-azs"></a> Configure AZs and Networks
+### <a id="config-azs"></a> Configure AZs and networks
 
 This section describes how to choose an AZ to run the service broker for <%= vars.product_short %>.
 It also describes how to select networks for <%= vars.product_short %>.
@@ -48,7 +48,7 @@ To configure AZs and networks:
 1. Click **Save**.
 
 
-### <a id="config-creds"></a> Configure Azure Credentials
+### <a id="config-creds"></a> Configure Azure credentials
 
 This section describes how to configure the Azure credentials that <%= vars.product_short %> requires to
 manage service instances.
@@ -88,13 +88,13 @@ To configure Azure credentials:
       </ul>
     </div>
 
-### <a id="state-db"></a>Configure a State Database
+### <a id="state-db"></a>Configure a state database
 
 This section describes how to associate <%= vars.product_short %> with a MySQL database,
 the _state database_.
 The broker requires this database to store its state.
 
-#### About Encrypting the State Database
+#### About encrypting the state database
 
 In production environments, VMware recommends that you enable encryption.
 This encrypts certain sensitive information in the state database, such as IaaS credentials.
@@ -116,7 +116,7 @@ You must have a small MySQL database to use as the state database.
   is only partially encrypted, it is safest to revert to the most recent database backup.
 </p>
 
-#### Procedure: Configure a State Database
+#### Procedure: Configure a state database
 
 To configure <%= vars.product_short %> with a state database:
 
@@ -134,10 +134,10 @@ To configure <%= vars.product_short %> with a state database:
     | **Database port**                                          | Enter the port number for connection to the state database. Defaults to `3306`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
     | **Database name**                                          | Enter the name of an existing database to use as the state database.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
     | **TLS Enforcement**                                        | Select the type of TLS enforcement you want. If you select **Custom**, enter your CA certificate, client certificate, and key.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-    | **Enable encryption of the Cloud Service Broker database** | If you want the sensitive data to be encrypted, select this checkbox and the **Add** button. If you do not want to encrypt the data, leave the checkbox unselected and do not fill in the Database Encryption Passwords fields.                                                                                                                                                                                                                                                                                                                                                      |
+    | **Enable encryption of the Cloud Service Broker database** | If you want the sensitive data to be encrypted, select this check box and the **Add** button. If you do not want to encrypt the data, leave the check box unselected and do not fill in the Database Encryption Passwords fields.                                                                                                                                                                                                                                                                                                                                                      |
     | **Label**                                                  | Enter a unique password label. You cannot change this label after you save.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
     | **Password**                                               | Enter a secure password that is at least 20 characters long. You cannot change this password after you save.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-    | **Primary**                                                | Select this checkbox if this is the password that you want to use to encrypt the data. You must mark one and only one password as primary.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+    | **Primary**                                                | Select this check box if this is the password that you want to use to encrypt the data. You must mark one and only one password as primary.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 1. Click **Save**.
 
@@ -167,7 +167,7 @@ Typical topics include:**
 users can choose the best options for themselves?
 + **High availability:** How do you configure/deploy X Service tile to be highly available? %>
 
-### <a id="services"></a> Configure Services with <%= vars.product_short %>
+### <a id="services"></a> Configure services with <%= vars.product_short %>
 
 This section describes how to configure services and service plans offered by the
 <%= vars.product_short %> within the Cloud Foundry Marketplace on your instance of Cloud Foundry.
@@ -281,36 +281,36 @@ supply the credentials as properties to a plan instance in the additional plans 
 1. Review your Cloud Foundry Marketplace to see the new plan sizes.
 
 
-## <a id="rotate-password"></a>Rotate the Encryption Password on the State Database
+## <a id="rotate-password"></a>Rotate the encryption password on the state database
 
-If you have already set an encryption password and want to change it, follow the instructions below:
+If you have already set an encryption password and want to change it, take the following steps.
 
 To rotate the password on the state database:
 
 1. Click **Service Broker Config**.
 
-2. Clear the **Primary** checkbox.
+2. Deselect the **Primary** check box.
 
 3. Click **Add**.
 
-4. Enter a new **Label** and **Password** for the new password, and select  **Primary**.
+4. Enter a new **Label** and **Password** for the new password, and select **Primary**.
 
     You cannot change the label or password after you save.
 
-1. Click **Save**.
+    ![Section of the Service Broker Config page where you can change the
+    primary password and label.](./images/rotate-password.png)
 
-1. Return to the <%= vars.ops_manager %> Installation Dashboard.
+5. Click **Save**.
 
-1. Click **Review Pending Changes**.
+6. Return to the <%= vars.ops_manager %> Installation Dashboard.
 
-1. Click **Apply changes** to install the <%= vars.product_short %> tile.
+7. Click **Review Pending Changes**.
 
-1. (Recommended) After the apply changes process completes, delete the non-primary label and password pair and apply changes again.
+8. Click **Apply changes** to install the <%= vars.product_short %> tile.
 
-   <%= image_tag("images/rotate-password.png", :alt => "Screenshot of the section where you can
-   rotate the encryption password on the state database.", :width => "400") %>
+9. (Recommended) After the apply changes process completes, delete the non-primary label and password pair and apply changes again.
 
-## <a id="remove-encryption"></a> Remove Encryption from the State Database
+## <a id="remove-encryption"></a> Remove encryption from the state database
 
 If the data in the state database was previously encrypted and you want to deactivate encryption, take the following steps.
 
@@ -318,24 +318,24 @@ To remove encryption from the state database:
 
 1. Click **Service Broker Config**.
 
-1. Clear the **Enable encryption of the Cloud Service Broker database** checkbox.
+2. Deselect the **Enable encryption of the Cloud Service Broker database** check box.
 
-1. Clear the **Primary** checkbox, but do not change the Label or Password fields.
+3. Deselect the **Primary** check box, but do not change the Label or Password fields.
+
+  <%= image_tag("images/remove-encryption.png", :alt => "Section of the Service Broker Config page where you can
+   remove encryption from the state database.", :width => "400") %>
 
 1. Click **Save**.
 
-1. Return to the <%= vars.ops_manager %> Installation Dashboard.
+2. Return to the <%= vars.ops_manager %> Installation Dashboard.
 
-1. Click **Review Pending Changes**.
+3. Click **Review Pending Changes**.
 
-1. Click **Apply changes** to install the <%= vars.product_short %> tile.
+4. Click **Apply changes** to install the <%= vars.product_short %> tile.
 
-1. (Recommended) After the apply changes process completes, delete all label and password pairs and apply changes again.
+5. (Recommended) After the apply changes process completes, delete all label and password pairs and apply changes again.
 
-   <%= image_tag("images/remove-encryption.png", :alt => "Screenshot of the section where you can
-   remove encryption from the state database.", :width => "400") %>
-
-## <a id="upgrade-all-config"></a> Upgrade All Services Instances Config
+## <a id="upgrade-all-config"></a> Upgrade all services instances config
 
 If upgrading from a previous tile version, service instances must be upgraded.
 By default, the tile upgrades all instances during installation.

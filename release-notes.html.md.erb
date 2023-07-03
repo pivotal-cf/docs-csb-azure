@@ -9,9 +9,9 @@ This topic describes the changes in this minor release of <%= vars.product_full 
 
 ##<a id="1-5-0"></a> v1.5.0
 
-**Release Date:** June 27, 2023
+**Release Date:** July 06, 2023
 
-### Breaking Changes
+### Breaking changes
 
 This release has the following breaking changes:
 
@@ -30,22 +30,22 @@ New features and changes in this release:
   The Terraform version used to apply changes is upgraded from v1.1.9 to v1.4.6.
   You must upgrade all service instances. When you upgrade, ensure that you follow the [Upgrade procedure](upgrading.html.md.erb#procedure).
 
-### Resolved Issues
+### Resolved issues
 
 This release has the following fixes:
 
 <%= partial vars.path_to_partials + '/csb/timeout-resolved' %>
 
-- **Fixed error, _Argument list too long_, when starting the application:**
+- **Fixed error, Argument list too long, when starting the application:**
   When configuring the Cloud Service Broker with a long list of server pairs, the application threw an error,
-  _Argument list too long_, due to reaching the maximum limit allowed by the operating system when setting
+  Argument list too long, due to reaching the limit allowed by the operating system when setting
   environment variables. Now the application sets the necessary variables more efficiently.
 
-### Known Issues
+### Known issues
 
 There are no known issues in this release.
 
-## <a id="view"></a> View Release Notes for Another Version
+## <a id="view"></a> View release notes for another version
 
 To view the release notes for another product version, select the version from
-dropdown at the top of this page.
+the drop-down menu at the top of this page.
