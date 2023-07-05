@@ -30,6 +30,17 @@ New features and changes in this release:
   The Terraform version used to apply changes is upgraded from v1.1.9 to v1.4.6.
   You must upgrade all service instances. When you upgrade, ensure that you follow the [Upgrade procedure](upgrading.html.md.erb#procedure).
 
+####  Azure MSSQL Database and Azure MSSQL Failover Group
+
+- **Long-term backup retention configuration exposed:**
+  By using the long-term retention (LTR) feature, you can store specified SQL Database  backups in Azure
+  Blob storage with configured redundancy for up to 10 years.
+  To enable LTR, you can define a policy using a combination of four parameters: weekly backup retention (W),
+  monthly backup retention (M), yearly backup retention (Y), and week of year (WeekOfYear).
+
+  For how to configure, see [Configuration Parameters for Azure MSSQL Database](reference/azure-mssql-db.html.md.erb)
+  or [Configuration Parameters for Azure MSSQL Failover Group](reference/azure-mssql-fog.html.md.erb).
+
 ### Resolved issues
 
 This release has the following fixes:
