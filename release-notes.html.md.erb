@@ -7,18 +7,15 @@ owner: Cloud Service Broker
 
 This topic describes the changes in this minor release of <%= vars.product_full %>.
 
-##<a id="1-5-0"></a> v1.5.0
+##<a id="1-6-0"></a> v1.6.0
 
-**Release Date:** July 06, 2023
+**Release Date:** xxxxx xx, 2023
 
 ### Breaking changes
 
 This release has the following breaking changes:
 
-- **Removed subsume capability for Azure SQL MSSQL Database Instance and Azure SQL MSSQL Failover Group:**
-  It is no longer possible to subsume an Azure SQL MSSQL Database Instance or an Azure SQL MSSQL Failover
-  Group. The plan preconfigured in the brokerpak is also eliminated.
-  For more information about the implications of this change, see the Upgrade procedure section in [Upgrading Cloud Service Broker for Azure](upgrading.html.md.erb#procedure).
+-
 
 ### Features
 
@@ -26,31 +23,13 @@ New features and changes in this release:
 
 #### General
 
-- **Terraform upgraded to v1.4.6:**
-  The Terraform version used to apply changes is upgraded from v1.1.9 to v1.4.6.
-  You must upgrade all service instances. When you upgrade, ensure that you follow the [Upgrade procedure](upgrading.html.md.erb#procedure).
+-
 
-####  Azure MSSQL Database and Azure MSSQL Failover Group
-
-- **Long-term backup retention configuration exposed:**
-  By using the long-term retention (LTR) feature, you can store specified SQL Database  backups in Azure
-  Blob storage with configured redundancy for up to 10 years.
-  To enable LTR, you can define a policy using a combination of four parameters: weekly backup retention (W),
-  monthly backup retention (M), yearly backup retention (Y), and week of year (WeekOfYear).
-
-  For how to configure, see [Configuration Parameters for Azure MSSQL Database](reference/azure-mssql-db.html.md.erb)
-  or [Configuration Parameters for Azure MSSQL Failover Group](reference/azure-mssql-fog.html.md.erb).
 
 ### Resolved issues
 
 This release has the following fixes:
 
-<%= partial vars.path_to_partials + '/csb/timeout-resolved' %>
-
-- **Fixed error, Argument list too long, when starting the application:**
-  When configuring the Cloud Service Broker with a long list of server pairs, the application threw an error,
-  Argument list too long, due to reaching the limit allowed by the operating system when setting
-  environment variables. Now the application sets the necessary variables more efficiently.
 
 ### Known issues
 
