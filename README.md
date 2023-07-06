@@ -2,7 +2,7 @@
 
 This repo contains the Cloud Service Broker for Azure documentation.
 
-In this README: 
+In this README:
 
 - [Branches in this Content Repo](#branches-in-this-content-repo)
 - [Releasing a New Minor Version](#releasing-a-new-minor-version)
@@ -24,7 +24,8 @@ Then, if necessary, immediately cherry-pick/copy any changes that you want to pu
 
 | Branch Name| Staging  | Production |
 |------------| ---------|------------|
-| main     | [v1.5 staging](https://docs-staging.vmware.com/en/draft/Tanzu-Cloud-Service-Broker-for-Azure/1.5/csb-azure/GUID-index.html) | N/A |
+| main     | [v1.6 staging](https://docs-staging.vmware.com/en/draft/Tanzu-Cloud-Service-Broker-for-Azure/1.6/csb-azure/GUID-index.html) | N/A |
+| 1.5     | [v1.5 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.5/csb-azure/GUID-index.html) | [v1.5 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.5/csb-azure/GUID-index.html) |
 | 1.4        | [v1.4 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.4/csb-azure/GUID-index.html) | [v1.4 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.4/csb-azure/GUID-index.html) |
 | 1.3        | [v1.3 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) | [v1.3 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.3/csb-azure/GUID-index.html) |
 | 1.2        | [v1.2 staging](https://docs-staging.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.2/csb-azure/GUID-index.html) | [v1.2 prod](https://docs.vmware.com/en/Tanzu-Cloud-Service-Broker-for-Azure/1.2/csb-azure/GUID-index.html) |
@@ -86,14 +87,14 @@ replacing the publication with the same version.
 
 **Prerequisite** Needs additional privileges - reach out to a manager on the docs team [#tanzu-docs](https://vmware.slack.com/archives/C055V2M0H) or ask a writer to do this step for you.
 
-1. Go to Staging publications in docsdash  
+1. Go to Staging publications in docsdash
   https://docsdash.vmware.com/deployment-stage
 
 2. Select a publication (make sure it's the latest version)
 
 3. Click "Deploy selected to Pre-Prod" and wait for the pop to turn green (refresh if necessary after about 10s)
 
-4. Go to Pre-Prod list  
+4. Go to Pre-Prod list
   https://docsdash.vmware.com/deployment-pre-prod
 
 5. Select a publication
