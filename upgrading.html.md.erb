@@ -3,19 +3,18 @@ title: Upgrading Cloud Service Broker for Azure
 owner: Cloud Service Broker
 ---
 
-This topic tells you how to upgrade <%= vars.product_full %>. The following sections have
-information about the [Upgrade procedure](#procedure), [Upgrading service instances](#upgrade-instances),
+Would you like to upgrade <%= vars.product_full %>? This topic tells you about the [Upgrade procedure](#procedure), [Upgrading service instances](#upgrade-instances),
 and specific details about [Upgrading to v1.4](#upgrading-specifics).
 
 ## <a id="procedure"></a> Upgrade procedure
 
-<p class="note important">
-   <strong>Important:</strong> When upgrading <%= vars.product_short %>, service instances might need
+>**Important**
+>When upgrading <%= vars.product_short %>, service instances might need
    to be upgraded.
-   Failure to upgrade one or more instance does not cause the tile installation to fail.<br><br>
-   Review the <code>deploy-all</code> errand logs in the change log to verify that
-   no errors occurred when upgrading instances. 
-</p>
+   Failure to upgrade one or more instance does not cause the tile installation to fail.
+
+>Review the `deploy-all` errand logs in the change log to verify that
+   no errors occurred when upgrading instances.
 
 To upgrade <%= vars.product_short %>:
 
