@@ -133,11 +133,10 @@ out which instances are pending upgrade.
 
 New Redis v6 is now available through  <%= vars.product_short %>.
 
-<p class="note">
-  <strong>Note:</strong> All brokerpak-provided plans set the Redis version to v4 to maintain compatibility with the instances already created.
+>**Note**
+>All brokerpak-provided plans set the Redis version to v4 to maintain compatibility with the instances already created.
   These plans are deprecated and removed from the brokerpak in future releases in favor of custom-defined plans in the tile.
   VMware recommends that you update all instances to use custom-defined plans instead.
-</p>
 
 To update to Redis v6:
 
@@ -147,7 +146,7 @@ and understand any possible consequences to the service.
 
 1. Identify the instance that you want to update to use Redis v6.
 
-1. Identify the plan used to create the instance by running:
+2. Identify the plan used to create the instance by running:
 
    ```console
    cf service INSTANCE-NAME
@@ -155,12 +154,12 @@ and understand any possible consequences to the service.
 
    Where `INSTANCE-NAME` is the name of the service to be updated.
 
-1. Find the plan definition of the plan you identified.
+3. Find the plan definition of the plan you identified.
    If it is a custom plan, you can find its definition in the tile configuration.
    If it is a brokerpak-provided plan, you can find the corresponding properties
    [in the brokerpak definition](https://github.com/cloudfoundry/csb-brokerpak-azure/blob/6f4a2879ea330fdedbbed896259f9f1942f2ff4b/azure-redis.yml#L26-L102)</a>.
 
-1. If the plan is a custom plan, you can update the instance to use Redis v6 by running:
+4. If the plan is a custom plan, you can update the instance to use Redis v6 by running:
 
    ```console
    cf update-service INSTANCE-NAME -c '{"redis_version": "6"}'
@@ -168,7 +167,7 @@ and understand any possible consequences to the service.
 
    Where `INSTANCE-NAME` is the name of the service to be updated.
 
-1. If the plan is a brokerpak-provided one, you can either define a plan with or without a specified
+5. If the plan is a brokerpak-provided one, you can either define a plan with or without a specified
 Redis version. Choose one of the following options:
 
     * **Option 1:** Define the custom-created plan with a specified Redis version.
@@ -189,14 +188,13 @@ Redis version. Choose one of the following options:
             }
             ```
 
-            <p class="note important">
-              <strong>Important:</strong> All other service properties must match
+            >**Important**
+            >All other service properties must match
               the plan the instance is already on.
-              If you set the <code>redis_version</code> property in the plan, users cannot change
+              If you set the `redis_version` property in the plan, users cannot change
               that property during create or update instance operations.
-            </p>
 
-        1. Update the instance to the new plan by running:
+        2. Update the instance to the new plan by running:
 
            ```console
            cf update-service INSTANCE-NAME -p NEW-PLAN-NAME
@@ -221,11 +219,10 @@ Redis version. Choose one of the following options:
             }
             ```
 
-            <p class="note important">
-              <strong>Important:</strong> All service properties, other than <code>name</code>, <code>id</code> and <code>description</code> must match the plan the instance is already on.
-            </p>
+            >**Important**
+            >All service properties, other than `name`, `id`, and `description`, must match the plan the instance is already on.
 
-        1. Update the instance to the new plan by running:
+        2. Update the instance to the new plan by running:
 
             ```console
             cf update-service INSTANCE-NAME -p NEW-PLAN-NAME -c '{"redis_version": "6"}'
