@@ -76,8 +76,9 @@ To configure Azure credentials:
 
 1. Click **Save**.
 
-    <div class="note">
-      <strong>Note:</strong> You can use different Azure credentials for each service plan by setting
+    <p class="note">
+    <span class="note__title">Note</span>
+    You can use different Azure credentials for each service plan by setting
       <code>azure_tenant_id</code>, <code>azure_subscription_id</code>,
       <code>azure_client_secret</code>, and <code>azure_client_id</code> in one of the following ways:
       <ul>
@@ -86,7 +87,7 @@ To configure Azure credentials:
         <li>In the cf CLI, set the credentials as parameters when creating a service. For example:
         <br><code>cf create-service ... -c '{ "azure_subscription_id":"...", ... "'</code></li>
       </ul>
-    </div>
+    </p>
 
 ### <a id="state-db"></a>Configure a state database
 
@@ -101,7 +102,7 @@ This encrypts certain sensitive information in the state database, such as IaaS 
 The encryption password that you enter on the Service Broker Config pane is used to generate an encryption key.
 
 <p class="note">
-<strong>Note:</strong>
+<span class="note__title">Note</span>
 Applying changes takes longer than normal when you first enable encryption and when you change the
 encryption password.
 </p>
@@ -111,7 +112,8 @@ encryption password.
 You must have a small MySQL database to use as the state database.
 
 <p class="note">
-  <strong>Note:</strong> VMware recommends enabling backup and restore capabilities in the MySQL
+<span class="note__title">Note</span>
+VMware recommends enabling backup and restore capabilities in the MySQL
   database before attempting encryption. This is because if something goes wrong, and your database
   is only partially encrypted, it is safest to revert to the most recent database backup.
 </p>
@@ -249,7 +251,8 @@ For details about properties for each service configuration, see
 <a href="reference/index.html">Service Plan Reference</a>.
 
     <p class="note">
-      <strong>Note:</strong> When developers create or update a service instance, they cannot override
+    <span class="note__title">Note</span>
+    When developers create or update a service instance, they cannot override
       any plan-level properties that have been set in this field.
     </p>
 
@@ -349,8 +352,9 @@ The broker might be unable to manage these service instances that are not upgrad
 In that case, any operations on that instance (update, bind, unbind, or delete) are blocked until you perform the upgrade task.
 You can run the upgrade task any time, and as many times as needed.
 
-<p class="note important">
-  <strong>Important:</strong> Failure to upgrade one or more instance does not cause the tile
+<p class="note">
+<span class="note__title">Note</span>
+Failure to upgrade one or more instance does not cause the tile
   installation to fail.
   Review the <code>deploy all</code> errand logs to verify that all instances are upgraded.
 </p>
@@ -362,7 +366,8 @@ and [Upgrading Cloud Service Broker for Azure](upgrading.html) to ensure there a
 upgrades.
 
 <p class="note important">
-  <strong>Important:</strong> Instances that the broker has subsumed must be changed to a suitable plan, other than the <code>subsume</code>
+<span class="note__title">Important</span>
+Instances that the broker has subsumed must be changed to a suitable plan, other than the <code>subsume</code>
   plan, before performing any upgrades.
   Failure to do so makes the broker unable to manage those instances.
 </p>
