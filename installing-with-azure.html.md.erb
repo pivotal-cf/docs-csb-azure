@@ -81,12 +81,12 @@ To configure Azure credentials:
     You can use different Azure credentials for each service plan by setting
       <code>azure_tenant_id</code>, <code>azure_subscription_id</code>,
       <code>azure_client_secret</code>, and <code>azure_client_id</code> in one of the following ways:
-      <ul>
-        <li>In the <%= vars.product_short %> tile, set the credentials when configuring a service plan.
-          See <a href="installing-with-azure.html#services">Configure Services with <%= vars.product_short %></a>.</li>
-        <li>In the cf CLI, set the credentials as parameters when creating a service. For example:
-        <br><code>cf create-service ... -c '{ "azure_subscription_id":"...", ... "'</code></li>
-      </ul>
+          <ul>
+            <li>In the <%= vars.product_short %> tile, set the credentials when configuring a service plan.
+              See <a href="installing-with-azure.html#services">Configure Services with <%= vars.product_short %></a>.</li>
+            <li>In the cf CLI, set the credentials as parameters when creating a service. For example:
+            <br><code>cf create-service ... -c '{ "azure_subscription_id":"...", ... "'</code></li>
+          </ul>
     </p>
 
 ### <a id="state-db"></a>Configure a state database
