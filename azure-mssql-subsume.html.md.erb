@@ -114,11 +114,8 @@ the <%= vars.product_short %>:
     Add credentials for the MASB pre-existing servers by following step 3 in
     [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services)
     or temporarily add the credentials with environment variables as follows.
-
-    <p class="note">
-      <strong>Note:</strong> Adding the credentials with environment variables is only for <em>testing</em>.
-      This is because the credentials are lost when you apply changes to the tile.
-    </p>
+    Adding the credentials with environment variables is only for testing,
+    because the credentials are lost when you apply changes to the tile.
 
     <p class="note">
       <strong>Note:</strong> You only need to do this configuration once for each server.
@@ -146,7 +143,7 @@ the <%= vars.product_short %>:
     * `SERVER-NAME` is the same as the previous step.
     * `SERVER-RESOURCE-GROUP` is the same as the previous step.
 
-1. Create a new MSSQL service instance using <%= vars.product_short %>  and
+4. Create a new MSSQL service instance using <%= vars.product_short %>  and
    import the existing MSSQL resource by choosing the "subsume" plan and including the metadata as shown:
 
     ```
@@ -168,7 +165,7 @@ the <%= vars.product_short %>:
       -c '{"azure_db_id":"/subscriptions/000abc00-0000-00ab-0abc-00000000/resourceGroups/resource-group/providers/Microsoft.Sql/servers/my-server/databases/my-database", "server": "server-1", "server-name": "my-server"}'
     </pre>
 
-1. Disconnect the app from the MASB service binding by running:
+5. Disconnect the app from the MASB service binding by running:
 
     ```
     cf unbind-service APP-NAME MASB-SERVICE-INSTANCE
@@ -185,7 +182,7 @@ the <%= vars.product_short %>:
     $ cf unbind-service my-app masb-instance
     </pre>
 
-1. Bind the app to the new service instance by running:
+6. Bind the app to the new service instance by running:
 
     ```
     cf bind-service APP-NAME NEW-SERVICE-INSTANCE
@@ -203,13 +200,13 @@ the <%= vars.product_short %>:
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
 
-1. Restage the app:
+7. Restage the app:
 
     ```
     cf restage APP-NAME
     ```
 
-1. Remove record of the old MAS-brokered database instance and any child objects
+8. Remove record of the old MAS-brokered database instance and any child objects
    from Cloud Foundry by running:
 
     ```
@@ -226,7 +223,7 @@ the <%= vars.product_short %>:
       resource, that is, the database.
     </p>
 
-1. Update the service instance to use a plan that closely matches the
+9. Update the service instance to use a plan that closely matches the
 configuration of the plan that the MAS-brokered instance used by running:
 
     ```
