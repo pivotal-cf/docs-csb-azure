@@ -163,15 +163,10 @@ the <%= vars.product_short %>:
    <br><br>
     Add credentials for the MASB pre-existing servers by following step 3 in
     [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services)
-    or temporarily add the credentials with environment variables as follows.
+    or temporarily add the credentials with environment variables as follows. Adding the credentials with environment variables is only for testing, because the credentials are lost when you apply changes to the tile.
 
     <p class="note">
-      <strong>Note:</strong> Adding the credentials with environment variables is only for <em>testing</em>.
-      This is because the credentials are lost when you apply changes to the tile.
-    </p>
-
-    <p class="note">
-      <strong>Note:</strong> You only need to do this configuration once for each server.
+      <span class="note__title">Note</span> You only need to do this configuration once for each server.
       If you have already done this configuration for a database server, you do not have to do it again.
     </p>
 
@@ -253,7 +248,7 @@ the <%= vars.product_short %>:
     cf restage APP-NAME
     ```
 
-1. Remove record of the old MAS-brokered database instance and any child objects
+6. Remove record of the old MAS-brokered database instance and any child objects
    from Cloud Foundry by running:
 
     ```
@@ -264,8 +259,8 @@ the <%= vars.product_short %>:
 
     <pre class="terminal">$ cf purge-service-instance masb-instance</pre>
 
-    <p class="note warning">
-      <strong> Warning:</strong> Do not run <code>cf delete-service</code>
+    <p class="note caution">
+      <span class="note__title">Caution</span> Do not run <code>cf delete-service</code>
       because then the Microsoft Azure Service Broker deletes the Azure MSSQL
       resource, that is, the database.
     </p>
