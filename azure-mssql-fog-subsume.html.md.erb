@@ -169,7 +169,7 @@ the <%= vars.product_short %>:
     <p class="note">
       <span class="note__title">Note</span> You only need to do this configuration once for each server.
       If you have already done this configuration for a database server, you do not have to do it again.
-    </p><br><br>
+    </p><br>
 
     ```
     cf set-env CLOUD-SERVICE-BROKER-APP MSSQL_DB_FOG_SERVER_PAIR_CREDS '{"SERVER-PAIR-LABEL":{"admin_password":"SERVER-ADMIN-PASSWORD","admin_username":"SERVER-ADMIN-USERNAME","primary":{"resource_group":"PRIMARY-SERVER-RESOURCE-GROUP","server_name":"PRIMARY-SERVER-NAME"},"secondary":{"resource_group":"SECONDARY-SERVER-RESOURCE-GROUP","server_name":"SECONDARY-SERVER-NAME"}}}''
