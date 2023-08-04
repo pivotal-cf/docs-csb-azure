@@ -46,7 +46,7 @@ The following table lists parameters which can only be added at the plan level.
 You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan.
 
 <p class="note">
-  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
+  <span class="note__title">Note</span> If you set a parameter at plan level, developers cannot
   change the value when creating or updating service instances.
 </p>
 
@@ -256,12 +256,9 @@ If you do not define a SKU using the `sku_name` parameter, the SKU is
 computed from the number of cores in your plan.
 See [Plans](#plans) above.
 
-<p class="note">
-  <strong>Note:</strong> When updating a service instance, the SKU for the updated
-  service instance must remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
-  If you update to a different tier, Azure refuses the update request.
-</p>
-
+When updating a service instance, the SKU for the updated
+service instance must remain in the same tier (`GP_S`, `GP`, or `HS`).
+If you update to a different tier, Azure refuses the update request.
 
 ## <a id="binding-creds"></a> Binding Credentials
 

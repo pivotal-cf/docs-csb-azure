@@ -39,7 +39,7 @@ The following table lists parameters which can only be configured for additional
 You can also add any of the configuration parameters listed in the [parameters](#parameters) section to your plan.
 
 <p class="note">
-  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
+  <span class="note__title">Note</span> If you set a parameter at plan level, developers cannot
   change the value when creating or updating service instances.
 </p>
 
@@ -79,8 +79,8 @@ provisioning a csb-azure-mssql-failover-group service:
     <td>string</td>
     <td>
       The Azure region in which to deploy the service instance.
-      <p class="note">
-        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
+      <p class="note important">
+        <span class="note__title">Important</span> Currently, Azure SQL is not available in all regions.
         If you configure a region that is unavailable, <%= vars.product_short %> fails.
       </p>
     </td>
@@ -232,17 +232,15 @@ For information about the DTU purchasing model, see
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases">this Microsoft documentation</a>.
 
 <p class="note">
-  <strong>Note:</strong> Azure SQL service instances use the vCore model and the Gen5
+  <span class="note__title">Note</span> Azure SQL service instances use the vCore model and the Gen5
   hardware generation unless you override this default using the <code>sku_name</code> parameter.
   For more information about the vCore model, see the
   <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
 </p>
 
-<p class="note">
-  <strong>Note:</strong> When updating a service instance, the SKU for the updated
-  service instance must remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
+  When updating a service instance, the SKU for the updated
+  service instance must remain in the same tier (`GP_S`, `GP`, or `HS`).
   If you update to a different tier, Azure refuses the update request.
-</p>
 
 ## <a id="binding-creds"></a> Binding Credentials
 

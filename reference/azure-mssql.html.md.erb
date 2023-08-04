@@ -43,7 +43,7 @@ To create plans with specific size limits we recommend setting `sku_name` or `co
 `max_storage_gb` properties.
 
 <p class="note">
-  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
+  <span class="note__title">Note</span> If you set a parameter at plan level, developers cannot
   change the value when creating or updating service instances.
 </p>
 
@@ -112,8 +112,8 @@ main table {
     <td>string</td>
     <td>
       The Azure region in which to deploy the service instance.
-      <p class="note">
-        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
+      <p class="note important">
+        <span class="note__title">Important</span> Currently, Azure SQL is not available in all regions.
         If you configure a region that is unavailable, <%= vars.product_short %> fails.
       </p>
     </td>
@@ -228,18 +228,16 @@ For information about the DTU purchasing model, see
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases">this Microsoft documentation</a>.
 
 <p class="note">
-  <strong>Note:</strong> Azure SQL service instances use the vCore model and the Gen5
+  <span class="note__title">Note</span> Azure SQL service instances use the vCore model and the Gen5
   hardware generation unless you override this default using the <code>sku_name</code> parameter.
   For more information about the vCore model, see the
   <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
 </p>
 
-<p class="note">
-  <strong>Note:</strong> When updating a service instance, it is recommended that the SKU for the updated
-  service instance should remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
-  If you wish to change to a different tier, check the Azure documentation to ensure that updating to the
-  new tier is supported.
-</p>
+When updating a service instance, VMware recommends that the SKU for the updated
+service instance remain in the same tier (`GP_S`, `GP`, or `HS`).
+If you wish to change to a different tier, check the Azure documentation to ensure that updating to the
+new tier is supported.
 
 ## <a id="binding-creds"></a> Binding Credentials
 

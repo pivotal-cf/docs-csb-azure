@@ -38,7 +38,7 @@ to your plan.
 The following properties are useful to set in a plan: `postgres_version`, `storage_gb`, `cores`, `sku`.
 
 <p class="note">
-  <strong>Note:</strong> If you set a parameter at plan level, developers cannot
+  <span class="note__title">Note</span> If you set a parameter at plan level, developers cannot
   change the value when creating or updating service instances.
 </p>
 
@@ -81,8 +81,8 @@ provisioning a csb-azure-postgresql service:
     <td>string</td>
     <td>
       The Azure region in which to deploy the service instance.
-      <p class="note">
-        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
+      <p class="note important">
+        <span class="note__title">Important</span> Currently, Azure SQL is not available in all regions.
         If you configure a region that is unavailable, <%= vars.product_short %> fails.
       </p>
     </td>
@@ -235,18 +235,16 @@ For information about the DTU purchasing model, see
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases">this Microsoft documentation</a>.
 
 <p class="note">
-  <strong>Note:</strong> Azure SQL service instances use the vCore model and the Gen5
-  hardware generation unless you override this default using the <code>sku_name</code> parameter.
+  <span class="note__title">Note</span> Azure SQL service instances use the vCore model and the Gen5
+  hardware generation unless you override this default by using the <code>sku_name</code> parameter.
   For more information about the vCore model, see the
   <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
 </p>
 
-<p class="note">
-  <strong>Note:</strong> When updating a service instance, it is recommended that the SKU for the
-  updated service instance remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
-  If you want to change to a different tier, check the Azure documentation to ensure that updating
-  to the new tier is supported.
-</p>
+When updating a service instance, VMware recommends that the SKU for the
+updated service instance remain in the same tier (`GP_S`, `GP`, or `HS`).
+If you want to change to a different tier, check the Azure documentation to ensure that updating
+to the new tier is supported.
 
 ## <a id="binding-creds"></a> Binding Credentials
 
@@ -276,7 +274,7 @@ Where:
 - `JDBC-FORMAT-CONNECTION-URI` is the Java Database Connectivity (JDBC) URL to connect to the database instance and database.
 
 <p class="note">
-  <strong>Note:</strong> When a binding or service key is deleted, the underlying PostgreSQL user
+  <span class="note__title">Note</span> When a binding or service key is deleted, the underlying PostgreSQL user
   still exists in the database. To remove the user completely, use the Azure console.
   For more information, see the
   <a href="https://www.postgresql.org/docs/current/sql-dropuser.html">PostgreSQL documentation</a>.
