@@ -162,15 +162,10 @@ the <%= vars.product_short %>:
    <br><br>
     Add credentials for the MASB pre-existing servers by following step 3 in
     [Configure Services with Cloud Service Broker for Azure](installing-with-azure.html#services)
-    or temporarily add the credentials with environment variables as follows.
+    or temporarily add the credentials with environment variables as follows. Adding the credentials with environment variables is only for testing, because the credentials are lost when you apply changes to the tile.
 
     <p class="note">
-      <strong>Note:</strong> Adding the credentials with environment variables is only for <em>testing</em>.
-      This is because the credentials are lost when you apply changes to the tile.
-    </p>
-
-    <p class="note">
-      <strong>Note:</strong> You only need to do this configuration once for each server.
+      <span class="note__title">Note</span> You only need to do this configuration once for each server.
       If you have already done this configuration for a database server, you do not have to do it again.
     </p>
 
@@ -195,7 +190,7 @@ the <%= vars.product_short %>:
     * `PRIMARY-SERVER-RESOURCE-GROUP` and `SECONDARY-SERVER-RESOURCE-GROUP` are the resource groups in which the primary and secondary database servers reside.
     * `PRIMARY-SERVER-NAME` and `SECONDARY-SERVER-NAME` are the names of the primary and secondary database servers.
 
-1. Create a new MSSQL service instance using <%= vars.product_short %> and
+2. Create a new MSSQL service instance using <%= vars.product_short %> and
    import the existing MSSQL FoG resource by choosing the "subsume" plan and including the metadata as shown:
 
     ```
@@ -215,7 +210,7 @@ the <%= vars.product_short %>:
     * `PRIMARY-AZURE-DB-ID` , `SECONDARY-AZURE-DB-ID` and `FOG-AZURE-ID` are found in the outputs of step 3 above.
     * `SERVER-PAIR-LABEL` is the same as in the previous step.
 
-1. Disconnect the app from the MASB service binding by running:
+3. Disconnect the app from the MASB service binding by running:
 
     ```
     cf unbind-service APP-NAME MASB-SERVICE-INSTANCE
@@ -230,7 +225,7 @@ the <%= vars.product_short %>:
 
     <pre class="terminal">$ cf unbind-service my-app masb-instance</pre>
 
-1. Bind the app to the new service instance by running:
+4. Bind the app to the new service instance by running:
 
     ```
     cf bind-service APP-NAME NEW-SERVICE-INSTANCE
@@ -242,13 +237,13 @@ the <%= vars.product_short %>:
     Because <%= vars.product_short %> creates new credentials at bind time,
     this creates new binding credentials for the app.
 
-1. Restage the app:
+5. Restage the app:
 
     ```
     cf restage APP-NAME
     ```
 
-1. Remove record of the old MAS-brokered database instance and any child objects
+6. Remove record of the old MAS-brokered database instance and any child objects
    from Cloud Foundry by running:
 
     ```
@@ -259,13 +254,13 @@ the <%= vars.product_short %>:
 
     <pre class="terminal">$ cf purge-service-instance masb-instance</pre>
 
-    <p class="note warning">
-      <strong> Warning:</strong> Do not run <code>cf delete-service</code>
+    <p class="note caution">
+      <span class="note__title">Caution</span> Do not run <code>cf delete-service</code>
       because then the Microsoft Azure Service Broker deletes the Azure MSSQL
       resource, that is, the database.
     </p>
 
-1. Update the service instance to use a plan that closely matches the
+7. Update the service instance to use a plan that closely matches the
 configuration of the plan that the MAS-brokered instance used by running:
 
     ```
@@ -276,7 +271,7 @@ configuration of the plan that the MAS-brokered instance used by running:
     Update instances to a plan other than `subsume` so that <%= vars.product_short %> can manage them.
 
     <p class="note">
-      <strong> Note:</strong> Changing the plan updates the service instance to
+      <span class="note__title">Note</span> Changing the plan updates the service instance to
       adopt the characteristics of that plan, such as CPU and storage size.
     </p>
 
