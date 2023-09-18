@@ -95,17 +95,15 @@ For information about the the DTU purchasing model, see the
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases">Microsoft documentation</a>.
 
 <p class="note">
-  <strong>Note:</strong> Azure SQL service instances use the vCore model and the Gen5
-  hardware generation unless you override this default using the <code>sku_name</code> parameter.
+  <span class="note__title">Note</span> Azure SQL service instances use the vCore model and the Gen5
+  hardware generation unless you override this default by using the <code>sku_name</code> parameter.
   For more information about the vCore model, see the
   <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
 </p>
 
-<p class="note">
-  <strong>Note:</strong> When updating a service instance, the SKU for the updated
+When updating a service instance, the SKU for the updated
   service instance must remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
   If you update to a different tier, Azure refuses the update request.
-</p>
 
 ### <a id="azure-mssql-parameters"></a> Configuration Parameters
 
@@ -173,7 +171,7 @@ main table {
     <td>
       The Azure region in which to deploy the service instance.
       <p class="note">
-        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
+        <span class="note__title">Note</span> Currently Azure SQL is not available in all regions.
         If you configure a region that is unavailable, <%= vars.product_short %> fails.
       </p>
     </td>
@@ -373,17 +371,15 @@ For information about the the DTU purchasing model, see the
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases">Microsoft documentation</a>.
 
 <p class="note">
-  <strong>Note:</strong> Azure SQL service instances use the vCore model and the Gen5
+  <span class="note__title">Note</span> Azure SQL service instances use the vCore model and the Gen5
   hardware generation unless you override this default using the <code>sku_name</code> parameter.
   For more information about the vCore model, see the
   <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
 </p>
 
-<p class="note">
-  <strong>Note:</strong> When updating a service instance, the SKU for the updated
+When updating a service instance, the SKU for the updated
   service instance must remain in the same tier (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
   If you update to a different tier, Azure refuses the update request.
-</p>
 
 ### <a id="azure-mssql-db-parameters"></a> Configuration Parameters
 
@@ -712,14 +708,14 @@ For information about the the DTU purchasing model, see the
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases">Microsoft documentation</a>.
 
 <p class="note">
-  <strong>Note:</strong> Azure SQL service instances use the vCore model and the Gen5
+  <span class="note__title">Note</span> Azure SQL service instances use the vCore model and the Gen5
   hardware generation unless you override this default using the <code>sku_name</code> parameter.
   For more information about the vCore model, see the
   <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
 </p>
 
 <p class="note">
-  <strong>Note:</strong> When updating a service instance, the SKU for the updated
+  <span class="note__title">Note</span> When updating a service instance, the SKU for the updated
   service instance must remain in the same family (<code>GP_S</code>, <code>GP</code>, or <code>HS</code>).
   <%# Should this say tier or family? GP_S is a tier. Can you only use the tiers listed here? %>
   If you update to a different family, Azure refuses the update request.
@@ -759,7 +755,7 @@ provisioning a csb-azure-mssql-failover-group service:
     <td>
       The Azure region in which to deploy the service instance.
       <p class="note">
-        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
+        <span class="note__title">Note</span> Currently Azure SQL is not available in all regions.
         If you configure a region that is unavailable, <%= vars.product_short %> fails.
       </p>
     </td>
@@ -922,7 +918,7 @@ For information about the the DTU purchasing model, see the
 <a href="https://docs.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases">Microsoft documentation</a>.
 
 <p class="note">
-  <strong>Note:</strong> Azure SQL service instances use the vCore model and the Gen5
+  <span class="note__title">Note</span> Azure SQL service instances use the vCore model and the Gen5
   hardware generation unless you override this default using the <code>sku_name</code> parameter.
   For more information about the vCore model, see the
   <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-vcore?tabs=azure-portal">Microsoft documentation</a>.
@@ -1208,7 +1204,7 @@ For more information about the pricing tiers in Azure Database for PostgreSQL, s
 [Microsoft documentation](https://docs.microsoft.com/en-us/azure/postgresql/concepts-pricing-tiers)
 
 <p class="note">
-  <strong>Note:</strong> The maximum vCores is dependent on the Service Tier.
+  <span class="note__title">Note</span> The maximum vCores is dependent on the Service Tier.
   <code>B_</code> = Basic, <code>GP_</code> = General Purpose, and <code>MO_</code> = Memory Optimized.
   See below for details.
 </p>
@@ -1216,7 +1212,7 @@ For more information about the pricing tiers in Azure Database for PostgreSQL, s
 <%# The note below used to be "Note: the same family (B, GP, or MO.) Otherwise Azure will refuse the update request."
 I copied the new note from above. %>
 <p class="note">
-  <strong>Note:</strong> When updating a service instance, the SKU for the updated
+  <span class="note__title">Note</span> When updating a service instance, the SKU for the updated
   service instance must remain in the same family (<code>B</code>, <code>GP</code>, or <code>MO</code>).
   <%# Should this say tier or family? GP_S is a tier. Can you only use the tiers listed here? %>
   If you update to a different family, Azure refuses the update request.
@@ -1298,7 +1294,7 @@ provisioning a csb-azure-postgresql service:
     <td>
       The Azure region in which to deploy the service instance.
       <p class="note">
-        <strong>Note:</strong> Currently Azure SQL is not available in all regions.
+        <span class="note__title">Note</span> Currently Azure SQL is not available in all regions.
         If you configure a region that is unavailable, <%= vars.product_short %> fails.
       </p>
     </td>
@@ -1385,7 +1381,7 @@ The format for binding credentials for PostgreSQL is as follows:
 ```
 
 <p class="note">
-  <strong>Note:</strong> When a binding or service key is deleted, the underlying PostgreSQL user
+  <span class="note__title">Note</span> When a binding or service key is deleted, the underlying PostgreSQL user
   still exists in the database. To remove the user completely, use the Azure console.
   For more information, see the
   <a href="https://www.postgresql.org/docs/current/sql-dropuser.html">PostgreSQL documentation</a>.
