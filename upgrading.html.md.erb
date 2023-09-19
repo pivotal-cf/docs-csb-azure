@@ -13,7 +13,7 @@ Follow the procedure in this topic if you use:
 + The `csb-azure-mssql-failover-group/small` plan or `csb-azure-mssql/small` plan
 
 <p class="note">
-   <strong>Note:</strong> Skip this topic if you do not use the exact components and versions listed above.
+   <span class="note__title">Note</span> Skip this topic if you do not use the exact components and versions listed above.
 </p>
 
 ## <a id="overview"></a> Overview
@@ -95,7 +95,7 @@ To output a list of instances and GUIDs of the `csb-azure-mssql-failover-group` 
     PLAN_GUID="$(cf curl "/v2/service_plans?q=service_guid:$SERVICE_GUID&q=unique_id:a556d1b4-5825-11ea-adb8-00155d4dfe6c" | jq -r .resources[0].metadata.guid)"
      ```
     <p class="note">
-      <strong>Note:</strong> <code>a556d1b4-5825-11ea-adb8-00155d4dfe6c</code> is always the internal
+      <span class="note__title">Note</span> <code>a556d1b4-5825-11ea-adb8-00155d4dfe6c</code> is always the internal
       identifier for the <code>small</code> plan.
     </p>
 
