@@ -15,7 +15,9 @@ This topic describes the changes in this minor release of <%= vars.product_full 
 
 This release has the following breaking changes:
 
--
+- **The **<% vars.product_full%> tile now requires Jammy Stemcell**:
+  The tile depends now on Jammy Stemcells instead of Xenial. You will need to have a Jammy Stemcell available in Ops Manager.
+  This change also implies Ops Manager needs to be at version v2.10.33 or later.
 
 ### Features
 
@@ -23,17 +25,11 @@ New features and changes in this release:
 
 #### General
 
--
-
 
 ### Resolved issues
 
 This release has the following fixes:
 
-- **Improved stack selection to try with "cflinuxfs3" before using the default value:**
-
-  Previously, in some scenarios, the default value was a Windows stack, which
-  caused the tile installation to fail.
 
 ### Known issues
 
