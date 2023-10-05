@@ -268,3 +268,9 @@ The format for binding credentials made available to the app is as follows:
     "databaseLoginPassword" : "AUTHENTICATION-PASSWORD"
 }
 ```
+
+A binding or service key corresponds to a user in SQL Server.
+By default, users cannot delete when they own a schema.
+
+When a binding or service key is deleted, data owned by the user is re-assigned to a role
+called `binding_user_group` before the user is deleted. This ensures the entity can be deleted.
