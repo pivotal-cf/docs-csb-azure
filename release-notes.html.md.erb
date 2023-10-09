@@ -29,6 +29,11 @@ New features and changes in this release:
 
 This release has the following fixes:
 
+#### Azure SQL (MSSQL) and Azure SQL (MSSQL) Database
+
+- **Fixed failure in unbinding operation - "The database principal owns a schema in the database" error:**
+  From now on, CSB will re-assigns data ownership to the `binding_user_group` role when deleting a
+  service key or a binding.
 
 ### Known issues
 
