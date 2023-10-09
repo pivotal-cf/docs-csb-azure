@@ -5,7 +5,8 @@ owner: Cloud Service Broker
 
 <strong><%= modified_date %></strong>
 
-This topic describes the changes in this minor release of <%= vars.product_full %>.
+This topic describes the changes in this minor release of <%= vars.product_full %>
+(<%= vars.product_short %>).
 
 ##<a id="1-6-0"></a> v1.6.0
 
@@ -16,7 +17,10 @@ This topic describes the changes in this minor release of <%= vars.product_full 
 This release has the following breaking changes:
 
 - **The **<% vars.product_full%> tile now requires Jammy Stemcell**:
-  The tile now depends on Jammy Stemcells instead of Xenial. You must have a Jammy Stemcell available in Tanzu Operations Manager, and Tanzu Operations Manager must be at version v2.10.33 or later.
+
+  The tile now depends on Jammy Stemcells instead of Xenial. You must have a Jammy Stemcell
+  available in Tanzu Operations Manager, and Tanzu Operations Manager must be at version v2.10.33 or
+  later.
 
 ### Features
 
@@ -31,9 +35,10 @@ This release has the following fixes:
 
 #### Azure SQL (MSSQL) and Azure SQL (MSSQL) Database
 
-- **Fixed failure in unbinding operation - "The database principal owns a schema in the database" error:**
-  From now on, CSB will re-assigns data ownership to the `binding_user_group` role when deleting a
-  service key or a binding.
+- **Fixed failure in unbinding operation `The database principal owns a schema in the database` error:**
+
+  From now on, <%= vars.product_short %> re-assigns data ownership to the `binding_user_group` role
+  before a service key or a binding is deleted.
 
 ### Known issues
 
