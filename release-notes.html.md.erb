@@ -28,13 +28,6 @@ This release has the following breaking changes:
   service instances cause the installation to stop. Your instances use the latest released features
   that include the latest security patches.
 
-### Features
-
-New features and changes in this release:
-
-#### General
-
-
 ### Resolved issues
 
 This release has the following fixes:
@@ -46,10 +39,11 @@ This release has the following fixes:
   From now on, <%= vars.product_short %> re-assigns data ownership to the `binding_user_group` role
   when a service key or a binding is deleted.
 
-- **Fixed incorrect buildpack stack association when the stack cflinuxfs4 is not available in your deployment:**
+- **Fixed incorrect buildpack stack association when the stack cflinuxfs4 is not available:**
 
-  If a deployment does not have the `cflinuxfs4` stack available, but the `cflinuxfs3` stack is available,
-  the Tile deploys the application by selecting the `cflinuxfs3` stack and creating the correct association.
+  If your deployment does not have the `cflinuxfs4` stack available, but has the `cflinuxfs3` stack
+  available, the tile now deploys the application by selecting the `cflinuxfs3` stack and creates 
+  the correct association.
 
 ### Known issues
 
