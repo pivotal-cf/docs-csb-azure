@@ -5,7 +5,7 @@ owner: Cloud Service Broker
 
 Would you like to upgrade <%= vars.product_full %>? This topic tells you about the
 [upgrade procedure](#procedure), [upgrading service instances](#upgrade-instances), and specific
-details about [upgrading to v1.6](#upgrading-specifics).
+details about [upgrading to v1.7](#upgrading-specifics).
 
 ## <a id="procedure"></a> Upgrade procedure
 
@@ -23,7 +23,7 @@ To upgrade <%= vars.product_short %>:
 3. Stage and configure the tile by following the instructions in
    [Installing with Azure](installing-with-azure.html.md.erb).
 
-4. Make all the changes described in [Upgrading to v1.6](#upgrading-specifics).
+4. Make all the changes described in [Upgrading to v1.7](#upgrading-specifics).
 
 5. Verify that your configuration complies with the
    [Important notes about upgrading service instances](#upgrade-notes) section later in this topic,
@@ -77,7 +77,7 @@ Before you start upgrading service instances, see the following notes:
   If you delete custom plans before upgrading all instances, instances from these plans are not
   upgraded. These instances become unmanageable by the broker. Delete plans after upgrading all
   instances, or see [Release Notes for Cloud Service Broker for Azure](release-notes.html.md.erb)
-  and [Upgrading to v1.6](#upgrading-specifics) to prevent conflicting upgrades.
+  and [Upgrading to v1.7](#upgrading-specifics) to prevent conflicting upgrades.
 
 - **Only upgrade the tile after all service instances are up to date:**
 
@@ -128,4 +128,4 @@ To use the cf CLI plug-in to upgrade instances:
    $ cf upgrade-all-services BROKER-NAME
    ```
 
-## <a id="upgrading-specifics"></a> Upgrade to v1.6
+## <a id="upgrading-specifics"></a> Upgrade to v1.7
