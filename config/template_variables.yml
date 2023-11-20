@@ -29,14 +29,14 @@ template_variables:
 
   ops_manager: Ops Manager
 
-  product_url: https://network.tanzu.vmware.com/
-  product_link: <div class="header-item"><a href="https://tanzu.vmware.com/tanzu">Back to Product Page</a></div>
+  product_url: https://docs.vmware.com/en/Cloud-Service-Broker-for-VMware-Tanzu/index.html
+  product_link: <div class="header-item"><a href="https://tanzu.vmware.com/products">Back to Product Page</a></div>
 
   service_name: Cloud Service Broker for Azure
   service_name_article: the Cloud Service Broker for Azure
   service_name_article_full: Cloud Service Broker for Azure service
   support_link: <a href="http://tanzu.vmware.com/support" target="_blank">Support</a>
-  support_call_to_action: <a href="http://tanzu.vmware.com/support" target="_blank">Need Support?</a>
+  support_call_to_action: <a href="https://tanzu.vmware.com/support/contact" target="_blank">Need Support?</a>
   support_url: http://tanzu.vmware.com/support
 
 
