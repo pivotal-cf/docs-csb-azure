@@ -5,7 +5,33 @@ owner: Cloud Service Broker
 
 This topic describes how to upgrade <%= vars.product_full %>.
 
-## <a id="upgrade-to-1-3"></a> Upgrading to v1.3
+## Pre-Upgrade procedure
+
+<p class="note important">
+<span class="note__title">Before upgrading, it is crucial to perform the checks suggested in this section.</span>
+  Failure to do so could cause the upgrade process to fail and leave the broker unable to manage your instances.
+</p>
+
+* **Check if services are up-to-date**
+   Execute the command:
+
+   ```shell
+   cf upgrade-all-services BROKER-NAME -check-up-to-date
+   ```
+   This command checks whether all services provided by the specified broker are up-to-date.
+   An instance is considered not up-to-date if it is pending upgrade, or if it is an orphaned service instance.
+
+* **Check for orphaned service instances**
+   For greater granularity, you can specifically check only orphan service instances by running this command:
+
+   ```shell
+   cf upgrade-all-services BROKER-NAME -check-deactivated-plans
+   ```
+   This checks for any service instances still using plans that have been deactivated.
+   More details can be found in the [Managing orphaned service instances documentation](./managing_orphaned_service_instances.html.md.erb).
+
+
+## <a id="procedure"></a> Upgrade procedure
 
 <%= vars.product_short %> uses Terraform internally to manage the deployment of service instances.
 Terraform was updated from v0.12 to v1.1.
@@ -50,8 +76,11 @@ To upgrade service instances using the Upgrade All Services Plug-in:
     cf upgrade-all-services BROKER-NAME -dry-run
     ```
 
-    Where `BROKER-NAME` is the name of the <%= vars.product_short %> broker you can detect by running
-    `cf service-brokers`.
+You can see whether there are instances with a pending upgrade by using the CLI plug-in.
+For more information, see [ensuring all instances are up to date with the CLI plug-in](#checking-cli-plugin).
+
+If you find any instances that are pending upgrades, follow the upgrading instructions for your
+current version.
 
 1. Upgrade all instances that have an upgrade pending by running:
 
@@ -86,6 +115,139 @@ does not matter if a more recent version of <%= vars.product_short %> is current
 
 ### <a id="csb-azure-mssql-db-fog"></a> Azure SQL Failover Group on Existing Server Pairs (csb-azure-mssql-db-failover-group)
 
-If a `csb-azure-mssql-db-failover-group` service instance was created with v1.1.6 or earlier, upgrading fails.
-The specific version that created the `csb-azure-mssql-db-failover-group` instance matters, and it
-does not matter if a more recent version of <%= vars.product_short %> is currently installed.
+1. Install the [cf CLI UpgradeAllServices plug-in on Cloud Foundry](https://plugins.cloudfoundry.org/#UpgradeAllServices).
+1. Follow the instructions in the **Usage** section of the `README` in the
+   [upgrade-all-services-cli-plugin](https://github.com/cloudfoundry/upgrade-all-services-cli-plugin#usage)
+   GitHub repository to perform a `check-up-to-date` command.
+
+   `check-up-to-date` example:
+
+   ```shell
+   cf upgrade-all-services BROKER-NAME -check-up-to-date
+   ```
+
+   These command provide a list, from enabled plans, of instances that are pending upgrades, and a list of
+   orphaned service instances that belong to deactivated plans.
+   Manage all the instances listed before attempting a tile upgrade.
+
+### <a id="upgrading-cli-plugin"></a> Upgrade instances through the CLI plug-in
+
+To run the cf CLI plug-in:
+
+1. Install the [cf CLI UpgradeAllServices plug-in on Cloud Foundry](https://plugins.cloudfoundry.org/#UpgradeAllServices).
+1. To run the upgrade, follow the instructions in the **Usage** section of the `README` in the
+   [upgrade-all-services-cli-plugin](https://github.com/cloudfoundry/upgrade-all-services-cli-plugin#usage)
+   GitHub repository.
+
+   For example:
+
+   ```shell
+   cf upgrade-all-services BROKER-NAME
+   ```
+
+Run the CLI plug-in with the `-dry-run` flag before applying the service instance upgrade to find
+out which instances are pending upgrade.
+
+## <a id="upgrading-specifics"></a> Upgrade to v1.4
+
+### <a id="redis"></a> Upgrading to Azure Cache for Redis v6
+
+New Redis v6 is now available through  <%= vars.product_short %>.
+
+>**Note**
+>All brokerpak-provided plans set the Redis version to v4 to maintain compatibility with the instances already created.
+  These plans are deprecated and removed from the brokerpak in future releases in favor of custom-defined plans in the tile.
+  VMware recommends that you update all instances to use custom-defined plans instead.
+
+To update to Redis v6:
+
+1. Before updating the Redis version, read the
+[Microsoft Azure upgrade recommendations](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-upgrade)
+and understand any possible consequences to the service.
+
+1. Identify the instance that you want to update to use Redis v6.
+
+2. Identify the plan used to create the instance by running:
+
+   ```console
+   cf service INSTANCE-NAME
+   ```
+
+   Where `INSTANCE-NAME` is the name of the service to be updated.
+
+3. Find the plan definition of the plan you identified.
+   If it is a custom plan, you can find its definition in the tile configuration.
+   If it is a brokerpak-provided plan, you can find the corresponding properties
+   [in the brokerpak definition](https://github.com/cloudfoundry/csb-brokerpak-azure/blob/6f4a2879ea330fdedbbed896259f9f1942f2ff4b/azure-redis.yml#L26-L102)</a>.
+
+4. If the plan is a custom plan, you can update the instance to use Redis v6 by running:
+
+   ```console
+   cf update-service INSTANCE-NAME -c '{"redis_version": "6"}'
+   ```
+
+   Where `INSTANCE-NAME` is the name of the service to be updated.
+
+5. If the plan is a brokerpak-provided one, you can either define a plan with or without a specified
+Redis version. Choose one of the following options:
+
+    * **Option 1:** Define the custom-created plan with a specified Redis version.
+
+        1. Define a custom plan that specifies the Redis version. For example:
+
+            ```json
+            {
+              "name": "custom-plan-v6",
+              "id": "ba3d28f0-6b17-11ed-91ca-1f5af50ef86f",
+              "description": "Custom plan",
+              "sku_name": "Basic",
+              "family": "C",
+              "capacity": 1,
+              "tls_min_version": "1.2",
+              "firewall_rules": [],
+              "redis_version": "6"
+            }
+            ```
+
+            >**Important**
+            >All other service properties must match
+              the plan the instance is already on.
+              If you set the `redis_version` property in the plan, users cannot change
+              that property during create or update instance operations.
+
+        2. Update the instance to the new plan by running:
+
+           ```console
+           cf update-service INSTANCE-NAME -p NEW-PLAN-NAME
+           ```
+
+           Where `NEW-PLAN-NAME` is the name of the plan created in previous step.
+
+    * **Option 2:** Define a custom-created plan without a specified Redis version.
+
+        1. Define a custom plan that does not specify the Redis version. For example:
+
+            ```json
+            {
+               "name": "custom-plan-v6",
+               "id": "ba3d28f0-6b17-11ed-91ca-1f5af50ef86f",
+               "description": "Custom plan",
+               "sku_name": "Basic",
+               "family": "C",
+               "capacity": 1,
+               "tls_min_version": "1.2",
+               "firewall_rules": []
+            }
+            ```
+
+            >**Important**
+            >All service properties, other than `name`, `id`, and `description`, must match the plan the instance is already on.
+
+        2. Update the instance to the new plan by running:
+
+            ```console
+            cf update-service INSTANCE-NAME -p NEW-PLAN-NAME -c '{"redis_version": "6"}'
+            ```
+
+            Where `NEW-PLAN-NAME` is the name of the plan created in previous
+            step.
