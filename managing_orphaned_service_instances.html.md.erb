@@ -189,13 +189,13 @@ Tanzu Cloud Service Broker for Azure and Cloud Foundry environments. The key tak
   the `UpgradeAllServices` plug-in with the `-check-deactivated-plans` flag.
 - **Root causes**: Instances become orphaned primarily due to plan removals, changes in custom plans, or by altering plan
   IDs.
-- **Effective management**: Involves regular health checks, database purging, and avoiding outdated methods like
+- **Effective management**: Involves regular checks, database purge if necessary, and avoiding outdated methods like
   recreating plans to rejoin instances to the broker.
 
-### Migration and resolution strategies
+### Resolution strategies
 
-- **Migrating orphaned instances**: Emphasize migrating data to new instances within the broker or moving to
-  user-provided instances, with detailed guidelines provided in the CSB documentation.
+- **User-provided instances**: Emphasize moving to user-provided instances or migrating data to new instances
+  within the broker.
 - **Avoiding complications**: Ignoring orphaned instances, especially during CSB updates, can lead to an unhealthy
   environment and complicated upgrade processes.
 
