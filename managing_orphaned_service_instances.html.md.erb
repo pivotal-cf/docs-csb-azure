@@ -5,7 +5,7 @@ owner: Cloud Service Broker
 
 <strong><%= modified_date %></strong>
 
-## Introduction
+## <a id="intro"></a> Introduction
 
 This topic is a comprehensive guide for using Tanzu Cloud Service Broker
 for Azure if you have service instances that belong to deactivated plans.
@@ -21,7 +21,7 @@ It will:
   steps to prevent potential service disruptions or security vulnerabilities.
 - Guide you through checking for orphaned service instances by using specific command-line tools.
 
-## Essential commands for orphaned instance management
+## <a id="commands-for-orph-inst-mgmt"></a> Essential commands for orphaned instance management
 
 This section provides a concise summary of the commands and steps required for detecting orphaned service
 instances in the Tanzu Cloud Service Broker for Azure (CSB) and Cloud Foundry environments.
@@ -46,12 +46,12 @@ If there are any service instances belonging to deactivated plans, it is essenti
 See <a href="#orphan-strategies">strategies for handling orphaned instances</a> for more information.
 
 
-## Section 1: Overview of orphaned service instances
+## <a id="overv-orph-inst"></a> Section 1: Overview of orphaned service instances
 
 In the context of the CSB for Azure and Cloud Foundry environments, it's essential to understand what constitutes orphaned
 service instances, why they occur, and the best practices for managing them.
 
-### What is an orphaned service instance?
+### <a id="what-is-orph-serv-inst"></a> What is an orphaned service instance?
 
 - **Definition**: An orphaned service instance refers to a service instance that Cloud Foundry recognizes as part of the CSB, but
   for which the CSB lacks the necessary information to manage effectively.
@@ -63,7 +63,7 @@ service instances, why they occur, and the best practices for managing them.
     - **Security**: Inability to manage these instances can pose significant security risks, especially in situations
       requiring immediate response.
 
-### Why do orphaned instances exist?
+### <a id="why-orph-inst"></a> Why do orphaned instances exist?
 
 - **Service removal**: Instances can become orphaned the service to which they belong is removed, either for
   strategic reasons or other considerations.
@@ -75,19 +75,19 @@ service instances, why they occur, and the best practices for managing them.
   different, resulting in orphaned instances. This is because CSB views the modified plan ID as a new resource,
   disconnected from its original configuration and management context.
 
-### Recommended actions for orphaned instances
+### <a id="recommended-actions"></a> Recommended actions for orphaned instances
 
 When the <%= vars.product_short %> is upgraded or configuration changes are made to plans, check
 for orphaned service instances. For more information, see <a href="#detecting-orphans">detecting orphaned service instances</a>.
 
-## Section 2: Identifying and managing orphaned service instances
+## <a id="identifying-managing"></a> Section 2: Identifying and managing orphaned service instances
 
 This section provides guidance on identifying service instances that have become orphaned in CSB for Azure and Cloud Foundry
 environments.
 Addressing these instances is crucial for maintaining security, manageability, upgradeability, and
 agility.
 
-### Identifying orphaned service instances
+### <a id="identifying"></a> Identifying orphaned service instances
 
 - **Using CLI tools**: Utilize Cloud Foundry CLI tools to identify orphaned instances.
     - **CLI Cloud Foundry `upgrade-all-services` plug-in - Flag `-check-deactivated-plans`**: This specific flag can be used to
@@ -125,7 +125,7 @@ agility.
 Section 3 outlines the steps and strategies necessary for effectively managing and resolving issues
 related to orphaned service instances in CSB for Azure and Cloud Foundry environments.
 
-### Options for addressing newly orphaned instances
+### <a id="options-new"></a> Options for addressing newly orphaned instances
 
 If an orphaned service instance was created with the current version of the <%= vars.product_short %>, you can resolve this by doing one of the following:
 
@@ -146,7 +146,7 @@ If an orphaned service instance was created with the current version of the <%= 
    the tile. The plan must have the same name, ID, and properties as before.
    See <a href="./installing-with-azure.html#services">configure services with <%= vars.product_short %></a> for more information.
 
-### Options for addressing historic orphaned instances
+### <a id="options-historic"></a> Options for addressing historic orphaned instances
 
 If an orphaned service instance was created with a previous version of the <%= vars.product_short %>, then it is not possible to
 resume management of the service instance with a later version of the <%= vars.product_short %>. In such cases, your options include:
@@ -166,13 +166,13 @@ resume management of the service instance with a later version of the <%= vars.p
    - Log into the <%= vars.product_short %> app with `cf ssh <app name>` and then run the command
      `app/cloud-service-broker purge <service instance id>`. This removes data about the service instance and all binding from the <%= vars.product_short %> database.
 
-### Implications of ignoring orphaned instances
+### <a id="implications"></a> Implications of ignoring orphaned instances
 
 - Neglecting orphaned instances during CSB updates can lead to an unhealthy environment.
 - Upgrade instructions for custom plans related to orphaned instances can become ineffective, necessitating manual
   migration.
 
-## Summary
+## <a id="summary"></a> Summary
 
 We have addressed the crucial aspects of managing orphaned service instances within the
 Tanzu Cloud Service Broker for Azure and Cloud Foundry environments. The key takeaways include:
