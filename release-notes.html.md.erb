@@ -42,6 +42,12 @@ all service instances. When you upgrade, ensure that you follow the [Upgrade pro
   inspected for detailed information on upgrade failures.
   For more information on the upgrade process, see [Upgrading Cloud Service Broker for Azure](upgrading.html).
 
+- **Tile installation now does not install if it finds any outdated [non-orphaned instances](managing_orphaned_service_instances.html.md.erb):**
+
+  This measure improves the overall stability and maintainability of the broker and any running instances.
+  It protects operators from accidentally skipping mandatory intermediate versions, which could introduce unexpected issues.
+  Despite this measure, VMware expects operators to [harness Upgrade Planner to view the supported upgrade path](https://upgrade-planner.pivotal.io).
+
 ### Resolved issues
 
 This release has the following fixes:
