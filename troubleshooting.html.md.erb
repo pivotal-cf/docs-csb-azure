@@ -1,0 +1,71 @@
+---
+title: Troubleshooting Cloud Service Broker for Azure
+owner: Cloud Service Broker
+---
+
+<strong><%= modified_date %></strong>
+
+This topic gives you troubleshooting information for <%= vars.product_full %>.
+
+## <a id="troubleshoot-errors"></a> Troubleshoot errors
+
+Start here if you have a specific error or error messages.
+
+### <a id="cosmos-mongo-errors"></a> Azure Cosmos DB Mongo errors
+
+The following errors can occur in Azure Cosmos DB Mongo:
+
+- [Invalid Parameter Group](#cosmos-mongo-field-unique-invalid-for-id)
+
+<div id="cosmos-mongo-field-unique-invalid-for-id" class="wrap-table-overflow">
+    <table class="table">
+        <tbody>
+             <tr>
+                <td><strong>Error</strong></td>
+                <td>The field 'unique' is not valid for _id index specification</td>
+             </tr>
+             <tr>
+                <td><strong>Operation</strong></td>
+                <td>create or update</td>
+             </tr>
+             <tr>
+                <td><strong>Symptom</strong></td>
+                <td>
+                  Errors containing:
+                  <ul>
+                  <li><code>The field 'unique' is not valid for _id index specification</code></li>
+                  </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Cause</strong></td>
+                <td>
+                  Newer versions of Azure Cosmos DB for MongoDB automatically indexes the <code>_id</code> field and the <code>shard_key</code>.
+                  See [Azure Cosmos DB Indexing for MongoDB server version 3.6 and higher](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/indexing#indexing-for-mongodb-server-version-36-and-higher)
+
+                  Cloud Service Broker for Azure did this transparently for the user too.
+                  So now, Azure Cosmos DB for MongoDB errors when trying to "duplicate" any of these indexes.
+
+                  To maintain backward compatibility, Cloud Service Broker for Azure will keep indexing these fields by default
+
+                  However, we have exposed two new fields to allow bypassing this issue and also to improve the UX of this service:
+                  - A new property <code>indexes</code> can be added to your plans or passed at service creation time.  
+                    It expects a comma-separated list of non-unique indexes you want to have in your collection.
+                  - A new property <code>unique_indexes</code> can be added to your plans or passed at service creation time.
+                    It expects a comma-separated list of unique indexes you want to have in your collection.
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Solution</strong></td>
+                <td>
+                    <ul>
+                    <li>(Required) Set <code>indexes: "_id"</code>. Add any additional indexes you want separated by commas.</li>
+                    <li>(Required) Set <code>unique_indexes: ""</code>. Add any additional unique indexes you want separated by commas but do not include <code>_id</code> in this list.</li>
+                    <li>(Optional) If you are not setting a custom <code>shard_key</code> you might need to explicitly set it to either <code>shard_key: "_id"</code> or <code>shard_key: null</code>.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
