@@ -40,9 +40,9 @@ This release has the following fixes:
   Newer versions of Azure Cosmos DB for MongoDB automatically indexes the `_id` field and the `shard_key`.  
   See [Azure Cosmos DB Indexing for MongoDB server version 3.6 and higher](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/indexing#indexing-for-mongodb-server-version-36-and-higher)
 
-  Cloud Service Broker for Azure did this transparently for the user too.  
-  So now, Azure Cosmos DB for MongoDB errors when trying to "duplicate" any of these indexes.  
-  To maintain backward compatibility, Cloud Service Broker for Azure will keep indexing these fields by default
+  Cloud Service Broker for Azure did this transparently for the user. Now, Azure
+  Cosmos DB for MongoDB errors when trying to duplicate any of these indexes.  
+  To maintain backward compatibility, Cloud Service Broker for Azure continues to index these fields by default.
 
   However, we have exposed two new fields to allow bypassing this issue and also to improve the UX of this service:
   - A new property `indexes` can be added to your plans or passed at service creation time.  
