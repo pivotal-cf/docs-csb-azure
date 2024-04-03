@@ -10,17 +10,17 @@ This documentation tells you about <%= vars.product_full %>.
 
 ## <a id='overview'></a> Overview
 
-The <%= vars.product_full %> enables platform operators to easily expose services to their developers
-from any public cloud with a Terraform provider.
+The <%= vars.product_full %> enables platform operators to easily expose services
+to their developers from Azure with an Infrastructure as Code (IaC) approach.
 <%= vars.product_short %> is thoroughly extensible, and can expose new services or public clouds
-through the use of custom brokerpaks.
+through the use of custom brokerpaks that rely on OpenTofu providers.
 
 ## <a id='features'></a> Key features
 
 <%= vars.product_short %> includes the following key features:
 
 - **Easily extensible and maintainable:** <%= vars.product_short %> uses brokerpaks to expose
-services. If your target public cloud has a Terraform provider, you can provision services
+services. If your target public cloud has a OpenTofu provider, you can provision services
 through a common interface using standard Cloud Foundry CLI (cf CLI) commands.
 For more information about brokerpaks, see
 [Brokerpak Introduction](https://github.com/pivotal/cloud-service-broker/blob/master/docs/brokerpak-intro.md)
@@ -33,10 +33,6 @@ with your usage of cloud services.
 everyone who uses <%= vars.product_short %> and vice versa. For more information, see the
 [Brokerpak Introduction](https://github.com/pivotal/cloud-service-broker/blob/master/docs/brokerpak-intro.md)
 in GitHub.
-- **Service migration through Terraform:** Easily migrate existing services through the import
-feature in Terraform. For more information, see the
-[Terraform documentation](https://www.terraform.io/docs/import/index.html).
-
 
 ## <a id="snapshot"></a> Product snapshot
 
