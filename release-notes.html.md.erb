@@ -1,5 +1,5 @@
 ---
-title: Release notes for Cloud Service Broker for Azure
+title: Release Notes for Cloud Service Broker for Azure
 owner: Cloud Service Broker
 ---
 
@@ -10,9 +10,9 @@ This topic describes the changes in this minor release of <%= vars.product_full 
 
 ##<a id="1-8-0"></a> v1.8.0
 
-**Release date:** mmmm dd, 2024
+**Release Date:** April 12, 2024
 
-### Breaking changes
+### Breaking Changes
 
 This release has no breaking changes.
 
@@ -32,16 +32,14 @@ New features and changes in this release:
   the [Upgrade procedure](upgrading.html.md) to avoid any issues.
 
 
-### Resolved issues
+### Resolved Issues
 
 This release has the following fixes:
-
-
 
 - **The field 'unique' is not valid for _id index specification**
 
   Newer versions of Azure Cosmos DB for MongoDB automatically indexes the `_id` field and the `shard_key`.  
-  See [Azure Cosmos DB Indexing for MongoDB server version 3.6 and higher](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/indexing#indexing-for-mongodb-server-version-36-and-higher)
+  See [Azure Cosmos DB Indexing for MongoDB server version 3.6 and higher](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/indexing#indexing-for-mongodb-server-version-36-and-higher).
 
   Cloud Service Broker for Azure did this transparently for the user. Now, Azure
   Cosmos DB for MongoDB errors when trying to duplicate any of these indexes.  
@@ -57,12 +55,11 @@ This release has the following fixes:
   You can now control memory and disk quota for the broker app by setting the
   preferred value in the broker configuration. By default, the quota is set to
   2G for both. If you have previously made changes to these values outside of
-  the tile, you should propagate those changes in the broker config. The values
-  will then persist through subsequent tile updates.
+  the tile, you should propagate those changes in the broker config. The values then persist through subsequent tile updates.
 
 - **Recover In-Progress Operations on Broker Restart**
   Prior to this update, any operation (such as provisioning, updating, or deprovisioning services) that was in progress
-  at the time of broker termination would remain indefinitely marked as "in progress".
+  at the time of broker termination remained indefinitely marked as "in progress".
   This state persisted even after the broker was restarted, making it challenging to resolve without manual
   intervention. Now the broker automatically detects these operations and marks them as "failed."
   This significant improvement allows for the cleanup of service instances affected by previously interrupted
@@ -74,11 +71,11 @@ This release has the following fixes:
   needed to be deleted from Cloud Foundry using `cf purge-service-instance`. Due to feedback that this process
   caused unnecessary burden on teams, it is now possible to delete such instances with `cf delete-service` instead.
 
-### Known issues
+### Known Issues
 
 There are no known issues in this release.
 
-## <a id="view"></a> View release notes for another version
+## <a id="view"></a> View Release Notes for another Version
 
 To view the release notes for another product version, select the version from
 the drop-down menu at the top of this page.
