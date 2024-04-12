@@ -8,9 +8,9 @@ owner: Cloud Service Broker
 This topic describes the changes in this minor release of <%= vars.product_full %>
 (<%= vars.product_short %>).
 
-##<a id="1-8-0"></a> v1.8.0
+##<a id="1-8-0"></a> v1.9.0
 
-**Release Date:** April 12, 2024
+**Release Date:** xxxx xx, 2024
 
 ### Breaking Changes
 
@@ -20,60 +20,20 @@ This release has no breaking changes.
 
 New features and changes in this release:
 
-#### General
+####
 
-##### OpenTofu for CSB Infrastructure Management
-
-- **Transition from Terraform to OpenTofu:**
-  Transition from Terraform MPL v2 version 1.5.7 to OpenTofu 1.6.2 for CSB infrastructure management.
-  OpenTofu's compatibility with Terraform's latest MPL v2 licensed version promises seamless infrastructure provisioning
-  and management enhancements. The infrastructure as code (IaC) tooling version used to apply changes is changed from
-  Terraform v1.4.4 to OpenTofu v1.6.2. You must upgrade all service instances. When you upgrade, ensure that you follow
-  the [Upgrade procedure](upgrading.html.md) to avoid any issues.
 
 
 ### Resolved Issues
 
 This release has the following fixes:
 
-- **The field 'unique' is not valid for _id index specification**
+- 
 
-  Newer versions of Azure Cosmos DB for MongoDB automatically indexes the `_id` field and the `shard_key`.  
-  See [Azure Cosmos DB Indexing for MongoDB server version 3.6 and higher](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/indexing#indexing-for-mongodb-server-version-36-and-higher).
-
-  Cloud Service Broker for Azure did this transparently for the user. Now, Azure
-  Cosmos DB for MongoDB errors when trying to duplicate any of these indexes.  
-  To maintain backward compatibility, Cloud Service Broker for Azure continues to index these fields by default.
-
-  However, we have exposed two new fields to allow bypassing this issue and also to improve the UX of this service:
-  - A new property `indexes` can be added to your plans or passed at service creation time.  
-    It expects a comma-separated list of non-unique indexes you want to have in your collection.
-  - A new property `unique_indexes` can be added to your plans or passed at service creation time.  
-    It expects a comma-separated list of unique indexes you want to have in your collection.
-
-- **Broker app memory and disk limitations can now be managed in the tile:**
-  You can now control memory and disk quota for the broker app by setting the
-  preferred value in the broker configuration. By default, the quota is set to
-  2G for both. If you have previously made changes to these values outside of
-  the tile, you should propagate those changes in the broker config. The values then persist through subsequent tile updates.
-
-- **Recover In-Progress Operations on Broker Restart**
-  Prior to this update, any operation (such as provisioning, updating, or deprovisioning services) that was in progress
-  at the time of broker termination remained indefinitely marked as "in progress".
-  This state persisted even after the broker was restarted, making it challenging to resolve without manual
-  intervention. Now the broker automatically detects these operations and marks them as "failed."
-  This significant improvement allows for the cleanup of service instances affected by previously interrupted
-  operations. This can be achieved by executing the `cf delete-service` command, or it may require the intervention of a
-  CloudFoundry administrator to execute `cf purge-service-instance`.
-
-- **It is now possible to delete instances that failed creation due to input parameter validation errors:**
-  In previous releases instances that failed creation due to input parameter validation errors
-  needed to be deleted from Cloud Foundry using `cf purge-service-instance`. Due to feedback that this process
-  caused unnecessary burden on teams, it is now possible to delete such instances with `cf delete-service` instead.
 
 ### Known Issues
 
-There are no known issues in this release.
+
 
 ## <a id="view"></a> View Release Notes for another Version
 
