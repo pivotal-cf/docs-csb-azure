@@ -1,6 +1,7 @@
 *   [Cloud Service Broker for Azure](../index.html)
 *   [Release Notes](../release-notes.html)
 *   [Installing and Configuring](../installing-with-azure.html)
+  *   [Custom plans](../custom-plans.html.md.erb)
 *   [Upgrading](../upgrading.html)
 *   [Service Plan Reference](../reference/index.html)
     *   [Azure SQL (MSSQL)](../reference/azure-mssql.html)
