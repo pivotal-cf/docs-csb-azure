@@ -1,0 +1,68 @@
+## Cloud Service Broker for Azure: Leveraging Custom Plans for Enhanced Service Configuration
+
+### Introduction
+
+The <%= vars.product_full %> employs a "brokerpak" to facilitate the provisioning of services
+on Azure. While this system includes several built-in plans that provide a fundamental configuration framework, these
+pre-configured plans often represent a generalized approach. This document emphasizes the benefits of creating and
+utilizing custom plans to meet specific organizational needs, enhancing both functionality and operational efficiency.
+
+### Understanding Built-in Plans
+
+Built-in plans within the <%= vars.product_full %> serve as a starting point for creating services. These plans
+offer an **opinionated** baseline configuration that might not align perfectly with your use cases. Designed with simplicity
+and educational purposes in mind, they allow you to quickly set up and test services but are often not sufficient for
+tailored application requirements due to their generalized nature.
+
+#### Limitations of Built-in Plans
+
+- **Generic Configuration**: Built-in plans are designed to cover basic use cases, lacking the flexibility needed for
+  more specific requirements.
+- **Fixed Parameters**: These plans come with pre-set configurations that might not match your specific needs.
+
+### The Advantages of Custom Plans
+
+Custom plans are essential if you are seeking to tailor services to your precise requirements. By configuring custom
+plans, you can ensure that the service instances created via the <%= vars.product_full %> fully align with
+your operational needs and constraints.
+
+#### Benefits of Custom Plans
+
+- **Tailored Service Properties**: Customize parameters to match exact business requirements.
+- **Increased Flexibility**: Adjust configurations as requirements evolve over time without being constrained by the
+  limitations of the built-in plans.
+
+### Configuring Custom Plans
+
+To effectively leverage the capabilities of the <%= vars.product_full %>, we advise to create and manage
+custom plans. These plans are configurable through the tile, providing a user-friendly method to
+define and adjust service characteristics.
+
+#### Steps to Configure Custom Plans
+
+1. **Plan Creation**: Define new custom plans within the tile, specifying desired configurations and parameters.
+2. **Service Testing**: Deploy a test service instance using the new plan and verify configurations directly in the
+   Azure console.
+3. **Documentation**: Refer to the detailed guide on configuring services with the <%= vars.product_full %>
+   available at [Configure Services with Cloud Service Broker for Azure](./installing-with-azure.html.md.erb#services).
+
+### Managing Plan Upgrades and Deletions
+
+When transitioning between plans or upgrading services, it is crucial to manage the lifecycle of custom plans carefully
+to avoid service disruption.
+
+#### Guidelines for Plan Management
+
+- **Upgrade Considerations**: Before upgrading, review and ensure that the configurations of the existing plans are
+  reflected in the new setup.
+- **Safe Deletions**: Delete custom plans only after all associated service instances have been upgraded to avoid
+  instances becoming unmanageable by the broker.
+
+For comprehensive upgrade steps and additional considerations,
+see [Upgrading Cloud Service Broker for Azure](./upgrading.html.md.erb).
+
+### Conclusion
+
+While built-in plans provide a quick start for users new to the <%= vars.product_full %>, custom plans offer the
+necessary flexibility and specificity for a more tailored approach. By configuring custom plans, you can
+achieve optimal alignment with your operational requirements and maximize the benefits of Azure services.
