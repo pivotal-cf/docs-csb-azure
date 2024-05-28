@@ -1,0 +1,230 @@
+---
+title: Azure PostgreSQL Flexible Server Reference
+owner: Cloud Service Broker
+---
+
+<strong><%= modified_date %></strong>
+
+This topic gives you reference information about the Azure PostgreSQL flexible server service (csb-azure-postgresql-flexible-server).
+It details the plans, configuration parameters, and binding credentials.
+
+For more information about Azure PostgreSQL, see the [Microsoft documentation](https://learn.microsoft.com/en-gb/azure/postgresql/).
+
+## <a id="plans-config"></a> Plan Configuration Parameters
+
+When configuring <%= vars.product_short %> you can add additional plans.
+For how to configure plans, see <a href="../installing-with-azure.html#services">Configure Services with Cloud Service Broker for Azure</a>.
+
+The following table lists parameters which can only be configured for additional plans:
+
+| Parameter name            | Description                                                                                                              | Default | Required |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------|---------|----------|
+| `name`                    | The plan name.                                                                                                           | _n/a_   | Yes      |
+| `id`                      | A unique GUID.                                                                                                           | _n/a_   | Yes      |
+| `description`             | Description of the new plan.                                                                                             | _n/a_   | Yes      |
+| `free`                    | When false, service instances of this service plan have a cost.                                                          | true    | No       |
+| `bindable`                | Specifies whether service instances of the service plan can bind to applications.                                        | true    | No       |
+| `plan_updateable`         | Whether the plan supports upgrading, downgrading, or sidegrading to another version.                                     | true    | No       |
+| `metadata.displayName`    | Name to use when displaying the plan in the Marketplace.                                                                 | _n/a_   | No       |
+| `metadata.bullets`        | List of bullet points to display in Apps Manager.                                                                        | _n/a_   | No       |
+
+You can also add any of the configuration parameters listed in the [Configuration Parameters](#parameters) section
+to your plan.
+The following properties are useful to set in a plan: `postgres_version`, `storage_gb`, `sku`.
+
+<p class="note">
+  <span class="note__title">Note</span> If you set a parameter at plan level, developers cannot
+  change the value when creating or updating service instances.
+</p>
+
+## <a id="parameters"></a> Configuration Parameters
+
+You can provision a service by running:
+
+```bash
+cf create-service csb-azure-postgresql-flexible-server PLAN-NAME SERVICE-INSTANCE-NAME -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+You can update the plan or configuration parameters for a service instance by running:
+
+```bash
+cf update-service SERVICE-INSTANCE-NAME [-p NEW-PLAN] -c '{"PARAMETER-NAME": "PARAMETER-VALUE"}'
+```
+
+The following table lists the parameters that you can configure, by using the `-c` flag, when
+provisioning or updating a `csb-azure-postgresql-flexible-server` service.
+The Operation column displays whether a parameter is supported for both provision and update, or for
+provision only:
+
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Parameter Name</th>
+      <th width="10%">Type</th>
+      <th width="40%">Description</th>
+      <th width="20%">Default</th>
+      <th width="10%">Operation</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>instance_name</code></td>
+    <td>string</td>
+    <td>The name of the Azure PostgreSQL instance to create.</td>
+    <td><code>csb-postgresql-INSTANCE-ID</code></td>
+    <td>provision</td>
+  </tr>
+  <tr>
+    <td><code>location</code></td>
+    <td>string</td>
+    <td>
+      The Azure region in which to deploy the service instance.
+      <p class="note important">
+        <span class="note__title">Important</span> Currently, Azure SQL is not available in all regions.
+        If you configure a region that is unavailable, <%= vars.product_short %> fails.
+      </p>
+    </td>
+    <td><code>westus</code></td>
+    <td>provision</td>
+  </tr>
+  <tr>
+    <td><code>resource_group</code></td>
+    <td>string</td>
+    <td>The Azure resource group in which to create the instance.</td>
+    <td><code>rg-INSTANCE-NAME</code></td>
+    <td>provision</td>
+  </tr>
+  <tr>
+    <td><code>azure_tenant_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure tenant for the service instance.</td>
+    <td>The value the operator entered for <strong>Tenant ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_subscription_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure subscription for the service instance.</td>
+    <td>The value the operator entered for <strong>Subscription ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_id</code></td>
+    <td>string</td>
+    <td>The ID of the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client ID</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>azure_client_secret</code></td>
+    <td>string</td>
+    <td>The secret (password) for the Azure service principal to authenticate for service instance creation.</td>
+    <td>The value the operator entered for <strong>Client Secret</strong> in <%= vars.ops_manager %>.</td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>storage_gb</code></td>
+    <td>number</td>
+    <td>Maximum storage allocated to the database instance in GB. 32&ndash;32767</td>
+    <td><code>32</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>sku_name</code></td>
+    <td>string</td>
+    <td>
+      The SKU Name for the PostgreSQL Flexible Server. The name of the SKU, follows the tier + name pattern (e.g. B_Standard_B1ms, GP_Standard_D2s_v3, MO_Standard_E4s_v3).
+      For a list of all valid SKUs, run:```az sql db list-editions -l LOCATION -o table```
+      If you want to change to a different tier, check the Azure documentation to ensure that updating
+      to the new tier is supported.
+    </td>
+    <td><code>""</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>postgres_version</code></td>
+    <td>string</td>
+    <td>The version for the PostgreSQL instance.</td>
+    <td><code>n/a</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>db_name</code></td>
+    <td>string</td>
+    <td>Name for your database.</td>
+    <td><code>vsbdb</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>allow_access_from_azure_services</code></td>
+    <td>string</td>
+    <td>If it should allow public access from any Azure service within Azure to this server for flexible server with public access. Doesn't take effect when <code>delegated_subnet_id</code> is set.</td>
+    <td><code>true</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>private_endpoint_subnet_id</code></td>
+    <td>string</td>
+    <td>The ID of the virtual network subnet to create the private endpoint to allow hosts in the selected virtual network to access this server.</td>
+    <td><code>vsbdb</code></td>
+    <td>provision and update</td>
+  </tr>
+  <tr>
+    <td><code>delegated_subnet_id</code></td>
+    <td>string</td>
+    <td>
+      The ID of the virtual network subnet to create the PostgreSQL Flexible Server. 
+      The provided subnet should not have any other resource deployed in it and this subnet will be delegated to the PostgreSQL Flexible Server, if not already delegated.</td>
+    <td><code>null</code></td>
+    <td>provision</td>
+  </tr>
+  <tr>
+    <td><code>private_dns_zone_id</code></td>
+    <td>string</td>
+    <td>The ID of the private DNS zone to create the PostgreSQL Flexible Server. Must be set when `delegated_subnet_id` is also set.</td>
+    <td><code>null</code></td>
+    <td>provision and update</td>
+  </tr>
+</table>
+
+## <a id="binding"></a> Binding
+
+You can bind a service by running:
+
+```console
+cf bind-service APP-NAME SERVICE-INSTANCE-NAME --binding-name BINDING-NAME
+```
+
+## <a id="binding-creds"></a> Binding Credentials
+
+The format for binding credentials for PostgreSQL is as follows:
+
+```json
+{
+    "name" : "DATABASE-NAME",
+    "hostname" : "DATABASE-SERVER-HOST",
+    "port" : "DATABASE-SERVER-PORT",
+    "username" : "AUTHENTICATION-USERNAME",
+    "password" : "AUTHENTICATION-PASSWORD",
+    "uri" : "DATABASE-CONNECTION-URI",
+    "jdbcUrl" : "JDBC-FORMAT-CONNECTION-URI"
+}
+```
+
+Where:
+
+- `DATABASE-NAME` is the database name.
+- `DATABASE-SERVER-HOST` is the database server host name.
+- `PORT` is the database server port.
+- `AUTHENTICATION-USERNAME` is the username to authenticate to the database instance.
+- `AUTHENTICATION-PASSWORD` is the password to authenticate to the database instance.
+- `DATABASE-CONNECTION-URI` is the URI to connect to the database instance and database.
+- `JDBC-FORMAT-CONNECTION-URI` is the Java Database Connectivity (JDBC) URL to connect to the database instance and database.
+
+A binding or service key corresponds to a user in PostgreSQL.
+By default, PostgreSQL users do not have have access to data written by other users.
+For bindings to have access to the same data, the `public` schema can be used, or a schema can be
+created and access can be granted to other users.
+
+When a binding or service key is deleted, data owned by the PostgreSQL user is re-assigned to a role
+called `binding_user_group` before the user is deleted. This ensures that other bindings still have
+access to the data.
