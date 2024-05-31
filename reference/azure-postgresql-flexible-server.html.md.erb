@@ -188,7 +188,7 @@ provision only:
   <tr>
     <td><code>private_dns_zone_id</code></td>
     <td>string</td>
-    <td>The ID of the private DNS zone to create the PostgreSQL Flexible Server. Must be set when `delegated_subnet_id` is also set.</td>
+    <td>The ID of the private DNS zone to create the PostgreSQL Flexible Server. Must be set when `delegated_subnet_id` or `private_endpoint_subnet_id` is also set.</td>
     <td><code>null</code></td>
     <td>provision and update</td>
   </tr>
@@ -229,7 +229,7 @@ Where:
 - `JDBC-FORMAT-CONNECTION-URI` is the Java Database Connectivity (JDBC) URL to connect to the database instance and database.
 
 A binding or service key corresponds to a user in PostgreSQL.
-By default, PostgreSQL users do not have have access to data written by other users.
+By default, PostgreSQL users do not have access to data written by other users.
 For bindings to have access to the same data, the `public` schema can be used, or a schema can be
 created and access can be granted to other users.
 
