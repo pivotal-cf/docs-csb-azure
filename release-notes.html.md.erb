@@ -8,9 +8,9 @@ owner: Cloud Service Broker
 This topic describes the changes in this minor release of <%= vars.product_full %>
 (<%= vars.product_short %>).
 
-##<a id="1-9-0"></a> v1.9.0
+##<a id="1-10-0"></a> v1.10.0
 
-**Release Date:** June 10, 2024
+**Release Date:** xxxx xx, 2024
 
 ### Breaking Changes
 
@@ -20,18 +20,6 @@ This release has no breaking changes.
 
 New features and changes in this release:
 
-- **Retirement of Azure MySQL and PostgreSQL single server offerings:**
-    Azure Database for MySQL - Single Server is on the retirement path and is scheduled for retirement by September 16, 2024.
-    Azure Database for PostgreSQL - Single Server is on the retirement path and is scheduled for retirement by March 28, 2025.
-    These service offerings are now marked as retired in their marketplace description. 
-    After the above dates customers will not be able to create or manage the single server offerings.
-    VMware strongly recommends not creating any new instances with this service.
-    For more information about the retirement, see the [PostgreSQL Microsoft documentation](https://learn.microsoft.com/en-gb/azure/postgresql/single-server/whats-happening-to-postgresql-single-server) and 
-    [MySQL Microsoft documentation](https://learn.microsoft.com/en-gb/azure/mysql/single-server/whats-happening-to-mysql-single-server).
-
-- **Exposing PostgreSQL Flexible Server:** The Azure PostgreSQL Flexible Server offering is now available and can be used when creating new PostgreSQL instances instead of using the retired PostgreSQL Single Server offering.
-    This offering does not come with brokerpak plans, and VMware recommends you create your own custom plan in the tile configuration. [Learn more about the plan configuration parameters](reference/azure-postgresql-flexible-server.html.md.erb#plans-config).
-    A new set of properties enable the configuration of the service instance. [Learn more about the service instance configuration parameters](reference/azure-postgresql-flexible-server.html.md.erb#parameters).
 
 
 ### Resolved Issues
