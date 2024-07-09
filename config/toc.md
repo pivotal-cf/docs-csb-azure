@@ -10,8 +10,6 @@
     *   [Azure SQL (MSSQL) Failover Group](../reference/azure-mssql-fog.html)
     *   [Pre-Configured Server Pairs for Azure SQL (MSSQL) Failover Groups](../reference/azure-mssql-fog-preconfig.html)
     *   [Azure SQL Failover Group Failover Runner](../reference/azure-mssql-fog-runner.html)
-    *   [Azure MySQL](../reference/azure-mysql.html)
-    *   [Azure PostgreSQL](../reference/azure-postgresql.html)
     *   [Azure PostgreSQL Flexible Server](../reference/azure-postgresql-flexible-server.html)
     *   [Azure Cosmos DB SQL API](../reference/azure-cosmosdb-sql.html)
     *   [Azure Cosmos DB Mongo API](../reference/azure-cosmosdb-mongo.html)
