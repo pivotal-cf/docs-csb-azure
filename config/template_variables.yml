@@ -12,7 +12,7 @@ template_variables:
   product_short: Cloud Service Broker for Azure
   product_abbr: Cloud Service Broker for Azure
 
-  product_network: VMware Tanzu Network
+  product_network: Broadcom Support
 
   path_to_partials: /csb-azure/partials
 
@@ -29,20 +29,20 @@ template_variables:
 
   ops_manager: Ops Manager
 
-  product_url: https://docs.vmware.com/en/Cloud-Service-Broker-for-VMware-Tanzu/index.html
-  product_link: <div class="header-item"><a href="https://tanzu.vmware.com/products">Back to Product Page</a></div>
+  product_url: https://support.broadcom.com/group/ecx/productdownloads?subfamily=Tanzu%20Cloud%20Service%20Broker%20for%20Azure
+  product_link: <div class="header-item"><a href="https://support.broadcom.com/group/ecx/productdownloads?subfamily=Tanzu%20Cloud%20Service%20Broker%20for%20Azure">Back to Product Page</a></div>
 
   service_name: Cloud Service Broker for Azure
   service_name_article: the Cloud Service Broker for Azure
   service_name_article_full: Cloud Service Broker for Azure service
   support_link: <a href="http://tanzu.vmware.com/support" target="_blank">Support</a>
-  support_call_to_action: <a href="http://tanzu.vmware.com/support" target="_blank">Need Support?</a>
-  support_url: http://tanzu.vmware.com/support
+  support_call_to_action: <a href="https://tanzu.vmware.com/support/contact" target="_blank">Need Support?</a>
+  support_url: https://support.broadcom.com/
 
 
   api_version: 235
   gtm_account_id: GTM-MM86KCJ
 
   use_global_header: true
-  global_header_product_href: https://tanzu.vmware.com/products
+  global_header_product_href: https://support.broadcom.com/
   global_header_product_link_text: Downloads
